@@ -86,6 +86,119 @@ def _assign_unnumbered_section_ordinals(section_rows):
                 section_rows[i]["SectionNumber"] = f"U{ordinal}"
 
 
+def _disambiguate_sibling_levels(section_rows):
+    """Post-process pass for the sibling-level correction family (entry #13,
+    approved 2026-05-28 by asbetos).
+
+    When a pLaw's ``<main>`` contains a ``<title>`` (or other top-level
+    container) holding two or more sibling ``<level>`` elements, each with
+    their own ``<section>`` children, the upstream extractor walks each
+    ``<level>``'s sections but does not capture the ``<level>``'s own
+    ``<heading>`` text into any ``UniqueKey``-bearing column. The resulting
+    Section rows share ``(Title, SubTitle, Chapter, SubChapter, SectionNumber)``
+    across sibling levels, collapsing to identical ``UniqueKey``.
+
+    This pass walks ``section_rows`` in document order grouped by
+    ``LawIdentifier``. Within each pLaw, rows are sub-grouped by their
+    container prefix ``(Title, SubTitle, Chapter, SubChapter)``. For each
+    sub-group, the pass tracks the set of section-number suffixes seen so
+    far (normalized via ``clean_and_format_section_fixed``); when a row's
+    suffix re-appears within the same prefix, that signals the start of a
+    new sibling-level block. The block ordinal is incremented and every
+    subsequent row in that prefix receives a sequential alpha marker
+    ('B', 'C', ...) injected into the first empty column among
+    ``SubTitle``, ``Chapter``, ``SubChapter``. The first sibling block
+    (block_ordinal == 0) is left untouched so the dominant block's
+    ``UniqueKey`` is unchanged.
+
+    PL 92-351 TITLE IV (vol 86) is the affected example: two ``<level>``
+    siblings each containing Sec. 1 and Sec. 2. Today both Sec. 1 rows
+    (and both Sec. 2 rows) collapse to the same ``UniqueKey`` because
+    only the parent TITLE IV heading is recorded.
+
+    Mutates ``section_rows`` in place.
+    """
+    if not section_rows:
+        return
+
+    # Group row indices by LawIdentifier, preserving document order.
+    by_law = {}
+    for idx, row in enumerate(section_rows):
+        law_id = row.get("LawIdentifier")
+        by_law.setdefault(law_id, []).append(idx)
+
+    # Local import to avoid module-level dependency on generate_id_keys.
+    try:
+        from generate_id_keys import clean_and_format_section_fixed
+    except ImportError:  # pragma: no cover - defensive fallback
+        return
+
+    def _alpha_marker(ordinal):
+        """1 -> 'B', 2 -> 'C', ... 25 -> 'Z', 26 -> 'AA', ..."""
+        # Block ordinals start at 1 for the SECOND block. Map to letters
+        # starting at 'B' so 'A' remains free for downstream uses.
+        result = ""
+        n = ordinal + 1  # shift so ordinal 1 -> 2 -> 'B'
+        while n > 0:
+            n, rem = divmod(n - 1, 26)
+            result = chr(ord("A") + rem) + result
+        return result
+
+    for law_id, indices in by_law.items():
+        # Sub-group by container prefix (Title, SubTitle, Chapter, SubChapter)
+        # in document order. Use a list of (prefix, [row_indices]) so we
+        # preserve order across distinct prefixes inside one pLaw.
+        prefix_groups = {}
+        prefix_order = []
+        for i in indices:
+            row = section_rows[i]
+            prefix = (
+                (row.get("Title") or "").strip(),
+                (row.get("SubTitle") or "").strip(),
+                (row.get("Chapter") or "").strip(),
+                (row.get("SubChapter") or "").strip(),
+            )
+            if prefix not in prefix_groups:
+                prefix_groups[prefix] = []
+                prefix_order.append(prefix)
+            prefix_groups[prefix].append(i)
+
+        for prefix in prefix_order:
+            group_indices = prefix_groups[prefix]
+            if len(group_indices) < 2:
+                continue  # No collision possible inside a single-row prefix.
+
+            seen_suffixes = set()
+            block_ordinal = 0
+            for i in group_indices:
+                row = section_rows[i]
+                suffix = clean_and_format_section_fixed(row.get("SectionNumber"))
+                if suffix in seen_suffixes:
+                    # Start of a new sibling-level block under this prefix.
+                    block_ordinal += 1
+                    seen_suffixes = {suffix}
+                else:
+                    seen_suffixes.add(suffix)
+
+                if block_ordinal == 0:
+                    continue  # First block — leave untouched.
+
+                marker = _alpha_marker(block_ordinal)
+                # Inject the marker into the first empty UniqueKey-bearing
+                # column among SubTitle, Chapter, SubChapter. If all three
+                # are populated, append the marker to SubChapter as a last
+                # resort so the row still gets a distinct UniqueKey.
+                for col in ("SubTitle", "Chapter", "SubChapter"):
+                    existing = row.get(col)
+                    if existing is None or not str(existing).strip():
+                        row[col] = marker
+                        break
+                else:
+                    # All four prefix slots populated upstream — append a
+                    # marker to SubChapter as the deepest disambiguator.
+                    row["SubChapter"] = f"{str(row['SubChapter']).rstrip()} {marker}"
+
+
 def _disambiguate_sibling_appropriations(division_rows):
     """Post-process pass for the sibling-appropriations correction family
     (entry #5, approved 2026-05-28 by asbetos).
@@ -461,11 +574,25 @@ def extract_public_law_from_uslm(file_path, vol):
         collide. The post-pass appends a sequential intra-heading ordinal
         (``" 2"``, ``" 3"``, ...) to the deepest non-null heading level on the
         2nd and subsequent occurrences within each pLaw.
+
+      * **sibling-level** (entry #13): when a pLaw's ``<title>`` (or other
+        top-level container) holds two or more sibling ``<level>`` elements
+        each with their own ``<section>`` children, the upstream extractor
+        does not capture the ``<level>``'s heading into any
+        ``UniqueKey``-bearing column. Within a single pLaw and a single
+        ``(Title, SubTitle, Chapter, SubChapter)`` prefix, the post-pass
+        detects a repeating section-number suffix as the start of a new
+        sibling-level block and injects a sequential alpha marker
+        ('B', 'C', ...) into the first empty column among
+        ``SubTitle``/``Chapter``/``SubChapter`` so the 2nd and subsequent
+        block's rows produce distinct ``UniqueKey``\\ s. The first block is
+        left untouched.
     """
     results = _extract_public_law_from_uslm_raw(file_path, vol)
     if isinstance(results, dict) and "Sections" in results:
         _recover_dropped_container_pLaws(file_path, vol, results)
         _assign_unnumbered_section_ordinals(results["Sections"])
+        _disambiguate_sibling_levels(results["Sections"])
     if isinstance(results, dict) and "Divisions" in results:
         _disambiguate_sibling_appropriations(results["Divisions"])
     return results
