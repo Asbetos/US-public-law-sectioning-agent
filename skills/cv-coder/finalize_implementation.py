@@ -114,14 +114,34 @@ def _git_commit_and_capture_sha(files_modified, message, repo_root):
 
 
 def _git_revert_files(files_modified, repo_root=None):
+    """Revert each file. Tracked: `git checkout HEAD --`. Untracked: rm.
+
+    Without the untracked branch, NEW files the coder created (typically new
+    regression test files) would be left behind on disk after a failed run,
+    polluting the working tree until the operator cleaned them up by hand.
+    """
     if repo_root is None:
         repo_root = _REPO_ROOT
+    repo_root = Path(repo_root)
     for f in files_modified:
-        subprocess.run(
-            ["git", "checkout", "--", f],
+        tracked = subprocess.run(
+            ["git", "cat-file", "-e", f"HEAD:{f}"],
             cwd=str(repo_root),
             capture_output=True,
         )
+        if tracked.returncode == 0:
+            subprocess.run(
+                ["git", "checkout", "HEAD", "--", f],
+                cwd=str(repo_root),
+                capture_output=True,
+            )
+        else:
+            full = repo_root / f
+            if full.exists():
+                try:
+                    full.unlink()
+                except OSError:
+                    logger.warning("Could not delete untracked file during revert: %s", f)
 
 
 def _invoke_republish(task_id, output_dir, repo_root=None):
