@@ -33,11 +33,7 @@
         "pattern": "multiple sections within a single pLaw where SectionNumber is null collapse to identical UniqueKey",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -73,11 +69,7 @@
         "pattern": "<main> contains <part> elements (multi-part Act) or bare <subsection> elements (short single-section amending Act) directly, with no top-level <section>; extractor's section walker emits 0 rows for the pLaw",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -108,11 +100,7 @@
         "law_id_substring": "Public Law 88\u2013181",
         "title_substring": "approving a compromise and settlement agreement of the navajo tribe of indians and authorizing the tribe to execute and the secretary of the interior to approve any oil and gas leases"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -151,11 +139,7 @@
         "pattern": "Within a single pLaw, two or more sibling <appropriations> elements (typically a regular appropriation and an immediately following supplemental 'additional amount' appropriation) share identical <heading> text under the same parent <appropriations>. The extractor builds DivisionHeadingLevel1..3 (and the UniqueKey's heading-derived positions) from the heading text path alone, so the two rows collapse to the same UniqueKey even though their <content> bodies differ.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -189,11 +173,7 @@
         "pattern": "<main> contains <title> elements at the top level with no top-level <section>; extractor's section walker emits 0 rows for the pLaw. Distinct from active #3 (which covers <part> and bare <subsection>).",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -228,11 +208,7 @@
         "pattern": "<main> contains <chapter> elements at the top level with no top-level <section>; extractor's section walker emits 0 rows for the pLaw. Distinct from active #3 (which covers <part> and bare <subsection>) and active #7 (which covers <title>).",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -263,11 +239,7 @@
         "law_id_substring": "Public Law 92\u20134424",
         "title_substring": "to provide for the continuation of programs authorized under the economic opportunity act of 1964"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -300,11 +272,7 @@
         "pattern": "Two sibling <level> elements within a single <title> (e.g. TITLE IV) each contain their own Sec. 1, Sec. 2, ... block. The extractor builds the UniqueKey's section-number position from the per-section <num value=\"...\"/> but does not capture the immediate parent <level><heading>...</heading> into the DivisionHeading path, so the Sec. 1 (and Sec. 2) rows under the two distinct <level>s collapse to the same UniqueKey even though their parent-level headings (e.g. 'General Provisions\u2014General Services Administration' vs 'General Provisions\u2014Civil Defense') differ.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -337,11 +305,7 @@
         "pattern": "A pLaw contains a leading <section> with no <num> (extracted SectionNumber = null) plus a later <section><num value=\"1\">Section 1.</num>. Active correction #2 assigns sequential ordinals to null-section rows, but the unnumbered enacting section still maps to ordinal '001' and the explicit 'Section 1.' also maps to position '001', producing a UniqueKey collision that active #2 alone does not resolve.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -373,11 +337,7 @@
         "pattern": "Within a single pLaw, the opening <section class=\"inline\"> carrying the 'That ...' enacting paragraph has no <num> child, so it falls back to SectionNumber position '000000000000001'. Later in the same pLaw, a numbered <section><num value=\"1\">Sec. 1.</num> exists (e.g. inside a <level>GENERAL PROVISIONS</level> block in appropriations Acts), which also resolves to position '000000000000001'. The two rows collapse to the same UniqueKey even though one is the preamble paragraph and the other is the first general-provision section. Distinct from active correction #2 (which handled the case of two sections that both lack <num>): here only one section lacks <num>, but it still collides with the numbered Sec. 1.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -419,11 +379,7 @@
         "pattern": "Throughout vol 88, the dominant pLaw shape is an outer <section> that holds only a <heading> and a nested inner <section class=\"firstIndent1 fontsize10\"><num value=\"N\">. The extractor reads the outer <section> as the section row, finds no <num value=...> directly under it, falls back to '000000000000001', and so every outer section in the pLaw collapses to the same UniqueKey. This is the same root cause active correction #2 already covers \u2014 but the two affected_examples in correction #2 (PL 87-292 joint resolution, PL 87-356 amendatory <quotedContent>) were patched with surgical if-conditions, so the general rule never fires for vol 88's outer-section-wraps-inner-numbered-section shape (56 duplicate groups, 28 affected pLaws). A handful of pLaws (93-405, 93-613) also exhibit the active-correction-#2 PL-87-292/87-356 shape directly, which is also not caught because #2 was applied only to the named PLs.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -456,11 +412,7 @@
         "scope": "extractor_code",
         "title_substring": "making further continuing appropriations for the fiscal year 1975"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -491,11 +443,7 @@
         "law_id_substring": "Public Law 94\u2013536",
         "title_substring": "to amend the act establishing a code of law for the district of columbia to prohibit the unauthorized use of a motor vehicle obtained under a written rental or other agreement"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -527,11 +475,7 @@
         "law_id_substring": "Public Law 94\u2013274",
         "text_substring": "notwithstanding the provisions of section 406(d) of the"
       },
-      "type": "section_number",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "section_number"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -563,11 +507,7 @@
         "law_id_substring": "Public Law 94\u2013455",
         "text_substring": null
       },
-      "type": "section_number",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "section_number"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -599,11 +539,7 @@
         "law_id_substring": "Public Law 94\u2013578",
         "text_substring": "section 3 of the act of august 31, 1964 (78 stat. 749)"
       },
-      "type": "section_number",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "section_number"
     }
   ],
   "next_id": 1,

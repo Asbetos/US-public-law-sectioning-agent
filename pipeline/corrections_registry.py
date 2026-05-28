@@ -373,6 +373,36 @@ class CorrectionsRegistry:
         _save_file_atomic(pending, self._pending_path)
         return entry
 
+    # ---- migration helpers ----
+
+    def migrate_implementation_status(self) -> int:
+        """Backfill the implementation_status field on existing on-disk entries.
+
+        For each entry in active_corrections.json AND pending_corrections.json
+        whose underlying dict lacks an 'implementation_status' key, write a
+        default ('pending' for type=other; 'not_required' otherwise) and zero
+        the three companion tracking fields. Saves atomically. Returns the
+        count of entries actually updated. Idempotent — running twice is a
+        no-op."""
+        import json
+        updated = 0
+        for path in (self._active_path, self._pending_path):
+            if not path.exists():
+                continue
+            data = json.loads(path.read_text())
+            for entry in data.get("entries", []) + data.get("rejected", []):
+                if "implementation_status" not in entry:
+                    default = "pending" if entry.get("type") == "other" else "not_required"
+                    entry["implementation_status"] = default
+                    entry["implementation_commit_sha"] = None
+                    entry["implementation_attempted_at"] = None
+                    entry["implementation_notes"] = None
+                    updated += 1
+            tmp = path.with_suffix(path.suffix + ".tmp")
+            tmp.write_text(json.dumps(data, indent=2))
+            tmp.replace(path)
+        return updated
+
     # ---- bootstrap ----
 
     @staticmethod

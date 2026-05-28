@@ -77,3 +77,59 @@ def test_to_dict_round_trips_implementation_fields():
     e2 = CorrectionEntry.from_dict(d)
     assert e2.implementation_status == "failed"
     assert e2.implementation_notes == "pytest red on new test"
+
+
+def test_registry_migrate_implementation_status_backfills(tmp_path):
+    CorrectionsRegistry = mod.CorrectionsRegistry
+    # Seed an active file WITHOUT the new field
+    active = tmp_path / "active_corrections.json"
+    active.write_text("""{
+      "schema_version": 1, "next_id": 5, "entries": [
+        {"id": 1, "type": "law_id", "trigger": {}, "correction": {},
+         "evidence": {}, "proposed_at": "2026-01-01T00:00:00",
+         "discovered_in_vol": 60, "agent_version": "x", "confidence": null,
+         "status": "approved", "applied_in_runs": [], "seen_again_count": 0,
+         "reviewer": null, "review_note": null, "reviewed_at": null},
+        {"id": 2, "type": "other", "trigger": {}, "correction": {},
+         "evidence": {}, "proposed_at": "2026-01-01T00:00:00",
+         "discovered_in_vol": 75, "agent_version": "x", "confidence": null,
+         "status": "approved", "applied_in_runs": [], "seen_again_count": 0,
+         "reviewer": null, "review_note": null, "reviewed_at": null}
+      ], "rejected": []
+    }""")
+    pending = tmp_path / "pending_corrections.json"
+    pending.write_text('{"schema_version": 1, "next_id": 5, "entries": [], "rejected": []}')
+
+    r = CorrectionsRegistry(tmp_path)
+    n = r.migrate_implementation_status()
+    assert n == 2  # both active entries needed a default written
+
+    import json
+    d = json.loads(active.read_text())
+    by_id = {e["id"]: e for e in d["entries"]}
+    assert by_id[1]["implementation_status"] == "not_required"  # type=law_id
+    assert by_id[2]["implementation_status"] == "pending"       # type=other
+
+
+def test_registry_migrate_implementation_status_is_idempotent(tmp_path):
+    CorrectionsRegistry = mod.CorrectionsRegistry
+    active = tmp_path / "active_corrections.json"
+    active.write_text("""{
+      "schema_version": 1, "next_id": 5, "entries": [
+        {"id": 1, "type": "law_id", "trigger": {}, "correction": {},
+         "evidence": {}, "proposed_at": "2026-01-01T00:00:00",
+         "discovered_in_vol": 60, "agent_version": "x", "confidence": null,
+         "status": "approved", "applied_in_runs": [], "seen_again_count": 0,
+         "reviewer": null, "review_note": null, "reviewed_at": null,
+         "implementation_status": "not_required",
+         "implementation_commit_sha": null,
+         "implementation_attempted_at": null,
+         "implementation_notes": null}
+      ], "rejected": []
+    }""")
+    pending = tmp_path / "pending_corrections.json"
+    pending.write_text('{"schema_version": 1, "next_id": 5, "entries": [], "rejected": []}')
+
+    r = CorrectionsRegistry(tmp_path)
+    n = r.migrate_implementation_status()
+    assert n == 0  # nothing to backfill on a second run
