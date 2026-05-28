@@ -174,9 +174,410 @@
         "scope": "extractor_code"
       },
       "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:26.401865",
+          "vol": 83
+        }
+      ],
+      "confidence": 0.8,
+      "correction": {
+        "affected_examples": [
+          "PL 91-185 (vol 83, lines 46411-46561): one unnumbered <section class=\"inline\"><content class=\"inline\">That\u2014</content></section> at OriginalOrder 1729 immediately followed by <section><num value=\"1\">Section 1.</num>...</section> at OriginalOrder 1730. Both rows collapse to UniqueKey 091-185-000-000-000-000-000-S-000000000000001."
+        ],
+        "description": "Extend the intra-law ordinal fallback added in active correction #2 (id=2) so that unnumbered <section> siblings never collide with a real parsed section number. When a pLaw contains both (a) one or more <section> elements lacking a parseable <num value=...> attribute and (b) one or more <section> elements whose parsed SectionNumber starts at 1, the null-fallback ordinal for the unnumbered section(s) must be assigned starting after the maximum parsed SectionNumber present in the same pLaw (or, equivalently, use a distinct slot \u2014 e.g. ordinal 0 or a prefixed namespace \u2014 so the unnumbered intro 'That\u2014' section does not collapse onto parsed Section 1). For PL 91-185 specifically: the unnumbered 'That\u2014' intro section currently gets SectionNumber-position '1', which collides with the real Section 1 that follows. Ordering should preserve document order (OriginalOrder)."
+      },
+      "discovered_in_vol": 83,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Only UniqueKey duplicate in vol 83 (validation report). The two rows have identical UniqueKey 091-185-000-000-000-000-000-S-000000000000001 but distinct Text and SectionNumber. Source XML legitimately contains one unnumbered intro <section> ('That\u2014') followed by a numbered <section><num value=\"1\"> Section 1. </num>...</section>. Existing active correction #2 covers pLaws where multiple sections lack <num>, but this case is the mixed shape: one unnumbered intro + one numbered Section 1.",
+        "xml_excerpt": "<section class=\"inline\">\n<content class=\"inline\">That\u2014 <sidenote><p class=\"firstIndent1 fontsize8\">Central Intelligence Agency Retirement Act of 1964 for Certain Employees, amendment.</p></sidenote></content>\n</section>\n<section class=\"firstIndent1 fontsize10\">\n<num value=\"1\"><inline class=\"smallCaps\">Section</inline> 1. </num>\n<content>Section 211(a) of the Central Intelligence Agency Retirement Act of 1964 for Certain Employees, as amended (78 Stat. 1043; 50 U.S.C. 403 note), is further amended by striking out \u201cSix and one-half per centum\u201d in the first sentence and inserting \u201cSeven per centum\u201d.</content>\n</section>"
+      },
+      "id": 10,
+      "proposed_at": "2026-05-28T00:03:26.401865",
+      "review_note": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "seen_again_count": 0,
+      "status": "pending",
+      "trigger": {
+        "law_id_substring": "(any pLaw whose <main> contains an unnumbered intro <section> followed by a numbered Section 1)",
+        "pattern": "Within a single pLaw, the first <section> is an unnumbered intro (e.g. <section class=\"inline\"><content class=\"inline\">That\u2014</content></section> with no <num> child) and is immediately followed by a numbered <section><num value=\"1\">Section 1. </num>...</section>. The extractor maps both rows' SectionNumber position to '000000000000001' (the null-fallback for the intro plus the parsed value '1' for Section 1), producing identical UniqueKeys despite distinct Text and SectionNumber.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:26.655140",
+          "vol": 84
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "affected_examples": [
+          "PL 91-599 International Financial Institutions Act (vol 84): <main> contains <longTitle>, <enactingFormula>, <sidenote>, 5 <chapter> elements (Chapter 1..5), <action>. No top-level <section>. Approved 1970-12-30. officialTitle: 'To authorize United States participation in increases in the resources of certain international financial institutions, to provide for an annual audit of the Exchange Stabilization Fund by the General Accounting Office, and for other purposes.' XML lines 104060-104206."
+        ],
+        "description": "Extend the extractor's section walker to recognize <chapter> as a valid top-level container under <main> when no top-level <section> children exist. For PL 91-599 in vol 84 (and any other pLaw whose <main> contains <chapter> elements directly), walk chapter/section and carry the chapter heading into DivisionHeadingLevel1. This is the same shape as active correction #3 (which handles <part> and bare <subsection>) and active correction #7 (which handles <title>), but applies to <chapter> containers. Today PL 91-599 is silently dropped from the parsed output (distinct LawIdentifier count 504 != public pLaw count in XML 505 for vol 84)."
+      },
+      "discovered_in_vol": 84,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Validation report flagged 'Distinct LawIdentifier count 504 != public pLaw count in XML 505 (diff -1)' for vol 84. XML scan + parquet diff pinpoints PL 91-599 as the single missing pLaw. Its <main> direct children are: longTitle, enactingFormula, sidenote, chapter, chapter, chapter, chapter, chapter, action. Zero top-level <section> children, so the standard section walker emits 0 rows and the pLaw is dropped.",
+        "xml_excerpt": "<pLaw><main><longTitle>...</longTitle><enactingFormula>...</enactingFormula><sidenote>...</sidenote><chapter><num value=\"1\">Chapter 1\u2014</num><heading class=\"inline\">INTERNATIONAL MONETARY FUND</heading>...</chapter><page>...</page><chapter><num value=\"2\">Chapter 2.\u2014</num><heading class=\"inline\">INTER-AMERICAN DEVELOPMENT BANK</heading>...</chapter><chapter>...</chapter><page>...</page><chapter>...</chapter><chapter>...</chapter><action>...</action></main></pLaw>"
+      },
+      "id": 11,
+      "proposed_at": "2026-05-28T00:03:26.655140",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.128786",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 91\u2013599",
+        "pattern": "<main> contains <chapter> elements at the top level with no top-level <section>; extractor's section walker emits 0 rows for the pLaw. Distinct from active #3 (which covers <part> and bare <subsection>) and active #7 (which covers <title>).",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:27.151031",
+          "vol": 86
+        }
+      ],
+      "confidence": 0.99,
+      "correction": {
+        "replace_with_law_id": "92-424"
+      },
+      "discovered_in_vol": 86,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order between PL 92-423 and PL 92-425; the suspect <citableAs> contains 'Public Law 92\u20134424' (extra '4' digit) while every other field in the same pLaw (<dc:title>, <docNumber>, preface <docNumber>) agrees on '92\u2013424'.",
+        "xml_excerpt": "<dc:title>Public Law 92\u2013424: To provide for the continuation of programs authorized under the Economic Opportunity Act of 1964, and for other purposes.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>424</docNumber>\n<citableAs>Public Law 92\u20134424</citableAs>\n<citableAs>86 Stat. 688</citableAs>\n<approvedDate>1972-09-19</approvedDate>\n...\n<preface>\n<page identifier=\"/us/stat/86/688\">86 Stat. 688</page>\n<dc:type>Public Law</dc:type> <docNumber>92\u2013424</docNumber>\n</preface>"
+      },
+      "id": 12,
+      "proposed_at": "2026-05-28T00:03:27.151031",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.185584",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 92\u20134424",
+        "title_substring": "to provide for the continuation of programs authorized under the economic opportunity act of 1964"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:27.151031",
+          "vol": 86
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "description": "When walking <level> children of a <title> (or any other top-level container under <main>), capture the <level>'s own <heading> text into the next available DivisionHeadingLevel slot below the parent title's heading, so that sibling <level> blocks with distinct headings produce distinct UniqueKey paths. In PL 92-351 TITLE IV the two sibling <level> blocks have headings 'General Provisions\u2014General Services Administration' and 'General Provisions\u2014Civil Defense'; each contains its own Sec. 1 and Sec. 2. Today both Sec. 1 rows (and both Sec. 2 rows) collapse to the same UniqueKey because only the parent TITLE IV heading is recorded."
+      },
+      "discovered_in_vol": 86,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Both PL 92-351 unique_key_duplicates (positions S-001 and S-002 under TITLE IV) have differing ContentHash but identical UniqueKey. XML inspection shows two sibling <level> elements within <title> with distinct <heading>s, each containing its own Sec. 1 and Sec. 2.",
+        "xml_excerpt": "<title>\n<num value=\"IV\">TITLE IV\u2014</num>\n...\n<level>\n<heading class=\"smallCaps centered\">General Provisions\u2014General Services Administration</heading>\n<section><num value=\"1\">Sec. 1 </num><content>The appropriate appropriation or fund available to the General Services Administration shall be credited with...</content></section>\n<section><num value=\"2\">Sec. 2. </num><content>Appropriations to the General Services Administration under the heading \u201cConstruction, Public Buildings Projects\u201d shall be available...</content></section>\n</level>\n...\n<level>\n<heading class=\"smallCaps centered\">General Provisions\u2014Civil Defense</heading>\n<section><num value=\"1\">Sec. 1. </num><content>Appropriations contained in this Act for carrying out civil defense activities shall not be available in excess of the limitations on appropriations contained in section 408 of the Federal Civil Defense Act, as amended (50 U.S.C. App. 2260).</content></section>\n<section><num value=\"2\">Sec. 2. </num><content>No part of any appropriation in this Act shall be available for the construction of warehouses or for the lease of warehouse space in any building which is to be constructed specifically for civil defense activities.</content></section>\n</level>"
+      },
+      "id": 13,
+      "proposed_at": "2026-05-28T00:03:27.151031",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.235478",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "general provisions",
+        "law_id_substring": "Public Law 92\u2013351",
+        "pattern": "Two sibling <level> elements within a single <title> (e.g. TITLE IV) each contain their own Sec. 1, Sec. 2, ... block. The extractor builds the UniqueKey's section-number position from the per-section <num value=\"...\"/> but does not capture the immediate parent <level><heading>...</heading> into the DivisionHeading path, so the Sec. 1 (and Sec. 2) rows under the two distinct <level>s collapse to the same UniqueKey even though their parent-level headings (e.g. 'General Provisions\u2014General Services Administration' vs 'General Provisions\u2014Civil Defense') differ.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:27.151031",
+          "vol": 86
+        }
+      ],
+      "confidence": 0.85,
+      "correction": {
+        "description": "Extend the null-section ordinal logic from active correction #2 so that null SectionNumber sections are assigned ordinals from a namespace that cannot collide with explicitly-numbered sections in the same pLaw. Two viable approaches: (a) start the null-section ordinal at max(explicit_section_numbers)+1 within the pLaw, or (b) tag null-section ordinals with a distinct character (e.g. 'U' for unnumbered) in the SectionNumber position of the UniqueKey. PL 92-344 has an enacting <section class=\"inline\"><content class=\"inline\">That the following sums are appropriated...</content></section> with no <num>, followed downstream by <section><num value=\"1\">Section 1.</num><sidenote>Vouchers</sidenote>...</section>; both currently collapse to UniqueKey position '000000000000001'."
+      },
+      "discovered_in_vol": 86,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "PL 92-344 unique_key_duplicates group at UniqueKey '092-344-000-000-000-000-000-S-000000000000001' contains one row with SectionNumber=null (the enacting clause) and one row with SectionNumber='Section 1.' (the explicit first numbered section). Active correction #2 would assign ordinal 1 to the null row, but the explicit Section 1 already occupies position 1; collision is not resolved.",
+        "xml_excerpt": "<section class=\"inline\">\n<content class=\"inline\">That the following <sidenote>District of Columbia Appropriation Act, 1973.</sidenote>sums are appropriated, out of any money in the Treasury not otherwise appropriated, for the District of Columbia for the fiscal year ending J line 30, 1973, and for other purposes, namely:</content>\n</section>\n...\n<section class=\"firstIndent1 fontsize10\">\n<num value=\"1\"><inline class=\"smallCaps\">Section</inline> 1. </num><sidenote>Vouchers.</sidenote>\n<content>Except as otherwise provided herein, all vouchers covering expenditures of appropriations contained in this Act shall be audited before payment by the designated certifying official...</content>\n</section>"
+      },
+      "id": 14,
+      "proposed_at": "2026-05-28T00:03:27.151031",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.288190",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "vouchers",
+        "law_id_substring": "Public Law 92\u2013344",
+        "pattern": "A pLaw contains a leading <section> with no <num> (extracted SectionNumber = null) plus a later <section><num value=\"1\">Section 1.</num>. Active correction #2 assigns sequential ordinals to null-section rows, but the unnumbered enacting section still maps to ordinal '001' and the explicit 'Section 1.' also maps to position '001', producing a UniqueKey collision that active #2 alone does not resolve.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:27.403102",
+          "vol": 87
+        }
+      ],
+      "confidence": 0.85,
+      "correction": {
+        "description": "Extend the extractor's section-number handling so that an unnumbered opening <section class=\"inline\"> directly under <main> (the 'That ...' enacting paragraph) does not collapse into the same SectionNumber slot as a later numbered <section><num value=\"1\">Sec. 1.</num> within the same pLaw. Either (a) emit the opening unnumbered section into a distinct ordinal slot (e.g. position 0 or the OriginalOrder-derived ordinal) reserved for pre-Sec.-1 preamble content, or (b) skip writing a Section row for an unnumbered <section class=\"inline\"> whose sole content is the enacting 'That ...' clause and instead treat it as enacting-formula context. Option (a) preserves the text in the parquet (preferred); option (b) drops a near-duplicate of the enactingFormula. The disambiguation must follow document order (OriginalOrder)."
+      },
+      "discovered_in_vol": 87,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "PL 93-91 (87 Stat. 306) has its opening 'That ...' section (OriginalOrder 608, SectionNumber=null) collapsed to UniqueKey 093-091-000-000-000-000-000-S-000000000000001 \u2014 the same UniqueKey produced by the GENERAL PROVISIONS Sec. 1. row (OriginalOrder 621, SectionNumber='Sec. 1.'). Active correction #2 only handles the case where multiple sections lack <num>; this is a new shape where the unnumbered preamble collides with a properly-numbered Sec. 1.",
+        "xml_excerpt": "<section class=\"inline\">\n<content class=\"inline\">That the following sums are appropriated, out of any money in the Treasury not otherwise appropriated, for the District of Columbia for the fiscal year ending June 30, 1974, and for other purposes, namely:</content>\n</section>\n... (appropriations blocks) ...\n<level>\n<heading class=\"centered\">GENERAL PROVISIONS</heading>\n<section class=\"firstIndent1 fontsize10\">\n<num class=\"smallCaps\" value=\"1\">Sec. 1. </num>\n<content class=\"inline\">Except as otherwise provided herein, all vouchers covering expenditures of appropriations contained in this Act shall be audited before payment...</content>\n</section>"
+      },
+      "id": 15,
+      "proposed_at": "2026-05-28T00:03:27.403102",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.338505",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "(any pLaw with an unnumbered opening 'That...' section followed by a numbered Sec. 1.)",
+        "pattern": "Within a single pLaw, the opening <section class=\"inline\"> carrying the 'That ...' enacting paragraph has no <num> child, so it falls back to SectionNumber position '000000000000001'. Later in the same pLaw, a numbered <section><num value=\"1\">Sec. 1.</num> exists (e.g. inside a <level>GENERAL PROVISIONS</level> block in appropriations Acts), which also resolves to position '000000000000001'. The two rows collapse to the same UniqueKey even though one is the preamble paragraph and the other is the first general-provision section. Distinct from active correction #2 (which handled the case of two sections that both lack <num>): here only one section lacks <num>, but it still collides with the numbered Sec. 1.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:27.660437",
+          "vol": 88
+        }
+      ],
+      "confidence": 0.85,
+      "correction": {
+        "affected_examples": [
+          "PL 93-275 Federal Energy Administration Act of 1974 (lines 6786-7772): 30 outer <section> wrappers, each with <heading> + inner <section><num value=\"N\">.",
+          "PL 93-288 Disaster Relief Act Amendments (lines 9750-10853): 47 outer-section rows split across Titles I-VI.",
+          "PL 93-344 Congressional Budget and Impoundment Control Act (lines 20270-22688): 48 outer-section rows split across Titles 0-9.",
+          "PL 93-559 Foreign Assistance Act amendments (lines 95441-97030): 56 sibling outer-section rows in a single dup group.",
+          "PL 93-577 Federal Nonnuclear Energy R&D Act (lines 100099-101119): 16 outer-section rows.",
+          "PL 93-428 Egg Research and Consumer Information Act (lines 57468-57848): 21 outer-section rows.",
+          "PL 93-405 DC Appropriations 1975 (lines 43802-43914): bare <section class=\"inline\"> enacting section collides with later \"Sec. 1. General Provisions\" (same null-fallback SectionNumber).",
+          "PL 93-613 Justice Working Capital Fund (lines 106389-106443): two outer <section> elements both lacking direct <num> \u2014 same shape as active-correction-#2 PL 87-356."
+        ],
+        "description": "Generalize active correction #2's fix: whenever a pLaw produces two or more <section>-typed rows whose SectionNumber is null (regardless of why the <num> was missing \u2014 joint-resolution, amendatory <quotedContent>, vol 88's outer-section-wraps-inner-numbered-section, or DC-appropriations enacting <section class=\"inline\">), assign a sequential intra-law ordinal (1, 2, 3, ...) to the SectionNumber position of the UniqueKey in OriginalOrder. Alternative implementation: when the outer <section> has no direct <num> child but its single <section> grandchild does, hoist the inner section's <num value=...> up so the row gets its real section number. Either fix resolves all 56 vol-88 duplicate groups."
+      },
+      "discovered_in_vol": 88,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "All 56 vol-88 unique_key_duplicates share the same suffix '-S-000000000000001' (the extractor's SectionNumber null-fallback). Text, SectionName, and OriginalOrder differ across rows in each group \u2014 confirming the source XML has genuinely distinct sections that collapsed only because of the missing-num issue. IsAppropriation=false on every row, so this is NOT the active correction #5 (appropriations sibling-heading) pattern.",
+        "xml_excerpt": "PL 93-275 lines 6815-6821 (dominant vol-88 shape):\n<section>\n<heading class=\"smallCaps centered\">short title</heading>\n<section class=\"firstIndent1 fontsize10\">\n<num value=\"1\"><inline class=\"smallCaps\">Section</inline> 1. </num>\n<content>This Act may be cited as the \"Federal Energy Administration Act of 1974\".</content>\n</section>\n</section>"
+      },
+      "id": 16,
+      "proposed_at": "2026-05-28T00:03:27.660437",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.388183",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "(any vol 88 pLaw containing two or more outer <section> wrappers whose only child elements are <heading> and a single numbered inner <section>)",
+        "pattern": "Throughout vol 88, the dominant pLaw shape is an outer <section> that holds only a <heading> and a nested inner <section class=\"firstIndent1 fontsize10\"><num value=\"N\">. The extractor reads the outer <section> as the section row, finds no <num value=...> directly under it, falls back to '000000000000001', and so every outer section in the pLaw collapses to the same UniqueKey. This is the same root cause active correction #2 already covers \u2014 but the two affected_examples in correction #2 (PL 87-292 joint resolution, PL 87-356 amendatory <quotedContent>) were patched with surgical if-conditions, so the general rule never fires for vol 88's outer-section-wraps-inner-numbered-section shape (56 duplicate groups, 28 affected pLaws). A handful of pLaws (93-405, 93-613) also exhibit the active-correction-#2 PL-87-292/87-356 shape directly, which is also not caught because #2 was applied only to the named PLs.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:27.922027",
+          "vol": 89
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "description": "Extend the extractor's section walker to recognize <quotedContent> as a valid top-level body holder under <main> when no top-level <section>, <part>, <title>, or bare <subsection> exists. For PL 94-7 in vol 89 (and any joint resolution that amends another Act by quoting the amendatory text directly under <main>), synthesize a single section row per pLaw whose Text is the concatenated text of the <quotedContent><content> node(s). Today this pLaw is silently dropped (0 rows emitted), which is why the distinct LawIdentifier count is 207 vs the 208 public pLaws in the XML. This is a fourth shape in the family of <main>-without-top-level-<section> corrections (after active #3 covering <part> and bare <subsection>, and active #7 covering <title>)."
+      },
+      "discovered_in_vol": 89,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Orchestrator-style verification: vol 89 XML has 208 public pLaws (`<publicPrivate>public</publicPrivate>` count) but enriched_89.parquet has only 207 distinct LawIdentifier. Diff identifies PL 94-7 as the single missing pLaw. Its <main> structure ['longTitle','resolvingClause','quotedContent','action'] has zero top-level <section> children, so the standard section walker emits 0 rows and the pLaw is dropped. Distinct from active #3 (covers <part>/bare <subsection>) and active #7 (covers <title>).",
+        "xml_excerpt": "<pLaw>\n<meta>\n<docNumber>7</docNumber>\n<citableAs>Public Law 94\u20137</citableAs>\n<citableAs>89 Stat. 13</citableAs>\n<approvedDate>1975-03-14</approvedDate>\n<congress>94</congress>\n<session>1</session>\n</meta>\n<main>\n<longTitle><docTitle>Joint Resolution</docTitle><officialTitle>Making further continuing appropriations for the fiscal year 1975, and for other purposes.</officialTitle>...</longTitle>\n<resolvingClause>Resolved by the Senate and House of Representatives...</resolvingClause>\n<quotedContent>\n<content class=\"inline\">That clause, (c) of section 102 of the joint resolution of June 30, 1974 (Public Law 93\u2013324, as amended by Public Law 93\u2013448 and Public Law 93\u2013570), is hereby further amended by striking out \u201cFebruary 28, 1975\u201d and inserting in lieu thereof \u201cJune 30, 1975\u201d ...</content>\n</quotedContent>\n<action><actionDescription>Approved March 14, 1975.</actionDescription></action>\n</main>\n</pLaw>"
+      },
+      "id": 17,
+      "proposed_at": "2026-05-28T00:03:27.922027",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.439895",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 94\u20137",
+        "pattern": "<main> contains <quotedContent> directly as its body holder (with a child <content>), no top-level <section>, no <part>, no <title>, no bare <subsection>. Joint-resolution amendatory shape: <main> := <longTitle>, <resolvingClause>, <quotedContent><content>...</content></quotedContent>, <action>. Extractor's section walker emits 0 rows for the pLaw and it is silently dropped.",
+        "scope": "extractor_code",
+        "title_substring": "making further continuing appropriations for the fiscal year 1975"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:28.188972",
+          "vol": 90
+        }
+      ],
+      "confidence": 0.98,
+      "correction": {
+        "replace_with_law_id": "94-526"
+      },
+      "discovered_in_vol": 90,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: this pLaw's citableAs says 94-536 but it sits at 90 Stat. 2479 between PL 94-525 (90 Stat. 2477) and PL 94-527 (90 Stat. 2481); the slot expected 94-526. The volume's own front-matter index at lines 818 and 78044 of STATUTE-90.xml lists '94\u2013526 ... District of Columbia, motor vehicles, unauthorized use ... AN ACT To amend the Act establishing a code of law for the District of Columbia ... 2479' \u2014 unambiguously identifying this pLaw as PL 94-526. The misnumbering also causes the spurious 'gap' anomalies at xml_index 321 and 331 and the spurious 'duplicate 94-536' at xml_index 330; all three resolve once xml_index 320 is renumbered to 94-526.",
+        "xml_excerpt": "<pLaw>\n<meta>\n<dc:title>Public Law 94\u2013536: To amend the Act establishing a code of law for the District of Columbia to prohibit the unauthorized use of a motor vehicle obtained under a written rental or other agreement.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>536</docNumber>\n<citableAs>Public Law 94\u2013536</citableAs>\n<citableAs>90 Stat. 2479</citableAs>\n<approvedDate>1976-10-17</approvedDate>\n..."
+      },
+      "id": 18,
+      "proposed_at": "2026-05-28T00:03:28.188972",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.490115",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 94\u2013536",
+        "title_substring": "to amend the act establishing a code of law for the district of columbia to prohibit the unauthorized use of a motor vehicle obtained under a written rental or other agreement"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:28.188972",
+          "vol": 90
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_section_number": "Sec. 116."
+      },
+      "discovered_in_vol": 90,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Within PL 94-274, two sections both carry <num value=\"110\">Sec. 110.</num> (lines 19272 and 19331). The second occurrence sits between Sec. 115 (line 19318) and Sec. 117 (line 19335), so the expected section number in that slot is Sec. 116. The visually-similar digits 0 and 6 are a common OCR substitution. The first Sec. 110 (line 19272, 10 USC 1079/1086 fiscal-year provision) is in the correct sequential slot after Sec. 109 and is legitimate.",
+        "xml_excerpt": "<section class=\"firstIndent1 fontsize10\">\n<num value=\"110\"><inline class=\"smallCaps\">Sec</inline>. 110. </num>\n<content class=\"inline\">Notwithstanding the provisions of section 406(d) of the<sidenote>...</sidenote> General Education Provisions Act (20 U.S.C. 1221 e\u20131 (d))...</content>\n</section>"
+      },
+      "id": 19,
+      "proposed_at": "2026-05-28T00:03:28.188972",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.542879",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "national center for education statistics",
+        "law_id_substring": "Public Law 94\u2013274",
+        "text_substring": "notwithstanding the provisions of section 406(d) of the"
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:28.188972",
+          "vol": 90
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_section_number": "SEC. 804."
+      },
+      "discovered_in_vol": 90,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Within PL 94-455 TITLE VIII (Capital Formation), two sections both carry <num value=\"801\">SEC. 801.</num> (lines 83267 and 83928). The second sits between SEC. 803 (line 83446) and SEC. 805 (line 84235), so the expected section number in that slot is SEC. 804. The digits 1 and 4 are a common OCR substitution (especially in serif/italic small caps).",
+        "xml_excerpt": "<section>\n<num value=\"801\">SEC. 801. </num>\n<heading>INVESTMENT CREDIT IN THE CASE OF MOVIE AND TELEVISION FILMS.</heading>\n<subsection class=\"indent0 fontsize10\">\n<num value=\"a\">(a) </num>\n<heading><inline class=\"smallCaps\">Special Rules for Movie and Television Films</inline>.\u2014</heading>..."
+      },
+      "id": 20,
+      "proposed_at": "2026-05-28T00:03:28.188972",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.593537",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "investment credit in the case of movie and television films",
+        "law_id_substring": "Public Law 94\u2013455",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:03:28.188972",
+          "vol": 90
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_section_number": "Sec. 306."
+      },
+      "discovered_in_vol": 90,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Within PL 94-578 TITLE III, two sections both carry <num value=\"305\">Sec. 305.</num> (lines 152773 and 152776). The neighbours go 304 (152762) \u2192 305 (152773) \u2192 305 (152776) \u2192 307 (152779), so the expected section number in the second slot is Sec. 306. The digits 5 and 6 are a common OCR substitution. The first Sec. 305 (Prince Georges/Charles Counties parcels) is in the correct sequential slot after Sec. 304 and is legitimate.",
+        "xml_excerpt": "<section class=\"firstIndent1 fontsize10\"><num value=\"305\"><inline class=\"smallCaps\">Sec</inline>. 305. </num><content class=\"inline\">Section 3 of the Act of August 31, 1964 (78 Stat. 749),<sidenote>...</sidenote> authorizing the establishment of the SaintGaudens National Historic Site, New Hampshire, is amended...</content></section>"
+      },
+      "id": 21,
+      "proposed_at": "2026-05-28T00:03:28.188972",
+      "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
+      "reviewed_at": "2026-05-28T00:05:41.644400",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "",
+        "law_id_substring": "Public Law 94\u2013578",
+        "text_substring": "section 3 of the act of august 31, 1964 (78 stat. 749)"
+      },
+      "type": "section_number"
     }
   ],
-  "next_id": 10,
+  "next_id": 22,
   "rejected": [
     {
       "agent_version": "cv-correct@0.1.0",

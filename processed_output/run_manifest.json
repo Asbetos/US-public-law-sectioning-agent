@@ -696,14 +696,56 @@
       "xml_sha256": "b314c7a9f641bc80833cabece1f3d7091dfd6b0b1de88eec96b7953a62d04941"
     },
     "83": {
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:04:50.067493",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-83/STATUTE-83_2026-05-28-00H-04M-48S.xlsx",
+      "output_sha256": "2c5fdccdb283c590be301739f82b57b36bc9b3582d3945ea02071ac3019987ee",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-83/STATUTE-83_2026-05-28-00H-04M-48S_SME.xlsx",
+      "status": "success",
       "xml_mtime": "2026-04-06T04:19:06.761579",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-83.xml",
       "xml_sha256": "6a481f0a6fdc66e50e057c511e28a00e2f0d6e34844779def6636266ca9cd186"
     },
     "84": {
       "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_84.parquet",
-      "last_run": "2026-05-27T23:50:26.945128",
-      "status": "ready_for_publish",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:04:52.868121",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-84/STATUTE-84_2026-05-28-00H-04M-50S.xlsx",
+      "output_sha256": "b7337d99d68f514fda88d6e5851c73aab78e00b142eaeb52b22da728ccb81030",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-84/STATUTE-84_2026-05-28-00H-04M-50S_SME.xlsx",
+      "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_84.json",
       "xml_mtime": "2026-04-06T04:19:06.508578",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-84.xml",
@@ -711,33 +753,139 @@
     },
     "85": {
       "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_85.parquet",
-      "last_run": "2026-05-27T23:50:26.799849",
-      "status": "ready_for_publish",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:04:54.472720",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-85/STATUTE-85_2026-05-28-00H-04M-53S.xlsx",
+      "output_sha256": "626916fd71423dd9d5a58f78b5c5b424e76bb67ef748fd3530f793995782e1cf",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-85/STATUTE-85_2026-05-28-00H-04M-53S_SME.xlsx",
+      "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_85.json",
       "xml_mtime": "2026-04-06T04:19:06.059577",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-85.xml",
       "xml_sha256": "69dbd2a775ad47f6d9a3146bc306ced31facb6ff64d06a3b19bf0299f9a11271"
     },
     "86": {
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:04:56.756961",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-86/STATUTE-86_2026-05-28-00H-04M-54S.xlsx",
+      "output_sha256": "b21b522bf9938b27f0db8dfba14eb7751d2f407b5fdc454ebdc0c527f0678ec8",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-86/STATUTE-86_2026-05-28-00H-04M-54S_SME.xlsx",
+      "status": "success",
       "xml_mtime": "2026-04-06T04:19:05.808576",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-86.xml",
       "xml_sha256": "1d506f8ff9183676a4600e8c0f0099249a6fc1750959e181b91320420e9785f8"
     },
     "87": {
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:04:58.850969",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-87/STATUTE-87_2026-05-28-00H-04M-57S.xlsx",
+      "output_sha256": "dd0e68cc72844e843c5bdaf5077a15e0a42dfe3313c77d1110102cbd005ca4de",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-87/STATUTE-87_2026-05-28-00H-04M-57S_SME.xlsx",
+      "status": "success",
       "xml_mtime": "2026-04-06T04:19:05.462574",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-87.xml",
       "xml_sha256": "ffe107ccd29b58ee6b5ce11f1fc4708988c2138bce311419f3033a6dfd3be823"
     },
     "88": {
       "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_88.parquet",
-      "last_run": "2026-05-27T23:50:33.938964",
-      "status": "ready_for_publish",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:05:01.483030",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-88/STATUTE-88_2026-05-28-00H-04M-59S.xlsx",
+      "output_sha256": "54a3a7f6699cc498591f561eb3e9cd43aff05e952ae056925c33f44ea47726cf",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-88/STATUTE-88_2026-05-28-00H-04M-59S_SME.xlsx",
+      "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_88.json",
       "xml_mtime": "2026-04-06T04:19:05.170573",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-88.xml",
       "xml_sha256": "424b489291b57c5d68511e126aeda0db2bb68ab1469eaeb62e9e34e4bd240c93"
     },
     "89": {
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:05:03.452370",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-89/STATUTE-89_2026-05-28-00H-05M-02S.xlsx",
+      "output_sha256": "dee02715f2712c75783837336ed12fe4667a303fd57fd1c2c2e0d81b368d6f7c",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-89/STATUTE-89_2026-05-28-00H-05M-02S_SME.xlsx",
+      "status": "success",
       "xml_mtime": "2026-04-06T04:19:04.700572",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-89.xml",
       "xml_sha256": "4a6284c758dfeeb6e5ae2dca4133d1155a7ef886d611ce7f10dc2ca3515beb1b"
@@ -749,8 +897,28 @@
     },
     "90": {
       "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_90.parquet",
-      "last_run": "2026-05-27T23:50:37.658908",
-      "status": "ready_for_publish",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": [
+          12,
+          18,
+          19,
+          20,
+          21
+        ]
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-28T00:05:06.711741",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-90/STATUTE-90_2026-05-28-00H-05M-04S.xlsx",
+      "output_sha256": "83abe0360a9ef582832d2b1267e80cc2f11268ecb79ee1942e92f94bab3b304f",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-90/STATUTE-90_2026-05-28-00H-05M-04S_SME.xlsx",
+      "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_90.json",
       "xml_mtime": "2026-04-06T04:19:04.427571",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-90.xml",
