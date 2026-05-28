@@ -20,7 +20,6 @@ venv/
 
 # Pipeline runtime artefacts (regenerable; large; SME work-in-progress)
 processed_output/scratch/
-processed_output/Volume-*/
 
 # Logs
 *.log
