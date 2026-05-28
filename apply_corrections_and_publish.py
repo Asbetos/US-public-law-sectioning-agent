@@ -98,6 +98,24 @@ def _apply_section_number_rules(
     return mutations
 
 
+def _filter_active_ids_for_manifest(entries) -> list[int]:
+    """Return IDs to report in manifest.corrections_applied.active.
+
+    Honesty rule: a type=other entry with implementation_status in
+    ('pending', 'in_progress', 'failed') is approved-but-not-yet-applied
+    by the publisher (which only auto-applies law_id and section_number
+    rules). Reporting such IDs in the manifest would falsely claim they
+    were applied. So we admit only entries whose implementation_status
+    is in (not_required, implemented, manual_override) AND whose status
+    is 'approved'."""
+    APPLIED_STATES = ("not_required", "implemented", "manual_override")
+    return [
+        e.id for e in entries
+        if e.status == "approved"
+        and getattr(e, "implementation_status", "not_required") in APPLIED_STATES
+    ]
+
+
 def _pending_to_rules(pending: list[CorrectionEntry]):
     """Split pending entries into (law_id_rules, section_number_rules)."""
     law_id_rules: list[tuple[str, str, str]] = []
@@ -202,7 +220,7 @@ def main(argv: list[str] | None = None) -> int:
         for e in registry.all_active_entries()
         if e.type == "section_number" and e.status == "approved"
     ]
-    active_ids = [e.id for e in registry.all_active_entries() if e.status == "approved"]
+    active_ids = _filter_active_ids_for_manifest(registry.all_active_entries())
 
     pending_law_id_rules: list = []
     pending_section_rules: list = []
