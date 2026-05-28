@@ -373,6 +373,41 @@ class CorrectionsRegistry:
         _save_file_atomic(pending, self._pending_path)
         return entry
 
+    # ---- implementation tracking ----
+
+    def mark_in_progress(self, entry_ids: list[int]) -> None:
+        """Flip one or more entries' ``implementation_status`` to ``in_progress``.
+
+        Stamps ``implementation_attempted_at`` to ``datetime.now().isoformat()`` for
+        each affected entry. Searches BOTH ``active_corrections.json`` and
+        ``pending_corrections.json`` so family-batch operations (where the
+        just-approved entry has been promoted to active but its siblings are still
+        in pending) work correctly. Saves both files atomically when changed.
+        Silently skips IDs not found in either file.
+        """
+        if not entry_ids:
+            return
+        target = set(entry_ids)
+        now = datetime.now().isoformat()
+        active = self.active
+        pending = self.pending
+        changed_active = False
+        changed_pending = False
+        for e in active.entries:
+            if e.id in target:
+                e.implementation_status = "in_progress"
+                e.implementation_attempted_at = now
+                changed_active = True
+        for e in pending.entries:
+            if e.id in target:
+                e.implementation_status = "in_progress"
+                e.implementation_attempted_at = now
+                changed_pending = True
+        if changed_active:
+            _save_file_atomic(active, self._active_path)
+        if changed_pending:
+            _save_file_atomic(pending, self._pending_path)
+
     # ---- migration helpers ----
 
     def migrate_implementation_status(self) -> int:

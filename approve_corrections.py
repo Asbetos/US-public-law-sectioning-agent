@@ -19,11 +19,13 @@ import json
 import os
 import sys
 import textwrap
+from datetime import datetime
 from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(_HERE))  # so `import pipeline.*` works
 
+from pipeline.correction_families import classify, family_members  # noqa: E402
 from pipeline.corrections_registry import CorrectionEntry, CorrectionsRegistry  # noqa: E402
 
 
@@ -149,6 +151,131 @@ def cmd_show(args, reg: CorrectionsRegistry) -> int:
     return 0
 
 
+def _queue_coder_task(
+    output_dir: Path,
+    entry_ids: list[int],
+    family: str,
+    *,
+    registry: CorrectionsRegistry,
+    reviewer: str,
+) -> Path:
+    """Write a coder-task JSON to ``<output_dir>/scratch/coder_task_<primary_id>.json``.
+
+    The primary id is the only id when ``entry_ids`` has length 1, else the
+    largest (so batched-family filenames are stable regardless of approval order).
+    The task JSON includes the full registry-entry dicts for each id in
+    ``entry_ids`` order, so the cv-coder subagent has everything it needs in one
+    file.
+    """
+    entry_ids = sorted(entry_ids)
+    primary_id = entry_ids[0] if len(entry_ids) == 1 else max(entry_ids)
+    by_id: dict[int, dict] = {}
+    for x in registry.all_pending_entries():
+        by_id[x.id] = x.to_dict()
+    for x in registry.all_active_entries():
+        by_id[x.id] = x.to_dict()  # active wins if duplicated
+    registry_entries = [by_id[i] for i in entry_ids if i in by_id]
+
+    scratch = output_dir / "scratch"
+    scratch.mkdir(parents=True, exist_ok=True)
+    task = {
+        "task_id": primary_id,
+        "entry_ids": entry_ids,
+        "family": family,
+        "queued_at": datetime.now().isoformat(),
+        "approver": reviewer,
+        "registry_entries": registry_entries,
+        "context_files": [
+            "parser/uslm_parser.py",
+            "tests/unit/test_uslm_parser.py",
+        ],
+        "constraints": [
+            "Add at least one regression test per family member that fails on the OLD code and passes on the NEW code.",
+            "Do not modify pipeline/corrections_registry.py, run_pipeline.py, processed_output/*, settings.json, .gitignore, or CI files.",
+            "Do not delete or rename existing tests.",
+            "All edits must be confined to parser/, pipeline/, and tests/.",
+            "Do NOT git commit — leave changes staged or unstaged. The finalize helper will commit.",
+            "Run `pytest tests/ -x` before reporting success.",
+        ],
+    }
+    task_path = scratch / f"coder_task_{primary_id}.json"
+    task_path.write_text(json.dumps(task, indent=2))
+    return task_path
+
+
+def _prompt_other_after_approval(
+    promoted: CorrectionEntry,
+    reg: CorrectionsRegistry,
+    output_dir: Path,
+    reviewer: str,
+) -> None:
+    """Post-promotion confirmation prompt for ``type='other'`` entries.
+
+    - If the entry belongs to a known family with at least one *other* pending
+      sibling, offer to batch all family members into ONE coder task (default Y).
+    - Otherwise (or if the family-batch is declined), offer to auto-implement
+      just this single entry (default N).
+    Writes a task JSON to ``<output_dir>/scratch/coder_task_<id>.json`` and
+    marks all queued entries ``implementation_status='in_progress'``.
+    """
+    if promoted.type != "other":
+        return
+
+    e_dict = promoted.to_dict()
+    family = classify(e_dict)
+
+    # Gather all entries from both pending and active sides to look for siblings.
+    all_entries = [x.to_dict() for x in reg.all_pending_entries()] + [
+        x.to_dict() for x in reg.all_active_entries()
+    ]
+    # The just-promoted entry now has status='approved' on the pending side
+    # (and a copy with implementation_status='pending' on active). For family
+    # batching, we want all *pending implementation_status* entries — the
+    # just-approved one qualifies because its implementation_status is still
+    # 'pending' (mark_in_progress hasn't been called yet).
+    groups = family_members(all_entries, pending_only=True)
+    raw_family_ids = sorted(set(groups.get(family, [])))
+    # Always ensure the just-approved entry is included.
+    if promoted.id not in raw_family_ids:
+        raw_family_ids = sorted(set(raw_family_ids) | {promoted.id})
+    family_ids = raw_family_ids
+
+    if family != "none" and len(family_ids) > 1:
+        print(f"\n⚙ Entry #{promoted.id} is type='other' (family: {family})")
+        print(
+            f"  {len(family_ids)} entries in this family currently have "
+            f"implementation_status='pending':"
+        )
+        print(f"    {', '.join(f'#{i}' for i in family_ids)}")
+        answer = input("  Batch all family members into ONE coder task? [Y/n]: ").strip().lower()
+        if answer in ("", "y", "yes"):
+            task_path = _queue_coder_task(
+                output_dir, family_ids, family, registry=reg, reviewer=reviewer
+            )
+            reg.mark_in_progress(family_ids)
+            primary_id = task_path.stem.split("_")[-1]
+            print(f"\n  cv-coder task queued at {task_path}")
+            print("  In your Claude Code session, invoke the cv-coder skill:")
+            print(f'    "implement correction {primary_id} with cv-coder"')
+            return
+        # else: fall through to single-entry path
+        family = "none"
+
+    # Single-entry path (family='none', single eligible entry, or batch declined).
+    answer = input(
+        f"\n⚙ Entry #{promoted.id} is type='other' — describes an extractor-code change.\n"
+        f"  Auto-implement now via the cv-coder agent? [y/N]: "
+    ).strip().lower()
+    if answer in ("y", "yes"):
+        task_path = _queue_coder_task(
+            output_dir, [promoted.id], family, registry=reg, reviewer=reviewer
+        )
+        reg.mark_in_progress([promoted.id])
+        print(f"\n  cv-coder task queued at {task_path}")
+        print("  In your Claude Code session, invoke the cv-coder skill:")
+        print(f'    "implement correction {promoted.id} with cv-coder"')
+
+
 def cmd_approve(args, reg: CorrectionsRegistry) -> int:
     try:
         promoted = reg.promote_to_active(entry_id=args.id, reviewer=args.reviewer, note=args.note)
@@ -158,6 +285,10 @@ def cmd_approve(args, reg: CorrectionsRegistry) -> int:
     print(f"Approved entry #{promoted.id} ({promoted.type}). Added to active_corrections.json.")
     print(f"Reviewer: {promoted.reviewer}")
     print(f"At:       {promoted.reviewed_at}")
+
+    _prompt_other_after_approval(
+        promoted, reg, _resolve_output_dir(args), reviewer=args.reviewer
+    )
     return 0
 
 
