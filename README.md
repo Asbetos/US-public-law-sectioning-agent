@@ -71,6 +71,129 @@ python approve_corrections.py show <id>
 python approve_corrections.py approve <id> --note "..."
 ```
 
+## cv-coder workflow (autonomous code fixes)
+
+`type:"other"` corrections describe extractor-code changes that can't be
+expressed as a simple data trigger+replacement rule. The **cv-coder** skill
+takes one or more approved `type:"other"` corrections and implements them in
+`parser/uslm_parser.py`, gated on a TDD discipline (failing test first), a
+scope guard (only `parser/`, `pipeline/`, `tests/`), and a full `pytest` gate.
+
+The workflow runs **direct to `main`** — no feature branch, no human merge
+gate. The pytest gate is the safety net. On any gate failure the working
+tree is reverted (`git checkout HEAD --` for tracked files; `rm` for newly
+created tests) and the entry(ies) are marked `implementation_status=failed`
+in the registry.
+
+### End-to-end
+
+```bash
+# 1. After cv-correct surfaces a type='other' proposal, approve it.
+python approve_corrections.py approve <id>
+```
+
+For `type:"other"` entries the CLI then prompts:
+
+- **Family mode** (most cases — when the entry belongs to a known family with
+  other pending members):
+  ```
+  ⚙ Entry #14 is type='other' (family: null-num)
+    4 entries in this family currently have implementation_status='pending':
+      #2, #14, #15, #16
+    Batch all family members into ONE coder task? [Y/n]:
+  ```
+  Empty input or `Y` queues ONE coder task covering all 4 entries.
+
+- **Single-entry mode** (one-off corrections or family declined):
+  ```
+  ⚙ Entry #14 is type='other' — describes an extractor-code change.
+    Auto-implement now via the cv-coder agent? [y/N]:
+  ```
+  `y` queues a task with just this entry.
+
+```bash
+# 2. In a Claude Code session, invoke the cv-coder skill:
+#    "implement correction <task_id> with cv-coder"
+```
+
+Claude follows the cv-coder playbook in [skills/cv-coder/SKILL.md](skills/cv-coder/SKILL.md):
+
+1. Verifies working tree is clean
+2. Dispatches an Opus subagent (with `ultrathink`) using the system prompt
+   in [skills/cv-coder/system_prompt.md](skills/cv-coder/system_prompt.md)
+3. Saves the coder's response to `scratch/coder_response_<task_id>.json`
+4. Runs `finalize_implementation.py` — the post-coder gate:
+   - status == "success"
+   - scope clean (no edits outside `parser/`, `pipeline/`, `tests/`)
+   - at least one new test added
+   - `pytest tests/ -x` is green on the working tree
+5. On all gates pass: `git commit` directly to `main` + mark all entry_ids
+   `implementation_status=implemented` + auto-chain
+   `re_publish_after_fix.py --entry <task_id> --yes`
+6. On any gate failure: revert working tree + mark `failed` with notes
+
+### Families
+
+`pipeline/correction_families.py` classifies `type='other'` entries by
+keywords in `trigger.pattern` (or fallback to `correction.description`):
+
+| Family | Entries (current registry) | Root cause |
+|---|---|---|
+| `null-num` | #2, #14, #15, #16 | `<section>` elements without `<num>` collapse to identical UniqueKey via the extractor's `"000000000000001"` fallback |
+| `top-level-container` | #3, #7, #11, #17 | `<main>` contains `<part>` / `<title>` / `<chapter>` / `<quotedContent>` directly with no top-level `<section>` — extractor's section walker silently drops the pLaw |
+| `sibling-appropriations` | #5 | Sibling `<appropriations>` elements sharing identical `<heading>` text |
+| `sibling-level` | #13 | Sibling `<level>` elements within a `<title>` with distinct headings collapse to same UniqueKey |
+| `none` | one-offs | No family match |
+
+Batch mode lets one coder run write a fused fix for all family members in
+ONE commit, with one regression test per member.
+
+### Re-publish auto-chain
+
+After a successful commit, `finalize_implementation.py` invokes
+`re_publish_after_fix.py --entry <task_id> --yes`. The re-publish helper
+identifies affected volumes via a validation-warning keyword map (e.g.,
+`null-num` matches volumes whose validation report lists `Duplicate
+UniqueKey rows`; `top-level-container` matches volumes with `Distinct
+LawIdentifier count` mismatch warnings), then loops:
+
+1. Delete the existing `Volume-N/` directory contents
+2. Clear the manifest entry's status fields
+3. Run `run_pipeline.py --volumes N --stop-before-publish`
+4. Run `apply_corrections_and_publish.py --volume N --include-pending`
+
+If re-publish fails mid-volume the commit still stands — re-publish can be
+retried manually:
+
+```bash
+python re_publish_after_fix.py --entry <id>
+```
+
+### Manual escape hatches
+
+- **Re-publish only**: `python re_publish_after_fix.py --entry <id>` —
+  re-publishes affected volumes for an already-implemented entry
+- **Dry run**: `python re_publish_after_fix.py --entry <id> --dry-run` —
+  print the plan, do nothing
+- **Skip cv-coder, implement by hand**: edit `parser/uslm_parser.py`
+  directly, then manually flip the entry's `implementation_status` to
+  `manual_override` in `processed_output/active_corrections.json` (a CLI
+  for this is future work)
+
+### What gets checked
+
+Every cv-coder run must satisfy ALL of:
+
+- Coder's reported `status == "success"`
+- All modified files under `parser/`, `pipeline/`, or `tests/` (and NONE
+  in the forbidden list: `pipeline/corrections_registry.py`,
+  `apply_corrections_and_publish.py`, `approve_corrections.py`)
+- At least one new test added (TDD)
+- `pytest tests/ -x` is green on the working tree
+
+If any gate fails, the working tree is reverted and the entry(ies) are
+marked `failed` with notes recording the specific blocker.
+
 ## Hard rules
 
 - **Published Excels are frozen.** Re-publishing requires explicit `--force-republish` + manual manifest cleanup.
