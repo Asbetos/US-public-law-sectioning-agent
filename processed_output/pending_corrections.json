@@ -22,6 +22,10 @@
         "xml_excerpt": "PL 87-292 (lines 34438-34442): two <section class=\"inline\"><content class=\"inline\"> nodes separated by a <resolvingClause>.  PL 87-356 (lines 43375-43402): one <section> with <content>, followed by a <section><quotedContent><num value=\"207\">...</quotedContent></section>."
       },
       "id": 2,
+      "implementation_attempted_at": "2026-05-28T18:03:23.007132",
+      "implementation_commit_sha": "ce77ea20a2dcf0392799c75a189c02e07b11c864",
+      "implementation_notes": "null-num family fix: parser/uslm_parser.py now runs _assign_unnumbered_section_ordinals as a post-pass that rewrites colliding null SectionNumber rows to synthetic 'U1','U2',... ordinals. Added 6 regression tests for entries #2, #14, #15, #16 plus 2 guards.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-27T15:21:31.717398",
       "review_note": "Surgical if-conditions added for PL 87-292 and 87-356",
       "reviewed_at": "2026-05-27T19:28:09.706601",
@@ -33,11 +37,7 @@
         "pattern": "multiple sections within a single pLaw where SectionNumber is null collapse to identical UniqueKey",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -62,6 +62,10 @@
         "xml_excerpt": "PL 87-195 <main>: <longTitle>, <enactingFormula>, <sidenote>, <part>, <part>, <part>, <part>, <action>.  PL 87-328 <main>: <longTitle>, <preamble>, <enactingFormula>, <part>, <part>, <action>.  PL 87-397 <main>: <longTitle>, <enactingFormula>, <sidenote>, <subsection>, <subsection>, <subsection>, <subsection>, <action>."
       },
       "id": 3,
+      "implementation_attempted_at": "2026-05-28T18:14:41.756250",
+      "implementation_commit_sha": "671373aa8095d6adf2786d994cc248dfb6b81abd",
+      "implementation_notes": "top-level-container family: _recover_dropped_container_pLaws() in parser/uslm_parser.py re-parses XML for pLaws dropped by the upstream walker and synthesizes rows from <part>/<title>/<chapter>/<subsection>/<quotedContent> containers.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-27T19:02:21.000000",
       "review_note": "Surgical if-conditions added for PL 87-195, 87-328, 87-397",
       "reviewed_at": "2026-05-27T19:28:09.756463",
@@ -73,11 +77,7 @@
         "pattern": "<main> contains <part> elements (multi-part Act) or bare <subsection> elements (short single-section amending Act) directly, with no top-level <section>; extractor's section walker emits 0 rows for the pLaw",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -98,6 +98,10 @@
         "xml_excerpt": "<pLaw>\n<meta>\n<dc:title>Public Law 88\u2013181: Approving a compromise and settlement agreement of the Navajo Tribe of Indians ...</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>181</docNumber>\n<citableAs>Public Law 88\u2013181</citableAs>\n<citableAs>77 Stat. 337</citableAs>\n<approvedDate>1963-11-20</approvedDate>\n..."
       },
       "id": 4,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-27T19:56:23.144882",
       "review_note": "Auto-approved: conf=0.95 (vol 77, PL 88-181 \u2192 88-182 Navajo Tribe settlement)",
       "reviewed_at": "2026-05-27T19:56:39.681049",
@@ -108,11 +112,7 @@
         "law_id_substring": "Public Law 88\u2013181",
         "title_substring": "approving a compromise and settlement agreement of the navajo tribe of indians and authorizing the tribe to execute and the secretary of the interior to approve any oil and gas leases"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -140,6 +140,10 @@
         "xml_excerpt": "See affected_examples for line ranges."
       },
       "id": 5,
+      "implementation_attempted_at": "2026-05-28T18:21:48.529417",
+      "implementation_commit_sha": "c315d1362b12abcd296a2a437df9973dcbd67807",
+      "implementation_notes": "sibling-appropriations: _disambiguate_sibling_appropriations post-pass appends ' 2', ' 3' to the deepest non-null heading level for colliding sibling Division rows.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-27T20:01:55.727866",
       "review_note": "Auto-approved: conf=0.9 (vol 78 appropriations Division-key sibling-heading collapse \u2014 verified across PL 88-356, 88-390, 88-392, 88-511, 88-527)",
       "reviewed_at": "2026-05-27T20:02:04.259411",
@@ -151,11 +155,7 @@
         "pattern": "Within a single pLaw, two or more sibling <appropriations> elements (typically a regular appropriation and an immediately following supplemental 'additional amount' appropriation) share identical <heading> text under the same parent <appropriations>. The extractor builds DivisionHeadingLevel1..3 (and the UniqueKey's heading-derived positions) from the heading text path alone, so the two rows collapse to the same UniqueKey even though their <content> bodies differ.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -178,6 +178,10 @@
         "xml_excerpt": "<pLaw><main><longTitle>...</longTitle><enactingFormula>...</enactingFormula><sidenote>...</sidenote><title>...TITLE I \u2014 DEFINITIONS...</title><title>...TITLE II \u2014 ESTABLISHMENT OF SYSTEM...</title><action>...</action></main></pLaw>"
       },
       "id": 7,
+      "implementation_attempted_at": "2026-05-28T18:14:41.756250",
+      "implementation_commit_sha": "671373aa8095d6adf2786d994cc248dfb6b81abd",
+      "implementation_notes": "top-level-container family: _recover_dropped_container_pLaws() in parser/uslm_parser.py re-parses XML for pLaws dropped by the upstream walker and synthesizes rows from <part>/<title>/<chapter>/<subsection>/<quotedContent> containers.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:02:37.744212",
       "review_note": "Auto-approved: conf=0.95 (orchestrator-filed correction for PL 88-643 CIA Retirement Act, <title>-organized <main>. Verified missing from enriched_78.parquet via XML diff.)",
       "reviewed_at": "2026-05-27T20:02:45.248241",
@@ -189,11 +193,7 @@
         "pattern": "<main> contains <title> elements at the top level with no top-level <section>; extractor's section walker emits 0 rows for the pLaw. Distinct from active #3 (which covers <part> and bare <subsection>).",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -217,6 +217,10 @@
         "xml_excerpt": "<pLaw><main><longTitle>...</longTitle><enactingFormula>...</enactingFormula><sidenote>...</sidenote><chapter><num value=\"1\">Chapter 1\u2014</num><heading class=\"inline\">INTERNATIONAL MONETARY FUND</heading>...</chapter><page>...</page><chapter><num value=\"2\">Chapter 2.\u2014</num><heading class=\"inline\">INTER-AMERICAN DEVELOPMENT BANK</heading>...</chapter><chapter>...</chapter><page>...</page><chapter>...</chapter><chapter>...</chapter><action>...</action></main></pLaw>"
       },
       "id": 11,
+      "implementation_attempted_at": "2026-05-28T18:14:41.756250",
+      "implementation_commit_sha": "671373aa8095d6adf2786d994cc248dfb6b81abd",
+      "implementation_notes": "top-level-container family: _recover_dropped_container_pLaws() in parser/uslm_parser.py re-parses XML for pLaws dropped by the upstream walker and synthesizes rows from <part>/<title>/<chapter>/<subsection>/<quotedContent> containers.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:03:26.655140",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.128786",
@@ -228,11 +232,7 @@
         "pattern": "<main> contains <chapter> elements at the top level with no top-level <section>; extractor's section walker emits 0 rows for the pLaw. Distinct from active #3 (which covers <part> and bare <subsection>) and active #7 (which covers <title>).",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -253,6 +253,10 @@
         "xml_excerpt": "<dc:title>Public Law 92\u2013424: To provide for the continuation of programs authorized under the Economic Opportunity Act of 1964, and for other purposes.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>424</docNumber>\n<citableAs>Public Law 92\u20134424</citableAs>\n<citableAs>86 Stat. 688</citableAs>\n<approvedDate>1972-09-19</approvedDate>\n...\n<preface>\n<page identifier=\"/us/stat/86/688\">86 Stat. 688</page>\n<dc:type>Public Law</dc:type> <docNumber>92\u2013424</docNumber>\n</preface>"
       },
       "id": 12,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-28T00:03:27.151031",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.185584",
@@ -263,11 +267,7 @@
         "law_id_substring": "Public Law 92\u20134424",
         "title_substring": "to provide for the continuation of programs authorized under the economic opportunity act of 1964"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -288,6 +288,10 @@
         "xml_excerpt": "<title>\n<num value=\"IV\">TITLE IV\u2014</num>\n...\n<level>\n<heading class=\"smallCaps centered\">General Provisions\u2014General Services Administration</heading>\n<section><num value=\"1\">Sec. 1 </num><content>The appropriate appropriation or fund available to the General Services Administration shall be credited with...</content></section>\n<section><num value=\"2\">Sec. 2. </num><content>Appropriations to the General Services Administration under the heading \u201cConstruction, Public Buildings Projects\u201d shall be available...</content></section>\n</level>\n...\n<level>\n<heading class=\"smallCaps centered\">General Provisions\u2014Civil Defense</heading>\n<section><num value=\"1\">Sec. 1. </num><content>Appropriations contained in this Act for carrying out civil defense activities shall not be available in excess of the limitations on appropriations contained in section 408 of the Federal Civil Defense Act, as amended (50 U.S.C. App. 2260).</content></section>\n<section><num value=\"2\">Sec. 2. </num><content>No part of any appropriation in this Act shall be available for the construction of warehouses or for the lease of warehouse space in any building which is to be constructed specifically for civil defense activities.</content></section>\n</level>"
       },
       "id": 13,
+      "implementation_attempted_at": "2026-05-28T18:25:59.599227",
+      "implementation_commit_sha": "f688540ec890af5d49d53af1357741ceb7b7557d",
+      "implementation_notes": "sibling-level: _disambiguate_sibling_levels post-pass injects alpha markers (B, C, ...) into Section row prefix columns to disambiguate sibling-level blocks within the same Title.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:03:27.151031",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.235478",
@@ -300,11 +304,7 @@
         "pattern": "Two sibling <level> elements within a single <title> (e.g. TITLE IV) each contain their own Sec. 1, Sec. 2, ... block. The extractor builds the UniqueKey's section-number position from the per-section <num value=\"...\"/> but does not capture the immediate parent <level><heading>...</heading> into the DivisionHeading path, so the Sec. 1 (and Sec. 2) rows under the two distinct <level>s collapse to the same UniqueKey even though their parent-level headings (e.g. 'General Provisions\u2014General Services Administration' vs 'General Provisions\u2014Civil Defense') differ.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -325,6 +325,10 @@
         "xml_excerpt": "<section class=\"inline\">\n<content class=\"inline\">That the following <sidenote>District of Columbia Appropriation Act, 1973.</sidenote>sums are appropriated, out of any money in the Treasury not otherwise appropriated, for the District of Columbia for the fiscal year ending J line 30, 1973, and for other purposes, namely:</content>\n</section>\n...\n<section class=\"firstIndent1 fontsize10\">\n<num value=\"1\"><inline class=\"smallCaps\">Section</inline> 1. </num><sidenote>Vouchers.</sidenote>\n<content>Except as otherwise provided herein, all vouchers covering expenditures of appropriations contained in this Act shall be audited before payment by the designated certifying official...</content>\n</section>"
       },
       "id": 14,
+      "implementation_attempted_at": "2026-05-28T18:03:23.007132",
+      "implementation_commit_sha": "ce77ea20a2dcf0392799c75a189c02e07b11c864",
+      "implementation_notes": "null-num family fix: parser/uslm_parser.py now runs _assign_unnumbered_section_ordinals as a post-pass that rewrites colliding null SectionNumber rows to synthetic 'U1','U2',... ordinals. Added 6 regression tests for entries #2, #14, #15, #16 plus 2 guards.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:03:27.151031",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.288190",
@@ -337,11 +341,7 @@
         "pattern": "A pLaw contains a leading <section> with no <num> (extracted SectionNumber = null) plus a later <section><num value=\"1\">Section 1.</num>. Active correction #2 assigns sequential ordinals to null-section rows, but the unnumbered enacting section still maps to ordinal '001' and the explicit 'Section 1.' also maps to position '001', producing a UniqueKey collision that active #2 alone does not resolve.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -362,6 +362,10 @@
         "xml_excerpt": "<section class=\"inline\">\n<content class=\"inline\">That the following sums are appropriated, out of any money in the Treasury not otherwise appropriated, for the District of Columbia for the fiscal year ending June 30, 1974, and for other purposes, namely:</content>\n</section>\n... (appropriations blocks) ...\n<level>\n<heading class=\"centered\">GENERAL PROVISIONS</heading>\n<section class=\"firstIndent1 fontsize10\">\n<num class=\"smallCaps\" value=\"1\">Sec. 1. </num>\n<content class=\"inline\">Except as otherwise provided herein, all vouchers covering expenditures of appropriations contained in this Act shall be audited before payment...</content>\n</section>"
       },
       "id": 15,
+      "implementation_attempted_at": "2026-05-28T18:03:23.007132",
+      "implementation_commit_sha": "ce77ea20a2dcf0392799c75a189c02e07b11c864",
+      "implementation_notes": "null-num family fix: parser/uslm_parser.py now runs _assign_unnumbered_section_ordinals as a post-pass that rewrites colliding null SectionNumber rows to synthetic 'U1','U2',... ordinals. Added 6 regression tests for entries #2, #14, #15, #16 plus 2 guards.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:03:27.403102",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.338505",
@@ -373,11 +377,7 @@
         "pattern": "Within a single pLaw, the opening <section class=\"inline\"> carrying the 'That ...' enacting paragraph has no <num> child, so it falls back to SectionNumber position '000000000000001'. Later in the same pLaw, a numbered <section><num value=\"1\">Sec. 1.</num> exists (e.g. inside a <level>GENERAL PROVISIONS</level> block in appropriations Acts), which also resolves to position '000000000000001'. The two rows collapse to the same UniqueKey even though one is the preamble paragraph and the other is the first general-provision section. Distinct from active correction #2 (which handled the case of two sections that both lack <num>): here only one section lacks <num>, but it still collides with the numbered Sec. 1.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -408,6 +408,10 @@
         "xml_excerpt": "PL 93-275 lines 6815-6821 (dominant vol-88 shape):\n<section>\n<heading class=\"smallCaps centered\">short title</heading>\n<section class=\"firstIndent1 fontsize10\">\n<num value=\"1\"><inline class=\"smallCaps\">Section</inline> 1. </num>\n<content>This Act may be cited as the \"Federal Energy Administration Act of 1974\".</content>\n</section>\n</section>"
       },
       "id": 16,
+      "implementation_attempted_at": "2026-05-28T18:03:23.007132",
+      "implementation_commit_sha": "ce77ea20a2dcf0392799c75a189c02e07b11c864",
+      "implementation_notes": "null-num family fix: parser/uslm_parser.py now runs _assign_unnumbered_section_ordinals as a post-pass that rewrites colliding null SectionNumber rows to synthetic 'U1','U2',... ordinals. Added 6 regression tests for entries #2, #14, #15, #16 plus 2 guards.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:03:27.660437",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.388183",
@@ -419,11 +423,7 @@
         "pattern": "Throughout vol 88, the dominant pLaw shape is an outer <section> that holds only a <heading> and a nested inner <section class=\"firstIndent1 fontsize10\"><num value=\"N\">. The extractor reads the outer <section> as the section row, finds no <num value=...> directly under it, falls back to '000000000000001', and so every outer section in the pLaw collapses to the same UniqueKey. This is the same root cause active correction #2 already covers \u2014 but the two affected_examples in correction #2 (PL 87-292 joint resolution, PL 87-356 amendatory <quotedContent>) were patched with surgical if-conditions, so the general rule never fires for vol 88's outer-section-wraps-inner-numbered-section shape (56 duplicate groups, 28 affected pLaws). A handful of pLaws (93-405, 93-613) also exhibit the active-correction-#2 PL-87-292/87-356 shape directly, which is also not caught because #2 was applied only to the named PLs.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -444,6 +444,10 @@
         "xml_excerpt": "<pLaw>\n<meta>\n<docNumber>7</docNumber>\n<citableAs>Public Law 94\u20137</citableAs>\n<citableAs>89 Stat. 13</citableAs>\n<approvedDate>1975-03-14</approvedDate>\n<congress>94</congress>\n<session>1</session>\n</meta>\n<main>\n<longTitle><docTitle>Joint Resolution</docTitle><officialTitle>Making further continuing appropriations for the fiscal year 1975, and for other purposes.</officialTitle>...</longTitle>\n<resolvingClause>Resolved by the Senate and House of Representatives...</resolvingClause>\n<quotedContent>\n<content class=\"inline\">That clause, (c) of section 102 of the joint resolution of June 30, 1974 (Public Law 93\u2013324, as amended by Public Law 93\u2013448 and Public Law 93\u2013570), is hereby further amended by striking out \u201cFebruary 28, 1975\u201d and inserting in lieu thereof \u201cJune 30, 1975\u201d ...</content>\n</quotedContent>\n<action><actionDescription>Approved March 14, 1975.</actionDescription></action>\n</main>\n</pLaw>"
       },
       "id": 17,
+      "implementation_attempted_at": "2026-05-28T18:14:41.756250",
+      "implementation_commit_sha": "671373aa8095d6adf2786d994cc248dfb6b81abd",
+      "implementation_notes": "top-level-container family: _recover_dropped_container_pLaws() in parser/uslm_parser.py re-parses XML for pLaws dropped by the upstream walker and synthesizes rows from <part>/<title>/<chapter>/<subsection>/<quotedContent> containers.",
+      "implementation_status": "implemented",
       "proposed_at": "2026-05-28T00:03:27.922027",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.439895",
@@ -456,11 +460,7 @@
         "scope": "extractor_code",
         "title_substring": "making further continuing appropriations for the fiscal year 1975"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -481,6 +481,10 @@
         "xml_excerpt": "<pLaw>\n<meta>\n<dc:title>Public Law 94\u2013536: To amend the Act establishing a code of law for the District of Columbia to prohibit the unauthorized use of a motor vehicle obtained under a written rental or other agreement.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>536</docNumber>\n<citableAs>Public Law 94\u2013536</citableAs>\n<citableAs>90 Stat. 2479</citableAs>\n<approvedDate>1976-10-17</approvedDate>\n..."
       },
       "id": 18,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-28T00:03:28.188972",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.490115",
@@ -491,11 +495,7 @@
         "law_id_substring": "Public Law 94\u2013536",
         "title_substring": "to amend the act establishing a code of law for the district of columbia to prohibit the unauthorized use of a motor vehicle obtained under a written rental or other agreement"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -516,6 +516,10 @@
         "xml_excerpt": "<section class=\"firstIndent1 fontsize10\">\n<num value=\"110\"><inline class=\"smallCaps\">Sec</inline>. 110. </num>\n<content class=\"inline\">Notwithstanding the provisions of section 406(d) of the<sidenote>...</sidenote> General Education Provisions Act (20 U.S.C. 1221 e\u20131 (d))...</content>\n</section>"
       },
       "id": 19,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-28T00:03:28.188972",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.542879",
@@ -527,11 +531,7 @@
         "law_id_substring": "Public Law 94\u2013274",
         "text_substring": "notwithstanding the provisions of section 406(d) of the"
       },
-      "type": "section_number",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "section_number"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -552,6 +552,10 @@
         "xml_excerpt": "<section>\n<num value=\"801\">SEC. 801. </num>\n<heading>INVESTMENT CREDIT IN THE CASE OF MOVIE AND TELEVISION FILMS.</heading>\n<subsection class=\"indent0 fontsize10\">\n<num value=\"a\">(a) </num>\n<heading><inline class=\"smallCaps\">Special Rules for Movie and Television Films</inline>.\u2014</heading>..."
       },
       "id": 20,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-28T00:03:28.188972",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.593537",
@@ -563,11 +567,7 @@
         "law_id_substring": "Public Law 94\u2013455",
         "text_substring": null
       },
-      "type": "section_number",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "section_number"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -588,6 +588,10 @@
         "xml_excerpt": "<section class=\"firstIndent1 fontsize10\"><num value=\"305\"><inline class=\"smallCaps\">Sec</inline>. 305. </num><content class=\"inline\">Section 3 of the Act of August 31, 1964 (78 Stat. 749),<sidenote>...</sidenote> authorizing the establishment of the SaintGaudens National Historic Site, New Hampshire, is amended...</content></section>"
       },
       "id": 21,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-28T00:03:28.188972",
       "review_note": "Auto-approved by /cv-correct: confidence > 0.8 (vols 83-90 batch)",
       "reviewed_at": "2026-05-28T00:05:41.644400",
@@ -599,14 +603,157 @@
         "law_id_substring": "Public Law 94\u2013578",
         "text_substring": "section 3 of the act of august 31, 1964 (78 stat. 749)"
       },
-      "type": "section_number",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:53.303445",
+          "vol": 74
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "86-463"
+      },
+      "discovered_in_vol": 74,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate law id 86-462: xml_index 78 carries PL 86-462 (Ohio River locks/dam, 74 Stat. 128, H.R. 10164) and xml_index 79 also carries PL 86-462 but for a completely different Act (Federal Deposit Insurance Act bank-merger amendment, 74 Stat. 129, S. 1062). Stat-page sequence 128 -> 129 -> 130 with subsequent PL 86-464 at xml_index 80 leaves a vacant slot for PL 86-463. PL 86-463 is the Bank Merger Act of 1960 (S. 1062, approved May 13, 1960) \u2014 the very bill the xml_index 79 pLaw enacts. The bill <ref> in the suspect's sidenote even points to /us/bill/86/s/1062 (Senate bill 1062) while the displayed text says 'H. R. 1062' \u2014 a further OCR signal that the docNumber and bill-number fields were mis-extracted on this pLaw.",
+        "xml_excerpt": "<dc:title>Public Law 86\u2013462: To amend the Federal Deposit Insurance Act to require Federal approval for mergers and consolidations of insured banks.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>462</docNumber>\n<citableAs>Public Law 86\u2013462</citableAs>\n<citableAs>74 Stat. 129</citableAs>\n<approvedDate>1960-05-13</approvedDate>\n...\n<sidenote><p class=\"centered fontsize8\">[<ref href=\"/us/bill/86/s/1062\">H. R. 1062</ref>]</p></sidenote>"
+      },
+      "id": 22,
       "implementation_attempted_at": null,
-      "implementation_notes": null
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-05-28T18:44:53.303445",
+      "review_note": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "seen_again_count": 0,
+      "status": "pending",
+      "trigger": {
+        "law_id_substring": "Public Law 86\u2013462",
+        "title_substring": "to amend the federal deposit insurance act to require federal approval for mergers and consolidations of insured banks"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:53.303445",
+          "vol": 74
+        }
+      ],
+      "confidence": 0.98,
+      "correction": {
+        "replace_with_law_id": "86-605"
+      },
+      "discovered_in_vol": 74,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: the suspect's docNumber says 360, but it sits between PL 86-604 (xml_index 220) and PL 86-606 (xml_index 222). Stat-page sequence 74 Stat. 359 -> 360 -> 361 leaves the 74 Stat. 360 slot for PL 86-605. Historically PL 86-605 (approved July 7, 1960) is the Act authorizing joint U.S.-Mexico construction of the Amistad Dam on the Rio Grande \u2014 a perfect match for the suspect's official title. The error is a systemic OCR misnumbering across every metadata field in this single pLaw (docNumber, both citableAs entries, dc:title, preface docNumber all read '360' instead of '605').",
+        "xml_excerpt": "<dc:title>Public Law 86\u2013360: To authorize the conclusion of an agreement for the Joint construction by the United States and Mexico of a major international storage dam on the Rio Grande in accordance with the provisions of the treaty of February 3, 1944, with Mexico, and for other purposes.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>360</docNumber>\n<citableAs>Public Law 86\u2013360</citableAs>\n<citableAs>74 Stat. 360</citableAs>\n<approvedDate>1960-07-07</approvedDate>\n...\n<preface>\n<page identifier=\"/us/stat/74/360\">74 <inline class=\"smallCaps\">Stat</inline>. 360</page>\n<dc:type>Public Law</dc:type> <docNumber>86\u2013360</docNumber>\n</preface>"
+      },
+      "id": 23,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-05-28T18:44:53.303445",
+      "review_note": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "seen_again_count": 0,
+      "status": "pending",
+      "trigger": {
+        "law_id_substring": "Public Law 86\u2013360",
+        "title_substring": "to authorize the conclusion of an agreement for the joint construction by the united states and mexico of a major international storage dam on the rio grande"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:54.230785",
+          "vol": 85
+        }
+      ],
+      "confidence": 0.8,
+      "correction": {
+        "description": "Generalize active correction #5's sibling-appropriations disambiguation so it catches UniqueKey collisions among <appropriations>-derived Division rows regardless of their structural sibling status or `level` attribute. Two viable approaches: (a) incorporate the <appropriations> `level` attribute (major / intermediate / small) into the heading-derived UniqueKey position so a small-level 'contingent expenses of the senate' never collides with an intermediate-level 'Contingent Expenses of the Senate' even after case-folding; or (b) extend the post-pass _disambiguate_sibling_appropriations so it triggers on ANY two Division rows within the same pLaw that end up sharing a UniqueKey (not only direct same-parent siblings), appending sequential ordinals in OriginalOrder to the deepest non-null DivisionHeadingLevel. For PL 92-18 in vol 85 the two affected rows are OriginalOrder 152 (intermediate-level 'Contingent Expenses of the Senate' under LEGISLATIVE BRANCH; Text=Senate policy committees / Automobiles / Inquiries / Folding documents / Miscellaneous items) and OriginalOrder 157 (small-level 'contingent expenses of the senate' appearing as a sibling of intermediate 'Joint Items' under LEGISLATIVE BRANCH; Text=Joint Economic Committee / Joint Committee on Atomic Energy / Joint Committee on Printing). Approach (a) is preferred because it preserves DivisionHeadingLevel2 unchanged and incorporates a real structural signal already present in the XML."
+      },
+      "discovered_in_vol": 85,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "PL 92-18 (vol 85) UniqueKey duplicate 092-018-000-002-000-000-000-D-01510-00247-00001: two Division rows under TITLE II / LEGISLATIVE BRANCH collide on the heading-derived UniqueKey position despite distinct Text and distinct case in DivisionHeadingLevel2 ('Contingent Expenses of the Senate' vs 'contingent expenses of the senate'). XML inspection at lines 5001 and 5065 shows the two are not direct structural siblings: they have different <appropriations> `level` attributes (intermediate vs small) and the small-level one appears one level shallower than expected. Active correction #5's same-parent sibling check does not fire on this cross-level shape.",
+        "xml_excerpt": "<title>\n<num value=\"II\">TITLE II</num>\n<heading class=\"centered\">INCREASED PAY COSTS</heading>\n<chapeau>For additional amounts for appropriations for the fiscal year 1971...</chapeau>\n<appropriations level=\"major\"><heading>LEGISLATIVE BRANCH</heading>\n  <appropriations level=\"intermediate\"><heading>Senate</heading>...</appropriations>\n  <appropriations level=\"intermediate\"><heading>Contingent Expenses of the Senate</heading>\n    <content class=\"firstIndent1 fontsize10\">\n      <list>\n        <listItem><listContent>\u201cSenate policy committees\u201d, $40,890;</listContent></listItem>\n        <listItem><listContent>\u201cAutomobiles and maintenance\u201d, $3,980;</listContent></listItem>\n        <listItem><listContent>\u201cInquiries and investigations\u201d, $664,955...</listContent></listItem>\n        <listItem><listContent>\u201cFolding documents\u201d, $4,415;</listContent></listItem>\n        <listItem><listContent>\u201cMiscellaneous items\u201d, $122,184...</listContent></listItem>\n      </list>\n    </content>\n  </appropriations>\n  <appropriations level=\"intermediate\"><heading>House of Representatives</heading>...</appropriations>\n  <appropriations level=\"intermediate\"><heading>Joint Items</heading>\n    <content class=\"firstIndent1 fontsize10\">\n      <list>\n        <listItem><listContent>\u201cJoint Committee on Reduction of Federal Expenditures\u201d, $5,440...</listContent></listItem>\n      </list>\n    </content>\n  </appropriations>\n  <appropriations level=\"small\"><heading>contingent expenses of the senate</heading>\n    <content class=\"firstIndent1 fontsize10\">\n      <list>\n        <listItem><listContent>\u201cJoint Economic Committee\u201d, $43,195;</listContent></listItem>\n        <listItem><listContent>\u201cJoint Committee on Atomic Energy\u201d, $27,285;</listContent></listItem>\n        <listItem><listContent>\u201cJoint Committee on Printing\u201d, $19,405;</listContent></listItem>\n      </list>\n    </content>\n  </appropriations>\n</appropriations>"
+      },
+      "id": 24,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "pending",
+      "proposed_at": "2026-05-28T18:44:54.230785",
+      "review_note": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "seen_again_count": 0,
+      "status": "pending",
+      "trigger": {
+        "heading_substring": "contingent expenses of the senate",
+        "law_id_substring": "Public Law 92\u201318",
+        "pattern": "Within a single appropriations pLaw (PL 92-18, vol 85, TITLE II 'INCREASED PAY COSTS'), two <appropriations> elements have heading text that case-folds to the same string ('Contingent Expenses of the Senate' at XML line 5001 vs 'contingent expenses of the senate' at XML line 5065) but differ in (a) the `level` attribute (intermediate vs small) and (b) their structural parent: the first is a direct child of <appropriations level=\"major\"><heading>LEGISLATIVE BRANCH</heading>, while the second is a `level=\"small\"` element that appears as a sibling of the intermediate <heading>Joint Items</heading> block, directly under the same LEGISLATIVE BRANCH major-level parent (no intervening intermediate-level wrapper). Active correction #5's _disambiguate_sibling_appropriations post-pass appends sequential ordinals to colliding <appropriations> siblings sharing identical <heading> text, but it does NOT trigger here because the case difference and the level mismatch break its matching criteria. Both rows collapse to UniqueKey 092-018-000-002-000-000-000-D-01510-00247-00001 even though their content differs sharply (the first row's Text covers 'Senate policy committees / Automobiles and maintenance / Inquiries and investigations / Folding documents / Miscellaneous items'; the second row's Text covers 'Joint Economic Committee / Joint Committee on Atomic Energy / Joint Committee on Printing').",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:54.765557",
+          "vol": 88
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "affected_examples": [
+          "PL 93-513 Nuclear warship compensation Joint Resolution (vol 88, lines 87255-87298): <main> contains <longTitle>, <preamble>, <resolvingClause>, a bare <p class=\"inline\">That it is the policy of the United States that it will pay claims or judgments for bodily injury...</p>, and <action>. Zero containers of any recognized type. Approved 1974-12-06. 88 Stat. 1610.",
+          "PL 93-624 Urgent supplemental appropriations Joint Resolution (vol 88, lines 113301-113403): <main> contains <longTitle>, <resolvingClause>, <sidenote>, 5 <chapter> elements (CHAPTER I..V), and <action>. Each <chapter> holds only <appropriations level=\"intermediate\"> children (which themselves nest <appropriations level=\"small\">); zero <section> elements at any depth. Approved 1975-01-03. 88 Stat. 2106."
+        ],
+        "description": "Extend _recover_dropped_container_pLaws so it emits at least one synthesized row for every dropped public pLaw. Two new branches: (1) When <main> contains a bare <p> (or <content>) operative paragraph and no recognized container (the joint-resolution 'policy' shape, PL 93-513), synthesize ONE section row whose Text is the concatenated text of the <p>/<content> children of <main>. Treat <p>, <content>, and any direct text-bearing child of <main> outside <longTitle>/<preamble>/<resolvingClause>/<action> as the operative body. (2) When a <part>/<title>/<chapter> container contains only <appropriations> children (no <section>) and the upstream appropriations walker also did not emit Division rows under this pLaw (because the pLaw was dropped earlier in extraction), synthesize ONE Division row per <appropriations> block, carrying the chapter heading into DivisionHeadingLevel1 and the appropriations <heading> into DivisionHeadingLevel2/3 as appropriate. Alternatively, ensure that when the upstream extractor emits Division rows from <appropriations> blocks, it does so unconditionally \u2014 independent of whether <main> has any top-level <section>. Either fix recovers PL 93-624 (which has 11 appropriations blocks across 5 chapters)."
+      },
+      "discovered_in_vol": 88,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Orchestrator-style verification: vol 88 XML has 404 public pLaws; enriched_88.parquet has only 402 distinct LawIdentifier. XML-vs-parquet diff identifies PL 93-513 and PL 93-624 as the two missing pLaws. Inspection of each pLaw's <main> shows neither is covered by the existing recovery (active corrections #3/#7/#11/#17): PL 93-513 has no recognized container of any kind (bare <p> operative paragraph); PL 93-624 has <chapter> containers but they hold only <appropriations> (no <section>), so the recursive walker descends but emits 0 rows.",
+        "xml_excerpt": "PL 93-513 <main> excerpt (lines 87280-87295):\n<resolvingClause class=\"indent0 firstIndent1 fontsize10\"><i>Resolved by the Senate and House of Representatives of the United States of America in Congress assembled,</i></resolvingClause>\n<p class=\"inline\">That it is the policy of <sidenote>...</sidenote>the United States that it will pay claims or judgments for bodily injury, death, or damage to or loss of real or personal property proven to have resulted from a nuclear incident involving the nuclear reactor of a United States warship: <proviso><i>Provided,</i> That ...</proviso>.</p>\n<action><actionDescription>Approved December 6, 1974.</actionDescription></action>\n\nPL 93-624 <main> excerpt (lines 113317-113330):\n<chapter>\n<num value=\"I\">CHAPTER I</num>\n<heading class=\"centered\">DEPARTMENT OF LABOR</heading>\n<appropriations level=\"intermediate\">\n<heading>Manpower Administration</heading>\n<appropriations level=\"small\">\n<heading>program administration</heading>\n<content class=\"firstIndent1\">For an additional amount for \u201cProgram administration\u201d, $500,000, ...</content>\n</appropriations>\n...\n</appropriations>\n</chapter>"
+      },
+      "id": 25,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "pending",
+      "proposed_at": "2026-05-28T18:44:54.765557",
+      "review_note": null,
+      "reviewed_at": null,
+      "reviewer": null,
+      "seen_again_count": 0,
+      "status": "pending",
+      "trigger": {
+        "law_id_substring": "(any pLaw whose <main> has zero top-level <section>, <part>, <title>, <chapter>, <subsection>, or <quotedContent> children, OR whose <chapter>/<title>/<part> containers hold only <appropriations> children with no nested <section>)",
+        "pattern": "Extends the top-level-container recovery family (active corrections #3, #7, #11, #17) to two additional shapes seen in vol 88: (a) joint-resolution 'policy' shape where <main> contains only <longTitle>, <preamble>, <resolvingClause>, a bare <p class=\"inline\">That ...</p> operative paragraph, and <action> \u2014 no <section>, <part>, <title>, <chapter>, <subsection>, or <quotedContent> anywhere; (b) supplemental-appropriations joint-resolution shape where <main> contains <chapter> elements but each <chapter> holds only <appropriations> children (no nested <section>). In shape (b) the recovery walker already descends into <chapter> via _walk_container_recursively, but finds no <section> and no recognized nested container, so emits 0 rows. Both pLaws are silently dropped, producing the validation warning 'Distinct LawIdentifier count 402 != public pLaw count in XML 404 (diff -2)' for vol 88. Distinct from active #3 (covers <part> and bare <subsection>), #7 (<title>), #11 (<chapter> with nested <section>), and #17 (<quotedContent>).",
+        "scope": "extractor_code"
+      },
+      "type": "other"
     }
   ],
-  "next_id": 22,
+  "next_id": 26,
   "rejected": [
     {
       "agent_version": "cv-correct@0.1.0",
@@ -626,6 +773,10 @@
         "xml_excerpt": "<pLaw>...</pLaw>"
       },
       "id": 1,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
       "proposed_at": "2026-05-26T15:27:16.794132",
       "review_note": "smoke test cleanup",
       "reviewed_at": "2026-05-26T15:27:30.154894",
@@ -636,11 +787,7 @@
         "law_id_substring": "79-496",
         "title_substring": "to amend the act approved july 3, 1943, entitled \u201can act"
       },
-      "type": "law_id",
-      "implementation_status": "not_required",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "law_id"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -660,6 +807,10 @@
         "xml_excerpt": "PL 88-283 already in vol 78 parquet with LawIdentifier 'Public Law 88-283'."
       },
       "id": 6,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "pending",
       "proposed_at": "2026-05-27T20:01:55.727866",
       "review_note": "Orchestrator-rejected: factually incorrect diagnosis. PL 88-283 is NOT missing from parquet \u2014 it is present with hyphen-form LawIdentifier (existing fallback in extract_public_law_from_uslm line ~169 handles bare citableAs). Actual missing pLaw is PL 88-643, root cause is <title>-organized <main> (NEW shape distinct from active #3). See new entry filed separately.",
       "reviewed_at": "2026-05-27T20:02:10.138532",
@@ -671,11 +822,7 @@
         "pattern": "For vol > 63 (modern USLM branch), the extractor parses law id from <citableAs>. When the source XML emits <citableAs>88\u2013283</citableAs> without the 'Public Law ' prefix, the prefix-substring check fails. Subagent claimed the pLaw is silently dropped \u2014 VERIFY: actual orchestrator check shows the existing fallback logic in extract_public_law_from_uslm (line ~169) DOES catch this and constructs 'Public Law {congress}-{docNumber}' from siblings. PL 88-283 IS present in vol 78 enriched parquet (with hyphen-form id 'Public Law 88-283', not en-dash). The actual missing pLaw is PL 88-643, root cause unrelated to this proposal.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     },
     {
       "agent_version": "cv-correct@0.1.0",
@@ -699,6 +846,10 @@
         "xml_excerpt": "<section class=\"inline\">\n<content class=\"inline\">That\u2014 <sidenote><p class=\"firstIndent1 fontsize8\">Central Intelligence Agency Retirement Act of 1964 for Certain Employees, amendment.</p></sidenote></content>\n</section>\n<section class=\"firstIndent1 fontsize10\">\n<num value=\"1\"><inline class=\"smallCaps\">Section</inline> 1. </num>\n<content>Section 211(a) of the Central Intelligence Agency Retirement Act of 1964 for Certain Employees, as amended (78 Stat. 1043; 50 U.S.C. 403 note), is further amended by striking out \u201cSix and one-half per centum\u201d in the first sentence and inserting \u201cSeven per centum\u201d.</content>\n</section>"
       },
       "id": 10,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "pending",
       "proposed_at": "2026-05-28T00:03:26.401865",
       "review_note": "Redundant \u2014 existing publisher suffix-dedup logic (_suffix_duplicate_unique_keys in apply_corrections_and_publish.py) already handles this case. The second occurrence of the colliding UniqueKey 091-185-...-001 gets auto-suffixed to ...-001-1 via cumcount. No extractor-code change needed; PL 91-185's two rows already serialize with distinct UniqueKeys in the published Excel.",
       "reviewed_at": "2026-05-28T00:15:11.324608",
@@ -710,11 +861,7 @@
         "pattern": "Within a single pLaw, the first <section> is an unnumbered intro (e.g. <section class=\"inline\"><content class=\"inline\">That\u2014</content></section> with no <num> child) and is immediately followed by a numbered <section><num value=\"1\">Section 1. </num>...</section>. The extractor maps both rows' SectionNumber position to '000000000000001' (the null-fallback for the intro plus the parsed value '1' for Section 1), producing identical UniqueKeys despite distinct Text and SectionNumber.",
         "scope": "extractor_code"
       },
-      "type": "other",
-      "implementation_status": "pending",
-      "implementation_commit_sha": null,
-      "implementation_attempted_at": null,
-      "implementation_notes": null
+      "type": "other"
     }
   ],
   "schema_version": 1

@@ -576,11 +576,38 @@
       "xml_sha256": "bf7fc6e194db4ab6b6060963568347566c86c8ec271a2c7155390f6877f2cb83"
     },
     "74": {
-      "last_run": "2026-05-22T11:05:15.772820",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-74/STATUTE-74_2026-05-22-11H-05M-12S.xlsx",
-      "output_sha256": "28137e745804d4f9c8faab1c4a13a39ce0f277bd1aa0825d2458085838e0fad6",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-74/STATUTE-74_2026-05-22-11H-05M-12S_SME.xlsx",
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_74.parquet",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "pending": [
+          22,
+          23
+        ]
+      },
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:11.437701",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-74/STATUTE-74_2026-05-28-18H-45M-09S.xlsx",
+      "output_sha256": "dbae417187c500bdefa8c051507c914f80088ef04789a324f9c6da5fc09c938e",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-74/STATUTE-74_2026-05-28-18H-45M-09S_SME.xlsx",
       "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_74.json",
       "xml_mtime": "2026-05-18T15:28:13.073498",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-74.xml",
       "xml_sha256": "872bda099d2a87ae3f0477a88ba89fb7ed091ab264ba9f102dd45ad791716f4f"
@@ -590,15 +617,32 @@
       "corrections_applied": {
         "active": [
           2,
-          3
+          3,
+          4,
+          5,
+          7,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
         ],
-        "pending": []
+        "pending": [
+          22,
+          23
+        ]
       },
-      "corrections_registry_hash": "9a62dbf3d905be84cfe67bfd364ecbbbc9a7a8a5aa1c482107457e8d9daa2abb",
-      "last_run": "2026-05-27T19:43:56.293605",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-75/STATUTE-75_2026-05-27-19H-43M-55S.xlsx",
-      "output_sha256": "a5b6ee5d375615d187112535ec68f5ead696ff626c608d6c55de69c27dea65fa",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-75/STATUTE-75_2026-05-27-19H-43M-55S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:13.066395",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-75/STATUTE-75_2026-05-28-18H-45M-11S.xlsx",
+      "output_sha256": "5105ee3bb709146b61c6187b242ae089139ea98ca7bf68b0a57b2faa35d6004c",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-75/STATUTE-75_2026-05-28-18H-45M-11S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_75.json",
       "xml_mtime": "2026-04-06T04:19:09.384589",
@@ -611,15 +655,31 @@
         "active": [
           2,
           3,
-          4
+          4,
+          5,
+          7,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
         ],
-        "pending": []
+        "pending": [
+          22,
+          23
+        ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-27T20:00:16.342572",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-76/STATUTE-76_2026-05-27-20H-00M-14S.xlsx",
-      "output_sha256": "91a9f5045831116e0c28c687192161744b180b723164ded92078a5fab3f383ff",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-76/STATUTE-76_2026-05-27-20H-00M-14S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:15.302228",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-76/STATUTE-76_2026-05-28-18H-45M-13S.xlsx",
+      "output_sha256": "fea377cb8af76aa5af44ab43fa101d2ca37b64525098e811b94880834c6a41e4",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-76/STATUTE-76_2026-05-28-18H-45M-13S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_76.json",
       "xml_mtime": "2026-04-06T04:19:09.115588",
@@ -632,15 +692,31 @@
         "active": [
           2,
           3,
-          4
+          4,
+          5,
+          7,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
         ],
-        "pending": []
+        "pending": [
+          22,
+          23
+        ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-27T19:56:46.628116",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-77/STATUTE-77_2026-05-27-19H-56M-45S.xlsx",
-      "output_sha256": "b6c8be8b0a7ddc3870b953054a134465f78a109a9ddcfdbcfee76e58eff8ff6f",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-77/STATUTE-77_2026-05-27-19H-56M-45S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:16.932813",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-77/STATUTE-77_2026-05-28-18H-45M-15S.xlsx",
+      "output_sha256": "9a525dd44b5ad91e082bbeb68e1af879e29024986a7ba4724d522d0845bd4839",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-77/STATUTE-77_2026-05-28-18H-45M-15S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_77.json",
       "xml_mtime": "2026-04-06T04:19:08.706586",
@@ -655,15 +731,29 @@
           3,
           4,
           5,
-          7
+          7,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
         ],
-        "pending": []
+        "pending": [
+          22,
+          23
+        ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-27T20:04:19.630799",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-78/STATUTE-78_2026-05-27-20H-04M-18S.xlsx",
-      "output_sha256": "0777705a64a9782ff1d2539d02ca42d242cbca30d957866a410177675c1253f4",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-78/STATUTE-78_2026-05-27-20H-04M-18S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:18.961045",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-78/STATUTE-78_2026-05-28-18H-45M-17S.xlsx",
+      "output_sha256": "e43272d7fde4aedfd067fc4f63926b07ddc2b48195ef93e04c0f8c84de702bfb",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-78/STATUTE-78_2026-05-28-18H-45M-17S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_78.json",
       "xml_mtime": "2026-04-06T04:19:08.384585",
@@ -696,28 +786,38 @@
       "xml_sha256": "b314c7a9f641bc80833cabece1f3d7091dfd6b0b1de88eec96b7953a62d04941"
     },
     "83": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_83.parquet",
       "corrections_applied": {
         "active": [
           2,
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:04:50.067493",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-83/STATUTE-83_2026-05-28-00H-04M-48S.xlsx",
-      "output_sha256": "2c5fdccdb283c590be301739f82b57b36bc9b3582d3945ea02071ac3019987ee",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-83/STATUTE-83_2026-05-28-00H-04M-48S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:20.704536",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-83/STATUTE-83_2026-05-28-18H-45M-19S.xlsx",
+      "output_sha256": "01d95d5333c61f200f86ec4723da14592c17f046adde4ea063fc2e72d961d2a7",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-83/STATUTE-83_2026-05-28-18H-45M-19S_SME.xlsx",
       "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_83.json",
       "xml_mtime": "2026-04-06T04:19:06.761579",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-83.xml",
       "xml_sha256": "6a481f0a6fdc66e50e057c511e28a00e2f0d6e34844779def6636266ca9cd186"
@@ -730,21 +830,29 @@
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:04:52.868121",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-84/STATUTE-84_2026-05-28-00H-04M-50S.xlsx",
-      "output_sha256": "b7337d99d68f514fda88d6e5851c73aab78e00b142eaeb52b22da728ccb81030",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-84/STATUTE-84_2026-05-28-00H-04M-50S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:23.531758",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-84/STATUTE-84_2026-05-28-18H-45M-21S.xlsx",
+      "output_sha256": "b9ddfe2fadb7130c7217196f074cfa7d6bbbfd5d57f2059255d437bd64607584",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-84/STATUTE-84_2026-05-28-18H-45M-21S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_84.json",
       "xml_mtime": "2026-04-06T04:19:06.508578",
@@ -759,21 +867,29 @@
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:04:54.472720",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-85/STATUTE-85_2026-05-28-00H-04M-53S.xlsx",
-      "output_sha256": "626916fd71423dd9d5a58f78b5c5b424e76bb67ef748fd3530f793995782e1cf",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-85/STATUTE-85_2026-05-28-00H-04M-53S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:25.155485",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-85/STATUTE-85_2026-05-28-18H-45M-24S.xlsx",
+      "output_sha256": "b12a301aaa763d01205636363a810119d3510395f2c03680bc58cb8f7cf74b67",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-85/STATUTE-85_2026-05-28-18H-45M-24S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_85.json",
       "xml_mtime": "2026-04-06T04:19:06.059577",
@@ -781,55 +897,75 @@
       "xml_sha256": "69dbd2a775ad47f6d9a3146bc306ced31facb6ff64d06a3b19bf0299f9a11271"
     },
     "86": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_86.parquet",
       "corrections_applied": {
         "active": [
           2,
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:04:56.756961",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-86/STATUTE-86_2026-05-28-00H-04M-54S.xlsx",
-      "output_sha256": "b21b522bf9938b27f0db8dfba14eb7751d2f407b5fdc454ebdc0c527f0678ec8",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-86/STATUTE-86_2026-05-28-00H-04M-54S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:27.454546",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-86/STATUTE-86_2026-05-28-18H-45M-25S.xlsx",
+      "output_sha256": "e67944fe7ebb5761e00c1ecdf1e8cbfcc96b246f1b48601abaab106bfef92a10",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-86/STATUTE-86_2026-05-28-18H-45M-25S_SME.xlsx",
       "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_86.json",
       "xml_mtime": "2026-04-06T04:19:05.808576",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-86.xml",
       "xml_sha256": "1d506f8ff9183676a4600e8c0f0099249a6fc1750959e181b91320420e9785f8"
     },
     "87": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_87.parquet",
       "corrections_applied": {
         "active": [
           2,
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:04:58.850969",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-87/STATUTE-87_2026-05-28-00H-04M-57S.xlsx",
-      "output_sha256": "dd0e68cc72844e843c5bdaf5077a15e0a42dfe3313c77d1110102cbd005ca4de",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-87/STATUTE-87_2026-05-28-00H-04M-57S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:29.557731",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-87/STATUTE-87_2026-05-28-18H-45M-27S.xlsx",
+      "output_sha256": "bb38208fae3e2979b1027d64c2b33005c67feedfb2a73f6138e39a62e8e75ce9",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-87/STATUTE-87_2026-05-28-18H-45M-27S_SME.xlsx",
       "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_87.json",
       "xml_mtime": "2026-04-06T04:19:05.462574",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-87.xml",
       "xml_sha256": "ffe107ccd29b58ee6b5ce11f1fc4708988c2138bce311419f3033a6dfd3be823"
@@ -842,21 +978,29 @@
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:05:01.483030",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-88/STATUTE-88_2026-05-28-00H-04M-59S.xlsx",
-      "output_sha256": "54a3a7f6699cc498591f561eb3e9cd43aff05e952ae056925c33f44ea47726cf",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-88/STATUTE-88_2026-05-28-00H-04M-59S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:32.226943",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-88/STATUTE-88_2026-05-28-18H-45M-30S.xlsx",
+      "output_sha256": "ebfcc9de1c0aee31c43d5a3d9995b3336397b4968cd47c067d5b1e6596c902a2",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-88/STATUTE-88_2026-05-28-18H-45M-30S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_88.json",
       "xml_mtime": "2026-04-06T04:19:05.170573",
@@ -864,28 +1008,38 @@
       "xml_sha256": "424b489291b57c5d68511e126aeda0db2bb68ab1469eaeb62e9e34e4bd240c93"
     },
     "89": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_89.parquet",
       "corrections_applied": {
         "active": [
           2,
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:05:03.452370",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-89/STATUTE-89_2026-05-28-00H-05M-02S.xlsx",
-      "output_sha256": "dee02715f2712c75783837336ed12fe4667a303fd57fd1c2c2e0d81b368d6f7c",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-89/STATUTE-89_2026-05-28-00H-05M-02S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:34.177135",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-89/STATUTE-89_2026-05-28-18H-45M-32S.xlsx",
+      "output_sha256": "c1170ee5c599adef621087183bd03095af8e27d7eb266b14a6d7b0b352e52d15",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-89/STATUTE-89_2026-05-28-18H-45M-32S_SME.xlsx",
       "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_89.json",
       "xml_mtime": "2026-04-06T04:19:04.700572",
       "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-89.xml",
       "xml_sha256": "4a6284c758dfeeb6e5ae2dca4133d1155a7ef886d611ce7f10dc2ca3515beb1b"
@@ -903,21 +1057,29 @@
           3,
           4,
           5,
-          7
-        ],
-        "pending": [
+          7,
+          11,
           12,
+          13,
+          14,
+          15,
+          16,
+          17,
           18,
           19,
           20,
           21
+        ],
+        "pending": [
+          22,
+          23
         ]
       },
-      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
-      "last_run": "2026-05-28T00:05:06.711741",
-      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-90/STATUTE-90_2026-05-28-00H-05M-04S.xlsx",
-      "output_sha256": "83abe0360a9ef582832d2b1267e80cc2f11268ecb79ee1942e92f94bab3b304f",
-      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-90/STATUTE-90_2026-05-28-00H-05M-04S_SME.xlsx",
+      "corrections_registry_hash": "0450f752ce5a8db1b3efe64c3a4f71524d207787bc5982edff28e5caa36ef8e9",
+      "last_run": "2026-05-28T18:45:37.477384",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-90/STATUTE-90_2026-05-28-18H-45M-34S.xlsx",
+      "output_sha256": "80dee561172005a4b2dd666eb9b33e72029add8fff3527073398210d33cbca31",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-90/STATUTE-90_2026-05-28-18H-45M-34S_SME.xlsx",
       "status": "success",
       "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_90.json",
       "xml_mtime": "2026-04-06T04:19:04.427571",
