@@ -384,7 +384,6 @@ class CorrectionsRegistry:
         the three companion tracking fields. Saves atomically. Returns the
         count of entries actually updated. Idempotent — running twice is a
         no-op."""
-        import json
         updated = 0
         for path in (self._active_path, self._pending_path):
             if not path.exists():
@@ -399,7 +398,7 @@ class CorrectionsRegistry:
                     entry["implementation_notes"] = None
                     updated += 1
             tmp = path.with_suffix(path.suffix + ".tmp")
-            tmp.write_text(json.dumps(data, indent=2))
+            tmp.write_text(json.dumps(data, indent=2, sort_keys=True))
             tmp.replace(path)
         return updated
 
