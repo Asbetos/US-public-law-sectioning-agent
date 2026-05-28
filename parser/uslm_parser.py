@@ -86,6 +86,71 @@ def _assign_unnumbered_section_ordinals(section_rows):
                 section_rows[i]["SectionNumber"] = f"U{ordinal}"
 
 
+def _disambiguate_sibling_appropriations(division_rows):
+    """Post-process pass for the sibling-appropriations correction family
+    (entry #5, approved 2026-05-28 by asbetos).
+
+    Within a single pLaw, the extractor's appropriations walker can emit two or
+    more Division rows whose ``(DivisionHeadingLevel1, DivisionHeadingLevel2,
+    DivisionHeadingLevel3)`` triple is identical — typically a regular
+    appropriation followed by an "additional amount" supplemental or a
+    transferred appropriation that share the same ``<heading>`` text under the
+    same parent ``<appropriations>``. Since the UniqueKey for Division rows is
+    derived from these three heading-mapped IDs, the rows collapse to the same
+    UniqueKey even though their ``<content>`` bodies differ.
+
+    This pass groups Division rows by ``LawIdentifier`` first, then by full
+    ``(L1, L2, L3)`` heading path in document order. For each group with two
+    or more rows, it appends a sequential intra-heading ordinal (``" 2"``,
+    ``" 3"``, ...) to the deepest non-null heading level on the 2nd and
+    subsequent rows; the first row is left untouched so the dominant heading
+    survives unchanged. The ordinal is appended to the heading TEXT so the
+    downstream heading-to-ID mapper in ``generate_id_keys.py`` produces
+    distinct ``DivisionHeadingLevel*`` IDs — and therefore distinct UniqueKeys —
+    without any change to the key-generation pipeline itself.
+
+    Mutates ``division_rows`` in place.
+    """
+    if not division_rows:
+        return
+
+    # Group row indices by LawIdentifier, preserving document order.
+    by_law = {}
+    for idx, row in enumerate(division_rows):
+        law_id = row.get("LawIdentifier")
+        by_law.setdefault(law_id, []).append(idx)
+
+    for law_id, indices in by_law.items():
+        # Within a single pLaw, group by full (L1, L2, L3) heading triple.
+        path_groups = {}
+        for i in indices:
+            row = division_rows[i]
+            path = (
+                (row.get("DivisionHeadingLevel1") or "").strip(),
+                (row.get("DivisionHeadingLevel2") or "").strip(),
+                (row.get("DivisionHeadingLevel3") or "").strip(),
+            )
+            path_groups.setdefault(path, []).append(i)
+
+        for path, group_indices in path_groups.items():
+            if len(group_indices) < 2:
+                continue  # No collision — nothing to disambiguate.
+            # Append a sequential ordinal to the deepest non-null heading level
+            # on the 2nd and subsequent rows (group_indices is already in
+            # document order because we iterated row indices ascending).
+            for ordinal, i in enumerate(group_indices[1:], start=2):
+                row = division_rows[i]
+                for level_key in (
+                    "DivisionHeadingLevel3",
+                    "DivisionHeadingLevel2",
+                    "DivisionHeadingLevel1",
+                ):
+                    value = row.get(level_key)
+                    if value is not None and str(value).strip():
+                        row[level_key] = f"{str(value).rstrip()} {ordinal}"
+                        break
+
+
 def _container_label(elem, ns):
     """Return ``num.text + heading.text`` for an immediate ``<num>``/``<heading>``
     child of ``elem`` (a ``<part>``/``<title>``/``<chapter>`` container).
@@ -387,11 +452,22 @@ def extract_public_law_from_uslm(file_path, vol):
         emitted). The recovery pass detects these dropped pLaws, walks the
         containers, and emits synthesized rows so distinct ``LawIdentifier``
         counts match the volume's public-pLaw count.
+
+      * **sibling-appropriations** (entry #5): when a pLaw contains two or more
+        sibling ``<appropriations>`` elements that share identical ``<heading>``
+        text under the same parent (regular + supplemental "additional amount"
+        + transferred), the extractor emits one Division row per
+        ``<appropriations>`` but the heading-derived ``UniqueKey`` positions
+        collide. The post-pass appends a sequential intra-heading ordinal
+        (``" 2"``, ``" 3"``, ...) to the deepest non-null heading level on the
+        2nd and subsequent occurrences within each pLaw.
     """
     results = _extract_public_law_from_uslm_raw(file_path, vol)
     if isinstance(results, dict) and "Sections" in results:
         _recover_dropped_container_pLaws(file_path, vol, results)
         _assign_unnumbered_section_ordinals(results["Sections"])
+    if isinstance(results, dict) and "Divisions" in results:
+        _disambiguate_sibling_appropriations(results["Divisions"])
     return results
 
 
