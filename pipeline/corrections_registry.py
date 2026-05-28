@@ -61,6 +61,11 @@ class CorrectionEntry:
     reviewed_at: str | None = None
     applied_in_runs: list[dict[str, Any]] = field(default_factory=list)
     seen_again_count: int = 0
+    # Implementation-tracking fields (cv-coder agent)
+    implementation_status: str = "not_required"     # not_required | pending | in_progress | implemented | failed | manual_override
+    implementation_commit_sha: str | None = None
+    implementation_attempted_at: str | None = None
+    implementation_notes: str | None = None
 
     def dedup_key(self) -> tuple[str, str, str]:
         """Two entries with the same key are considered the same proposal."""
@@ -69,6 +74,61 @@ class CorrectionEntry:
             json.dumps(self.trigger, sort_keys=True),
             json.dumps(self.correction, sort_keys=True),
         )
+
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]) -> "CorrectionEntry":
+        """Construct a CorrectionEntry from a plain dict (e.g. from JSON).
+
+        Handles missing keys with sensible defaults, including the
+        implementation-tracking fields added for the cv-coder agent.
+        """
+        ptype = d.get("type", "other")
+        default_impl_status = "pending" if ptype == "other" else "not_required"
+        return cls(
+            id=d["id"],
+            type=ptype,
+            trigger=d.get("trigger", {}),
+            correction=d.get("correction", {}),
+            evidence=d.get("evidence", {}),
+            proposed_at=d.get("proposed_at", ""),
+            discovered_in_vol=d.get("discovered_in_vol"),
+            agent_version=d.get("agent_version"),
+            confidence=d.get("confidence"),
+            status=d.get("status", "pending"),
+            reviewer=d.get("reviewer"),
+            review_note=d.get("review_note"),
+            reviewed_at=d.get("reviewed_at"),
+            applied_in_runs=d.get("applied_in_runs", []),
+            seen_again_count=d.get("seen_again_count", 0),
+            implementation_status=d.get("implementation_status", default_impl_status),
+            implementation_commit_sha=d.get("implementation_commit_sha"),
+            implementation_attempted_at=d.get("implementation_attempted_at"),
+            implementation_notes=d.get("implementation_notes"),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        """Serialise to a plain dict suitable for JSON storage."""
+        return {
+            "id": self.id,
+            "type": self.type,
+            "trigger": self.trigger,
+            "correction": self.correction,
+            "evidence": self.evidence,
+            "proposed_at": self.proposed_at,
+            "discovered_in_vol": self.discovered_in_vol,
+            "agent_version": self.agent_version,
+            "confidence": self.confidence,
+            "status": self.status,
+            "reviewer": self.reviewer,
+            "review_note": self.review_note,
+            "reviewed_at": self.reviewed_at,
+            "applied_in_runs": self.applied_in_runs,
+            "seen_again_count": self.seen_again_count,
+            "implementation_status": self.implementation_status,
+            "implementation_commit_sha": self.implementation_commit_sha,
+            "implementation_attempted_at": self.implementation_attempted_at,
+            "implementation_notes": self.implementation_notes,
+        }
 
 
 # ---------- on-disk file shape ----------
@@ -84,8 +144,8 @@ class _RegistryFile:
         return {
             "schema_version": self.schema_version,
             "next_id": self.next_id,
-            "entries": [asdict(e) for e in self.entries],
-            "rejected": [asdict(e) for e in self.rejected],
+            "entries": [e.to_dict() for e in self.entries],
+            "rejected": [e.to_dict() for e in self.rejected],
         }
 
     @classmethod
@@ -93,8 +153,8 @@ class _RegistryFile:
         return cls(
             schema_version=data.get("schema_version", SCHEMA_VERSION),
             next_id=data.get("next_id", 1),
-            entries=[CorrectionEntry(**e) for e in data.get("entries", [])],
-            rejected=[CorrectionEntry(**e) for e in data.get("rejected", [])],
+            entries=[CorrectionEntry.from_dict(e) for e in data.get("entries", [])],
+            rejected=[CorrectionEntry.from_dict(e) for e in data.get("rejected", [])],
         )
 
 
