@@ -82,9 +82,18 @@ Substitute the per-volume placeholders. Then dispatch the `Agent` tool with:
 
 ```
 subagent_type: general-purpose
+model: opus
 description: "cv-correct: review volume N"
-prompt: <the filled-in system_prompt.md + the per-volume payload>
+prompt: <the filled-in system_prompt.md + the per-volume payload + the reasoning directive below>
 ```
+
+**Always pass `model: opus`** — the subagent's job (deciding whether a
+duplicate group is an extractor bug or an XML quirk, whether a law-number
+anomaly is a real misnumbering or a legitimate gap) requires the strongest
+reasoning model available, regardless of what model the parent session is
+running. Do not omit this argument and do not substitute `sonnet` or
+`haiku` to save cost — false positives here become approved corrections
+that mutate real published data.
 
 The per-volume payload is a JSON document with these keys (paths above —
 read each file's contents into the payload):
@@ -99,6 +108,19 @@ read each file's contents into the payload):
   "xml_excerpts": "<XML snippets for the candidate rows>"
 }
 ```
+
+**Reasoning directive — append verbatim to the end of the prompt:**
+
+> Think very hard about each anomaly before deciding. For every law-number
+> anomaly, examine the suspect's official title, the neighbouring laws'
+> citations, and the XML structure. For every UniqueKey-duplicate group,
+> compare the rows column-by-column AND inspect the source XML to classify
+> as extractor-fixable vs. XML-data-quality. Do not propose corrections you
+> are not confident about — leaving a row un-corrected is always preferable
+> to a wrong correction that mutates a published Excel. ultrathink.
+
+The literal token `ultrathink` at the end activates Claude Code's maximum
+extended-thinking budget, which is appropriate for this judgement task.
 
 The subagent returns text. Extract the JSON object inside (the schema is
 defined in `system_prompt.md`). On parse failure, log + treat as empty.
