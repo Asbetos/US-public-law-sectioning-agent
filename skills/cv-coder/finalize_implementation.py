@@ -207,6 +207,12 @@ def main(argv=None):
     parser.add_argument("--response", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--log-level", default="INFO")
+    parser.add_argument(
+        "--skip-republish", action="store_true",
+        help="Do not auto-chain re_publish_after_fix.py after a successful "
+             "commit. Used for batch operations that re-publish affected "
+             "volumes in a separate unified pass.",
+    )
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=args.log_level, format="%(levelname)s %(name)s: %(message)s")
@@ -292,19 +298,25 @@ def main(argv=None):
     )
 
     # Auto-chain re-publish (failure here is a warning, not a hard failure)
-    republish_ok = _invoke_republish(args.task_id, args.output_dir)
-    if not republish_ok:
-        logger.warning(
-            "re_publish_after_fix failed for entry #%d; commit %s already landed. "
-            "Re-run manually: python re_publish_after_fix.py --entry %d --yes",
-            args.task_id,
-            sha,
-            args.task_id,
-        )
+    if args.skip_republish:
+        republish_ok = None  # not attempted
+        logger.info("Skipping auto-chain re-publish (--skip-republish set)")
+    else:
+        republish_ok = _invoke_republish(args.task_id, args.output_dir)
+        if not republish_ok:
+            logger.warning(
+                "re_publish_after_fix failed for entry #%d; commit %s already landed. "
+                "Re-run manually: python re_publish_after_fix.py --entry %d --yes",
+                args.task_id,
+                sha,
+                args.task_id,
+            )
 
     print(f"OK Entry(ies) #{entry_ids} implementation_status=implemented")
     print(f"  Commit: {sha}")
-    if republish_ok:
+    if republish_ok is None:
+        print("  Re-publish: SKIPPED (--skip-republish)")
+    elif republish_ok:
         print("  Re-publish: complete")
     else:
         print("  Re-publish: FAILED (warning only - commit landed)")
