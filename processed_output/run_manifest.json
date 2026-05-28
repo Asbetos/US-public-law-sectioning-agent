@@ -1,0 +1,795 @@
+{
+  "volumes": {
+    "1": {
+      "xml_mtime": "2026-04-06T04:19:37.057690",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-1.xml",
+      "xml_sha256": "3493b9f7feafe4fd8e4791a450d5dd3dd4fe1b4dfa798ec75242673e825482c6"
+    },
+    "10": {
+      "xml_mtime": "2026-04-06T04:19:34.878682",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-10.xml",
+      "xml_sha256": "f7a1532338c897bacf08cb21dae5575ebe6dc32b28cc41f36689a39f704ee553"
+    },
+    "100": {
+      "xml_mtime": "2026-04-06T04:19:00.254555",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-100.xml",
+      "xml_sha256": "b8da05e88cd09229394a6d24fa64f16e32d6c8957434fdaad91d8269c86ac200"
+    },
+    "101": {
+      "xml_mtime": "2026-04-06T04:18:59.534553",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-101.xml",
+      "xml_sha256": "719811f0ec82d2e20a4dd58955e300a0ac1b975816fab5e5b59f1c288035cbaa"
+    },
+    "102": {
+      "xml_mtime": "2026-04-06T04:18:59.073551",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-102.xml",
+      "xml_sha256": "3febac45253bce880fc468e4ce7343a3b7d4b95347d212c620fc6c985ff1b767"
+    },
+    "103": {
+      "xml_mtime": "2026-04-06T04:18:58.357548",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-103.xml",
+      "xml_sha256": "30d15cc2bb0f9d9a51be9f14e621804308c944e7196fa97d9038da702e141996"
+    },
+    "104": {
+      "xml_mtime": "2026-04-06T04:18:57.896547",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-104.xml",
+      "xml_sha256": "eac23693c35631f635d0280e283f8db141fcb48437c3b953b4b9bba98fe1c9ac"
+    },
+    "105": {
+      "xml_mtime": "2026-04-06T04:18:57.122544",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-105.xml",
+      "xml_sha256": "5b88175ca54b0958e10ec194fc6070fe63b8688fc1bf41cf44c3ea49144c2e39"
+    },
+    "106": {
+      "xml_mtime": "2026-04-06T04:18:56.704542",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-106.xml",
+      "xml_sha256": "79b6677e5de0666fab839535c6c5b97f0484856769d3e6aca3b91842fd9545c2"
+    },
+    "107": {
+      "xml_mtime": "2026-04-06T04:18:56.000540",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-107.xml",
+      "xml_sha256": "66f24ef6d11db93bc1d5c2edddabdd2bfc5c4256ec6ad741118f149179443900"
+    },
+    "108": {
+      "xml_mtime": "2026-04-06T04:18:55.875540",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-108.xml",
+      "xml_sha256": "66f24ef6d11db93bc1d5c2edddabdd2bfc5c4256ec6ad741118f149179443900"
+    },
+    "109": {
+      "xml_mtime": "2026-04-06T04:18:55.750539",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-109.xml",
+      "xml_sha256": "66f24ef6d11db93bc1d5c2edddabdd2bfc5c4256ec6ad741118f149179443900"
+    },
+    "11": {
+      "xml_mtime": "2026-04-06T04:19:34.599681",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-11.xml",
+      "xml_sha256": "158cd227df8ab7a96533048fbec5ec40331de1e5055e7e0c315ccb91370f2ef0"
+    },
+    "110": {
+      "xml_mtime": "2026-04-06T04:18:55.609539",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-110.xml",
+      "xml_sha256": "73206a986308bd085a38aa4900d0cc6950062eff82dfde8d45fe03f373223598"
+    },
+    "111": {
+      "xml_mtime": "2026-04-06T04:18:54.791535",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-111.xml",
+      "xml_sha256": "1900beaa10d2b7b3858264a954d7e77fd274a052497ffa30ec8c4ed1f02f8dd7"
+    },
+    "112": {
+      "xml_mtime": "2026-04-06T04:18:54.360534",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-112.xml",
+      "xml_sha256": "3dd27c2ee98eaab4db598e7f76f7ca7ff8b0f223568f46c690bf5dee8c20ecb7"
+    },
+    "113": {
+      "xml_mtime": "2026-04-06T04:18:53.740532",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-113.xml",
+      "xml_sha256": "0ff7949b84178a69a82d757a3355f78f3f0229bf1e31e3b7bd4f458f17102086"
+    },
+    "114": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_114.parquet",
+      "corrections_applied": {
+        "active": [],
+        "pending": [
+          1
+        ]
+      },
+      "corrections_registry_hash": "9a62dbf3d905be84cfe67bfd364ecbbbc9a7a8a5aa1c482107457e8d9daa2abb",
+      "last_run": "2026-05-26T15:21:09.544889",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-114/STATUTE-114_2026-05-22-11H-20M-57S.xlsx",
+      "output_sha256": "522874f73135b983ca279ae84b5e869a74c3a61a3640d944f24094f55fae7262",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-114/STATUTE-114_2026-05-22-11H-20M-57S_SME.xlsx",
+      "status": "ready_for_publish",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_114.json",
+      "xml_mtime": "2026-04-06T04:18:53.334530",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-114.xml",
+      "xml_sha256": "e547393a06e55e2d18f06c68553e9bfd9749fff9f349263152a5423e665fe24e"
+    },
+    "115": {
+      "xml_mtime": "2026-04-06T04:18:52.665528",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-115.xml",
+      "xml_sha256": "cadcaece4a9c3c27f75d169adf7e418ac361f3561d65f41d1ca1a1904aca1b0e"
+    },
+    "116": {
+      "xml_mtime": "2026-04-06T04:18:52.224526",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-116.xml",
+      "xml_sha256": "c1d3eef0bedc48bac1339f819f2387a077eadc5a25a9011c699f2e0cba8d49e2"
+    },
+    "117": {
+      "xml_mtime": "2026-04-06T04:18:51.764524",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-117.xml",
+      "xml_sha256": "b9e1b720be7016201ded3685b5ad35643330fdad739652e6c1dcad98a3dc2300"
+    },
+    "118": {
+      "xml_mtime": "2026-04-06T04:18:51.196522",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-118.xml",
+      "xml_sha256": "a33c2edfd504c845acfd1de4c45ce56ebe2d3bd61ba0b7c516a7bfcdcad9f9ef"
+    },
+    "119": {
+      "xml_mtime": "2026-04-06T04:18:50.577520",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-119.xml",
+      "xml_sha256": "f6eee0acd5aabf17ac5113d74e707665fbb52b391f6a477d3342c059645af2c4"
+    },
+    "12": {
+      "xml_mtime": "2026-04-06T04:19:34.353680",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-12.xml",
+      "xml_sha256": "90ef71765d397b0b927bafddc31889638ad20f79d32124ca1a12e4e6ad612661"
+    },
+    "120": {
+      "xml_mtime": "2026-04-06T04:18:50.045518",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-120.xml",
+      "xml_sha256": "f391147dda9cc5327415f7ee56fcca7c8d9eba2fcc616eab4dd6f108d368c2d8"
+    },
+    "121": {
+      "xml_mtime": "2026-04-06T04:18:49.472516",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-121.xml",
+      "xml_sha256": "4c91b7aed0d20c300eb7f6822550b439c6f7af918149c5917835432f54195acd"
+    },
+    "122": {
+      "xml_mtime": "2026-04-06T04:18:49.055515",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-122.xml",
+      "xml_sha256": "f7729f060b5fab322e735622f67d459cbe16be20cfc8e58ad8c3564d4a2421f5"
+    },
+    "123": {
+      "xml_mtime": "2026-04-06T04:18:48.307512",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-123.xml",
+      "xml_sha256": "4a482ac2bcab08876bcca779d9f1bd19e309f2a09e1654883c3a7a07bdea980e"
+    },
+    "124": {
+      "xml_mtime": "2026-04-06T04:18:47.777510",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-124.xml",
+      "xml_sha256": "021704863305f58c03cd8ab23830a29b33c4057c332e027369789025e9061169"
+    },
+    "125": {
+      "xml_mtime": "2026-04-06T04:18:47.151508",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-125.xml",
+      "xml_sha256": "ccc42d20aee1a5372ed2f0ce6e69ed83720ca47968feebeb51c43ed93da33637"
+    },
+    "126": {
+      "xml_mtime": "2026-04-06T04:18:46.797506",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-126.xml",
+      "xml_sha256": "e55ae042987ffeb36ecd4becd259590777badd0140dd1e403cda50ea44367cf2"
+    },
+    "127": {
+      "xml_mtime": "2026-04-06T04:18:46.359505",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-127.xml",
+      "xml_sha256": "3c92331a16f9abf4e50f0de9ec1675aa6d11d20bf0759dadfd8d31c3ac1eed64"
+    },
+    "128": {
+      "xml_mtime": "2026-04-06T04:18:46.059504",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-128.xml",
+      "xml_sha256": "c3cd10a3b6f4fb63ef01e3b1676bd392ccfef022dd22d5ace4f979fe13795e70"
+    },
+    "129": {
+      "xml_mtime": "2026-04-06T04:18:45.480501",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-129.xml",
+      "xml_sha256": "1762a105608c1e4e6d290d67507c89a276fcd2313f5173d28ab3a090cf3effa4"
+    },
+    "13": {
+      "xml_mtime": "2026-04-06T04:19:34.026679",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-13.xml",
+      "xml_sha256": "9c01a9025bcabc470727dfd2b3373c622f7c2a62d8125cd502fbd24131b56f7d"
+    },
+    "130": {
+      "xml_mtime": "2026-04-06T04:18:44.990500",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-130.xml",
+      "xml_sha256": "53194c9a81cf236da7ce03cf721b0d28b8d29dbd9e4a281e52b2d36468708dcf"
+    },
+    "131": {
+      "xml_mtime": "2026-04-06T04:18:44.517498",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-131.xml",
+      "xml_sha256": "7ca8a344526c50ffd01a4bd789243f12fedca5c073f26e88155b295db3b9ee94"
+    },
+    "132": {
+      "xml_mtime": "2026-04-06T04:18:44.087497",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-132.xml",
+      "xml_sha256": "e031498193c98af9ba17f0dd78e83c0b6c883820fddfb708a6a2589a407eb5d2"
+    },
+    "133": {
+      "xml_mtime": "2026-04-06T04:18:43.315494",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-133.xml",
+      "xml_sha256": "af3881e7ac7b22c4a6e1669a64ded3eb7d4471d62c7af769538bd07a600faece"
+    },
+    "134": {
+      "xml_mtime": "2026-04-06T04:18:42.782492",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-134.xml",
+      "xml_sha256": "479931f27e7cda3eb3ce63b540fde55eb885ae1a9f5e13d3c99c2168a8979e78"
+    },
+    "135": {
+      "xml_mtime": "2026-04-06T04:18:42.031489",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-135.xml",
+      "xml_sha256": "244e5bb1d911ae594b4361cca125d03917c672dd77437adc8842e2cc21f87e1e"
+    },
+    "136": {
+      "xml_mtime": "2026-04-06T04:18:41.585487",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-136.xml",
+      "xml_sha256": "47ce72f8f36e63c60cc78aa52adc44928b25ae832db630b5cc5a1186df49871b"
+    },
+    "137": {
+      "xml_mtime": "2026-04-06T04:18:40.730484",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-137.xml",
+      "xml_sha256": "d3b1ab2d13a6a1f7a78174999591dab9c6d75e9583fd07b634dc2ef183a3ff2f"
+    },
+    "14": {
+      "xml_mtime": "2026-04-06T04:19:33.773678",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-14.xml",
+      "xml_sha256": "8410797eaa96c8d547db78330fcc9bd5af9e31569da122efe9144e464cd39d19"
+    },
+    "15": {
+      "xml_mtime": "2026-04-06T04:19:33.509677",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-15.xml",
+      "xml_sha256": "b2a044d630356aea2eb19690c366c49a7030e085049887fae4705415fd260c40"
+    },
+    "16": {
+      "xml_mtime": "2026-04-06T04:19:33.272676",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-16.xml",
+      "xml_sha256": "d5e093beee23bc510afc649ae178245b6f7cbda68b2bfa101633dba3f4e46e1f"
+    },
+    "17": {
+      "xml_mtime": "2026-04-06T04:19:32.982675",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-17.xml",
+      "xml_sha256": "e77ed05805c45c62b12b074706103ce775cdd35db1b782ee67971110109d6e34"
+    },
+    "18": {
+      "xml_mtime": "2026-04-06T04:19:32.691674",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-18.xml",
+      "xml_sha256": "c98236a069406d41b220700e6a29b954f9b5e296d9dc02c2a28e92754f90304c"
+    },
+    "19": {
+      "xml_mtime": "2026-04-06T04:19:32.007671",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-19.xml",
+      "xml_sha256": "b8d8573a62e3acc0204a8009670e069d5a649c3ab00738f65e51e1b704180bf4"
+    },
+    "2": {
+      "xml_mtime": "2026-04-06T04:19:36.820689",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-2.xml",
+      "xml_sha256": "827ffaeaccd8eb63671dd405a8aec4ad4e2ca4f38a1de9dd6835c38cbda749ff"
+    },
+    "20": {
+      "xml_mtime": "2026-04-06T04:19:31.780670",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-20.xml",
+      "xml_sha256": "ded80080f8c0fbb55aa2206a534b17ca70e28d70a64faaa7a50432a2eba0fdb9"
+    },
+    "21": {
+      "xml_mtime": "2026-04-06T04:19:31.531670",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-21.xml",
+      "xml_sha256": "c62385901731facb02c129cff1f357a7cde276b1b4ab1f660b4ea420b7013b29"
+    },
+    "22": {
+      "xml_mtime": "2026-04-06T04:19:31.296669",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-22.xml",
+      "xml_sha256": "a4457c8a0aa533038df66d31202513eb43156dd00392fdefcf92dab23aed467c"
+    },
+    "23": {
+      "xml_mtime": "2026-04-06T04:19:31.033668",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-23.xml",
+      "xml_sha256": "bcf8a78de3dd9f0660d59d8555829c9c35e17be900d64544384fc6af24b71955"
+    },
+    "24": {
+      "xml_mtime": "2026-04-06T04:19:30.803667",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-24.xml",
+      "xml_sha256": "1bb9567ff04bfc6b7317bb0581c753bc5cdf3e051be0ffca2f93a655ae021caa"
+    },
+    "25": {
+      "xml_mtime": "2026-04-06T04:19:30.527666",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-25.xml",
+      "xml_sha256": "55270d6f1fd091cd647ca8c80a9d1dfcdef07dad232a8114b0b2389f60186626"
+    },
+    "26": {
+      "xml_mtime": "2026-04-06T04:19:30.200665",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-26.xml",
+      "xml_sha256": "901ba30a7986bd700feb50f4e4b00f68ed1694d583a00e63f12046c1ff85f011"
+    },
+    "27": {
+      "xml_mtime": "2026-04-06T04:19:29.850663",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-27.xml",
+      "xml_sha256": "95c930278771d8f1bce4eca257aed77c26c05863ecc272e6f4dc2def04ad8d96"
+    },
+    "28": {
+      "xml_mtime": "2026-04-06T04:19:29.568662",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-28.xml",
+      "xml_sha256": "a5045aa022cf5b0c913682452329659d3c9eefadf83b0851c555589657a7e09e"
+    },
+    "29": {
+      "xml_mtime": "2026-04-06T04:19:29.245661",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-29.xml",
+      "xml_sha256": "8bea10a13be8cd38668480babff2097268a43fdb362d8883908919500b0798be"
+    },
+    "3": {
+      "xml_mtime": "2026-04-06T04:19:36.570688",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-3.xml",
+      "xml_sha256": "51cb65e979665f8077245a3b3c7c9d8511aaae467acfc2cf37c1ac3bb225c680"
+    },
+    "30": {
+      "xml_mtime": "2026-04-06T04:19:28.983660",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-30.xml",
+      "xml_sha256": "2e78e0845aa86dc345fb0caf59c520ebc1f3011d1928496eef4b7c43c42f7df2"
+    },
+    "31": {
+      "xml_mtime": "2026-04-06T04:19:28.589659",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-31.xml",
+      "xml_sha256": "d5b7bd7a9f5d603ae98c44f2785c49319542d927d04d78443a16954c641d8e75"
+    },
+    "32": {
+      "xml_mtime": "2026-04-06T04:19:28.191657",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-32.xml",
+      "xml_sha256": "732ea9eee2160c30252881d0558e52571295218fb7d1ec9235b99978a61781f5"
+    },
+    "33": {
+      "xml_mtime": "2026-04-06T04:19:27.637655",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-33.xml",
+      "xml_sha256": "f2f31651f1f5628d2fc89244c3d689c98d1f6e675a975c183f40490e802fa643"
+    },
+    "34": {
+      "xml_mtime": "2026-04-06T04:19:27.187654",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-34.xml",
+      "xml_sha256": "db486ce8337ec02da0f04a018ba80edd8dae75dbb1afe8a32cf76f7921e67bcc"
+    },
+    "35": {
+      "xml_mtime": "2026-04-06T04:19:26.628652",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-35.xml",
+      "xml_sha256": "294c56aeffeb172e134e2c167e0e9a5938814b4c4d85ad3f2f20335e9abdbf18"
+    },
+    "36": {
+      "xml_mtime": "2026-04-06T04:19:26.155650",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-36.xml",
+      "xml_sha256": "a664a9b79f3bbdf222f74dbfd4a81eeacf325bee3eaaff22e568309252bd3446"
+    },
+    "37": {
+      "xml_mtime": "2026-04-06T04:19:25.607648",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-37.xml",
+      "xml_sha256": "e8bf10c2d734d85f245b072eda0b16e1854864ca8d64620897efaf160b8aaf42"
+    },
+    "38": {
+      "xml_mtime": "2026-04-06T04:19:25.170646",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-38.xml",
+      "xml_sha256": "5ed1bd77035e1e5fc30891576766cf2be11101edf93cef3c09a4a585d35fe952"
+    },
+    "39": {
+      "xml_mtime": "2026-04-06T04:19:24.675645",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-39.xml",
+      "xml_sha256": "733615550a956034915ea1512027b048f9873a1d02c9d31724388dc5dc3112be"
+    },
+    "4": {
+      "xml_mtime": "2026-04-06T04:19:36.329687",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-4.xml",
+      "xml_sha256": "d237a0c55a0d5b924b45e2c9bc90599030663e17603cbc8ef8d0d2802ecebce0"
+    },
+    "40": {
+      "xml_mtime": "2026-04-06T04:19:24.215643",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-40.xml",
+      "xml_sha256": "c5deb96a8124bc3c4df6cc908af98a0945e0cf3e7e0c19900315b806739c1d4f"
+    },
+    "41": {
+      "xml_mtime": "2026-04-06T04:19:23.715641",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-41.xml",
+      "xml_sha256": "2fa12b8a8c42ca250adb2cd3e6cddc99a657725f0377213fbff05bc216df148d"
+    },
+    "42": {
+      "xml_mtime": "2026-04-06T04:19:23.234639",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-42.xml",
+      "xml_sha256": "fba75687dfe7032de36b2705f62f5a869ec69adfb46b4d9ce65083467fd80f92"
+    },
+    "43": {
+      "xml_mtime": "2026-04-06T04:19:22.673637",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-43.xml",
+      "xml_sha256": "e993cdd0d4355955a5dcbcff52b9628c9e01a83ca477375b887819f477e94fb9"
+    },
+    "44": {
+      "xml_mtime": "2026-04-06T04:19:22.161635",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-44.xml",
+      "xml_sha256": "56d77bfdcb7dad6feeb66919adb1225001e6207dfc97296a5f8ba76176342e9f"
+    },
+    "45": {
+      "xml_mtime": "2026-04-06T04:19:20.958631",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-45.xml",
+      "xml_sha256": "4843775a795efacf5da9614ff122b25590b5b1d797e123d3cb8fa1ba6f6d71b5"
+    },
+    "46": {
+      "xml_mtime": "2026-04-06T04:19:20.349629",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-46.xml",
+      "xml_sha256": "f159e504c914667a43766701875c3fd1df3783c47bc38bb40ff21b511d10824a"
+    },
+    "47": {
+      "xml_mtime": "2026-04-06T04:19:19.823627",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-47.xml",
+      "xml_sha256": "c2d808ab2994577de0afc2b8fa21a99aed43f839e93495b5a8801522f67d8c2d"
+    },
+    "48": {
+      "xml_mtime": "2026-04-06T04:19:19.351625",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-48.xml",
+      "xml_sha256": "2fa991809ea7ebd24cc3b7d84ead4208cbf431e3b73d37c391e398e608824288"
+    },
+    "49": {
+      "xml_mtime": "2026-04-06T04:19:18.966624",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-49.xml",
+      "xml_sha256": "03668ceb6e35c3c08285438dbad15b9f1721c1302fd220ae8b4b0774ab775e6b"
+    },
+    "5": {
+      "xml_mtime": "2026-04-06T04:19:36.086686",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-5.xml",
+      "xml_sha256": "54d25c6798957445289215e6a6918386b917d42e3c08209d5eb654da3fb2d9a0"
+    },
+    "50": {
+      "xml_mtime": "2026-04-06T04:19:18.343621",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-50.xml",
+      "xml_sha256": "77664e941516271e421fd0975c22e77949759d6fad21250915cbbb5b7b260654"
+    },
+    "51": {
+      "xml_mtime": "2026-04-06T04:19:17.990620",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-51.xml",
+      "xml_sha256": "7511d02e0357301636830f7fc69aad740aab3cfde3bc4489e7a85f45b5a77fc5"
+    },
+    "52": {
+      "xml_mtime": "2026-04-06T04:19:17.832620",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-52.xml",
+      "xml_sha256": "c05db30f846abf9e1fbaa7025ce8b7ba67bf298847ed61675baa47bf492e7f14"
+    },
+    "53": {
+      "xml_mtime": "2026-04-06T04:19:17.484618",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-53.xml",
+      "xml_sha256": "30873c7a640d6ab2de1c11da36e3dc38af7b0314d18cd5c8efdf7db2b9f37129"
+    },
+    "54": {
+      "xml_mtime": "2026-04-06T04:19:17.005617",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-54.xml",
+      "xml_sha256": "f00831c878fb393ddf15b830d7eb2d6a6b712e5005a8c62edef7f9358f555593"
+    },
+    "55": {
+      "xml_mtime": "2026-04-06T04:19:16.532615",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-55.xml",
+      "xml_sha256": "0d40b772bfdc6cd15b109c49bc6567b6e8abe9bb5ebdd6cdfeb2999b8cdb176c"
+    },
+    "56": {
+      "xml_mtime": "2026-04-06T04:19:16.202614",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-56.xml",
+      "xml_sha256": "cc76c0d5fda281d3ad29873de84ddf8402abddfb980c1538a5e7a986a2abcc80"
+    },
+    "57": {
+      "xml_mtime": "2026-04-06T04:19:15.805612",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-57.xml",
+      "xml_sha256": "39b69cc7a271e7ca27f052d7ad212cceb2bf5cf537a7a377b29df0184db119dd"
+    },
+    "58": {
+      "xml_mtime": "2026-04-06T04:19:15.517611",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-58.xml",
+      "xml_sha256": "3576a44327ed3ee32ee61c15aeb418c1b2c853f9ef8ed12b07039f3332a6430d"
+    },
+    "59": {
+      "xml_mtime": "2026-04-06T04:19:15.185610",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-59.xml",
+      "xml_sha256": "db482ad275a071aac465682d37610028e49728d483dd44cc541a49c9b17e8d10"
+    },
+    "6": {
+      "xml_mtime": "2026-04-06T04:19:35.837685",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-6.xml",
+      "xml_sha256": "56a5c27ebfd4c34a1a741d3f619341202727ca42ead6c0ef13c6e38a558db765"
+    },
+    "60": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_60.parquet",
+      "corrections_applied": {
+        "active": [],
+        "pending": []
+      },
+      "corrections_registry_hash": "9a62dbf3d905be84cfe67bfd364ecbbbc9a7a8a5aa1c482107457e8d9daa2abb",
+      "last_run": "2026-05-26T15:28:23.840823",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-60/STATUTE-60_2026-05-26-15H-28M-22S.xlsx",
+      "output_sha256": "280483db5324af96cc6b48648f94dba23a00d2fdc97b6d7c4e430ee541ce5811",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-60/STATUTE-60_2026-05-26-15H-28M-22S_SME.xlsx",
+      "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_60.json",
+      "xml_mtime": "2026-04-06T04:19:14.863609",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-60.xml",
+      "xml_sha256": "2153464cfed4a69d1fa352efeda424640f1e9d541b93f68f14f3f38d85b45fa0"
+    },
+    "61": {
+      "xml_mtime": "2026-04-06T04:19:14.483607",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-61.xml",
+      "xml_sha256": "3657936d487bf1e291ca05c83543719527a2cda3457588e73a3cb217ce35338d"
+    },
+    "62": {
+      "xml_mtime": "2026-04-06T04:19:13.846605",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-62.xml",
+      "xml_sha256": "cc8806a84611ee5b0d100a6bf318b73923a12b88a5e7e75f23bf18b762f5904f"
+    },
+    "63": {
+      "xml_mtime": "2026-04-06T04:19:13.418603",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-63.xml",
+      "xml_sha256": "046ed256bf719fcb4ecd50cc88031cd91143abafac435e24ccdaff9e6363c592"
+    },
+    "64": {
+      "xml_mtime": "2026-04-06T04:19:12.991602",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-64.xml",
+      "xml_sha256": "af5a4384ba3024725183d8417d2d75bce8805a1f52bb199961ff4a30f415caf7"
+    },
+    "65": {
+      "xml_mtime": "2026-04-06T04:19:12.497600",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-65.xml",
+      "xml_sha256": "d6c73bf6470d2ecee9e6fa2867afae0218495021051248af38c36c59b0c6ee66"
+    },
+    "66": {
+      "xml_mtime": "2026-04-06T04:19:12.220599",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-66.xml",
+      "xml_sha256": "b023610301479026a94f2af640418a22d1ed1158e56133c1abf7cb460af0bd5b"
+    },
+    "67": {
+      "last_run": "2026-05-17T01:09:48.671215",
+      "status": "validate_failed",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_67.json",
+      "xml_mtime": "2026-04-06T04:19:11.944598",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-67.xml",
+      "xml_sha256": "9259c6867455f520281c11e9b9e5005579282493a5180e3e0f54911beecbdb53"
+    },
+    "68": {
+      "xml_mtime": "2026-04-06T04:19:11.678597",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-68.xml",
+      "xml_sha256": "bff979fa9b33282e2fae43a28687efdf33c9e13e6ae05746789f24ee4b3682a3"
+    },
+    "69": {
+      "xml_mtime": "2026-04-06T04:19:11.234596",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-69.xml",
+      "xml_sha256": "8c1f0d881a5e47e51b1c4ddd9d93a3d70992c827853225c50b1fcb3cf49b4247"
+    },
+    "7": {
+      "xml_mtime": "2026-04-06T04:19:35.578684",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-7.xml",
+      "xml_sha256": "01d7486ff72e85bf574602d7e65849e02c73e3cd7a94d5319d1fd43b02297b7b"
+    },
+    "70": {
+      "xml_mtime": "2026-04-06T04:19:10.978595",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-70.xml",
+      "xml_sha256": "26ea17fd295e257544303ff7f4e8cb1ce5cdc3fbf066c051fe2fb87d652fd915"
+    },
+    "71": {
+      "xml_mtime": "2026-04-06T04:19:10.578593",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-71.xml",
+      "xml_sha256": "04f017d1e9b6498b477b12b2307ff0befbd3465cfcbbad5e38eb99263e90b733"
+    },
+    "72": {
+      "status": "stale",
+      "xml_mtime": "2026-05-18T15:39:03.299594",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-72.xml",
+      "xml_sha256": "e41347d1031eaacea42a0ed5f769ba02e4c128b7e6fb20d248d1b349d1fd1a47"
+    },
+    "73": {
+      "xml_mtime": "2026-04-06T04:19:09.927591",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-73.xml",
+      "xml_sha256": "bf7fc6e194db4ab6b6060963568347566c86c8ec271a2c7155390f6877f2cb83"
+    },
+    "74": {
+      "last_run": "2026-05-22T11:05:15.772820",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-74/STATUTE-74_2026-05-22-11H-05M-12S.xlsx",
+      "output_sha256": "28137e745804d4f9c8faab1c4a13a39ce0f277bd1aa0825d2458085838e0fad6",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-74/STATUTE-74_2026-05-22-11H-05M-12S_SME.xlsx",
+      "status": "success",
+      "xml_mtime": "2026-05-18T15:28:13.073498",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-74.xml",
+      "xml_sha256": "872bda099d2a87ae3f0477a88ba89fb7ed091ab264ba9f102dd45ad791716f4f"
+    },
+    "75": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_75.parquet",
+      "corrections_applied": {
+        "active": [
+          2,
+          3
+        ],
+        "pending": []
+      },
+      "corrections_registry_hash": "9a62dbf3d905be84cfe67bfd364ecbbbc9a7a8a5aa1c482107457e8d9daa2abb",
+      "last_run": "2026-05-27T19:43:56.293605",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-75/STATUTE-75_2026-05-27-19H-43M-55S.xlsx",
+      "output_sha256": "a5b6ee5d375615d187112535ec68f5ead696ff626c608d6c55de69c27dea65fa",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-75/STATUTE-75_2026-05-27-19H-43M-55S_SME.xlsx",
+      "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_75.json",
+      "xml_mtime": "2026-04-06T04:19:09.384589",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-75.xml",
+      "xml_sha256": "14d747e83103bee34f8b7c8ea97511b36e1392e1708c5d179e5de4ad7d6bc3c5"
+    },
+    "76": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_76.parquet",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4
+        ],
+        "pending": []
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-27T20:00:16.342572",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-76/STATUTE-76_2026-05-27-20H-00M-14S.xlsx",
+      "output_sha256": "91a9f5045831116e0c28c687192161744b180b723164ded92078a5fab3f383ff",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-76/STATUTE-76_2026-05-27-20H-00M-14S_SME.xlsx",
+      "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_76.json",
+      "xml_mtime": "2026-04-06T04:19:09.115588",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-76.xml",
+      "xml_sha256": "55666f478f9d440c8e4670e798e139d232b5e35aca3d0157b695bc7f0c5d7520"
+    },
+    "77": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_77.parquet",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4
+        ],
+        "pending": []
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-27T19:56:46.628116",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-77/STATUTE-77_2026-05-27-19H-56M-45S.xlsx",
+      "output_sha256": "b6c8be8b0a7ddc3870b953054a134465f78a109a9ddcfdbcfee76e58eff8ff6f",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-77/STATUTE-77_2026-05-27-19H-56M-45S_SME.xlsx",
+      "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_77.json",
+      "xml_mtime": "2026-04-06T04:19:08.706586",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-77.xml",
+      "xml_sha256": "2c4633daddd156900e6a05d20b2a0fa3d1584ec7e0e5b9a8289fa6d73ff4f71c"
+    },
+    "78": {
+      "checkpoint_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/enriched_78.parquet",
+      "corrections_applied": {
+        "active": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "pending": []
+      },
+      "corrections_registry_hash": "eea0c540aad6652bc36af64479e1e5336fce8d6a405ff74422dd129facb0c0ca",
+      "last_run": "2026-05-27T20:04:19.630799",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-78/STATUTE-78_2026-05-27-20H-04M-18S.xlsx",
+      "output_sha256": "0777705a64a9782ff1d2539d02ca42d242cbca30d957866a410177675c1253f4",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-78/STATUTE-78_2026-05-27-20H-04M-18S_SME.xlsx",
+      "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_78.json",
+      "xml_mtime": "2026-04-06T04:19:08.384585",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-78.xml",
+      "xml_sha256": "5a53bb233440efd15aa6809cc3ed607ae5a0997e4379f255e4813202ad67bf5f"
+    },
+    "79": {
+      "xml_mtime": "2026-04-06T04:19:08.085584",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-79.xml",
+      "xml_sha256": "6af4d2caedcd73ca36fd10495d3c350d15fbf4054dc4afb9b500a890fcaeb2e0"
+    },
+    "8": {
+      "xml_mtime": "2026-04-06T04:19:35.380684",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-8.xml",
+      "xml_sha256": "7f09d7117d78450ae2b7cab3cbcb0e4bb3bbd323ab6677b6d95cd006bcd1dd8a"
+    },
+    "80": {
+      "xml_mtime": "2026-04-06T04:19:07.758583",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-80.xml",
+      "xml_sha256": "38ab13077b5ec9cf89de1bacd861fb9785c80a3e138407576ea189be1a58f34e"
+    },
+    "81": {
+      "xml_mtime": "2026-04-06T04:19:07.385581",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-81.xml",
+      "xml_sha256": "0d5c7c3952058770c0e987263d49fbb0e2b03ee140d6c450603d32d1eadaa778"
+    },
+    "82": {
+      "xml_mtime": "2026-04-06T04:19:07.106580",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-82.xml",
+      "xml_sha256": "b314c7a9f641bc80833cabece1f3d7091dfd6b0b1de88eec96b7953a62d04941"
+    },
+    "83": {
+      "xml_mtime": "2026-04-06T04:19:06.761579",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-83.xml",
+      "xml_sha256": "6a481f0a6fdc66e50e057c511e28a00e2f0d6e34844779def6636266ca9cd186"
+    },
+    "84": {
+      "xml_mtime": "2026-04-06T04:19:06.508578",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-84.xml",
+      "xml_sha256": "97f46d6da19a49479e8ca6298d54169ff259f03170b2365e1ee797ed23c7d62c"
+    },
+    "85": {
+      "xml_mtime": "2026-04-06T04:19:06.059577",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-85.xml",
+      "xml_sha256": "69dbd2a775ad47f6d9a3146bc306ced31facb6ff64d06a3b19bf0299f9a11271"
+    },
+    "86": {
+      "xml_mtime": "2026-04-06T04:19:05.808576",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-86.xml",
+      "xml_sha256": "1d506f8ff9183676a4600e8c0f0099249a6fc1750959e181b91320420e9785f8"
+    },
+    "87": {
+      "xml_mtime": "2026-04-06T04:19:05.462574",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-87.xml",
+      "xml_sha256": "ffe107ccd29b58ee6b5ce11f1fc4708988c2138bce311419f3033a6dfd3be823"
+    },
+    "88": {
+      "xml_mtime": "2026-04-06T04:19:05.170573",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-88.xml",
+      "xml_sha256": "424b489291b57c5d68511e126aeda0db2bb68ab1469eaeb62e9e34e4bd240c93"
+    },
+    "89": {
+      "xml_mtime": "2026-04-06T04:19:04.700572",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-89.xml",
+      "xml_sha256": "4a6284c758dfeeb6e5ae2dca4133d1155a7ef886d611ce7f10dc2ca3515beb1b"
+    },
+    "9": {
+      "xml_mtime": "2026-04-06T04:19:35.144683",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-9.xml",
+      "xml_sha256": "29a5405237acf31402afb533d0e10fa5b39ca0f45df47e9b9942fec8eef49f07"
+    },
+    "90": {
+      "xml_mtime": "2026-04-06T04:19:04.427571",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-90.xml",
+      "xml_sha256": "8c64d29f9c3979aba8a7fb240e8fdede7081ec2dcda5a55cedc9fb8a70852260"
+    },
+    "91": {
+      "xml_mtime": "2026-04-06T04:19:03.923569",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-91.xml",
+      "xml_sha256": "dd29ea5426509f1b0073e38e3cf662a3346d5daf43583c66f1c2acbee59712cb"
+    },
+    "92": {
+      "xml_mtime": "2026-04-06T04:19:03.594568",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-92.xml",
+      "xml_sha256": "5ece9cb5e952246220ae407d2b616668f58bf387e69c7edef7a001fb0d1a4ec0"
+    },
+    "93": {
+      "xml_mtime": "2026-04-06T04:19:03.029566",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-93.xml",
+      "xml_sha256": "0459bf8ee9350dc4585663a47258a5eb9673ea2933c727602d4e14af0015e150"
+    },
+    "94": {
+      "xml_mtime": "2026-04-06T04:19:02.700564",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-94.xml",
+      "xml_sha256": "3b2076b30889f2166f0ed5654d13011a83339707c52914a644a02444edc8a2da"
+    },
+    "95": {
+      "xml_mtime": "2026-04-06T04:19:02.149562",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-95.xml",
+      "xml_sha256": "213b23b8bee7f43feb126a1aaa38194c0f9be37986bc1bc5d29e0d56a79ac6ea"
+    },
+    "96": {
+      "xml_mtime": "2026-04-06T04:19:01.834561",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-96.xml",
+      "xml_sha256": "659b172695062e23b9b6ba8abb96e0a44e438398ba9afdfe1f08252d332157bd"
+    },
+    "97": {
+      "xml_mtime": "2026-04-06T04:19:01.420560",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-97.xml",
+      "xml_sha256": "93e8784bdeb676a6eb7ccc70cc5007ff1b7bec5c57b0a64a7bf68f22e211c406"
+    },
+    "98": {
+      "last_run": "2026-05-17T01:17:47.597134",
+      "output_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-98/STATUTE-98_2026-05-17-01H-17M-34S.xlsx",
+      "output_sha256": "856f03b10326de0795e8d8a07c08cde02a2c17bff97c0f67879b25bddf2771bb",
+      "sme_path": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/Volume-98/STATUTE-98_2026-05-17-01H-17M-34S_SME.xlsx",
+      "status": "success",
+      "validation_report": "/home/G39248410/citizen_voice/Code/data-preprocessing-pipeline/processed_output/scratch/validation_report_98.json",
+      "xml_mtime": "2026-04-06T04:19:01.125559",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-98.xml",
+      "xml_sha256": "3fd58167efd92718e88120933072017a373a3852cf4a95c4b3cee887fc7b4a40"
+    },
+    "99": {
+      "xml_mtime": "2026-04-06T04:19:00.612557",
+      "xml_path": "/groups/brooksgrp/laws/us_federal_statutes/Updated_2026-04-06/STATUTE-99.xml",
+      "xml_sha256": "032a082a301e81908502222d505c5c4ad2254763943d1bb2ca5a92fef3e2f85b"
+    }
+  }
+}

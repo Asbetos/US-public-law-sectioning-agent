@@ -1,0 +1,244 @@
+{
+  "entries": [
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-27T15:21:31.717398",
+          "vol": 75
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "affected_examples": [
+          "PL 87-292 (joint resolution, two unnumbered 'That...' sections at XML lines 34438 and 34441)",
+          "PL 87-356 (introductory section at line 43375 plus <quotedContent> amendatory section at line 43378)"
+        ],
+        "description": "When a pLaw contains more than one <section> element whose section number cannot be extracted (no <num value=...> attribute, e.g. joint-resolution 'Resolved that...' sections and amendatory sections whose body is wrapped in <quotedContent>), assign a sequential intra-law ordinal (1, 2, 3, ...) to the SectionNumber position of the UniqueKey instead of leaving it as '000000000000001' for every such section. The ordinal should follow document order (OriginalOrder). This preserves uniqueness of UniqueKey without inventing section numbers the source XML does not contain."
+      },
+      "discovered_in_vol": 75,
+      "evidence": {
+        "rule_or_signal": "Both flagged unique_key duplicates share the section-number slot '000000000000001' which is the extractor's null-fallback. Inspection of the XML shows the duplication is not OCR noise \u2014 the source legitimately contains multiple sibling <section> elements without parseable section numbers.",
+        "xml_excerpt": "PL 87-292 (lines 34438-34442): two <section class=\"inline\"><content class=\"inline\"> nodes separated by a <resolvingClause>.  PL 87-356 (lines 43375-43402): one <section> with <content>, followed by a <section><quotedContent><num value=\"207\">...</quotedContent></section>."
+      },
+      "id": 2,
+      "proposed_at": "2026-05-27T15:21:31.717398",
+      "review_note": "Surgical if-conditions added for PL 87-292 and 87-356",
+      "reviewed_at": "2026-05-27T19:28:09.706601",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "(any pLaw with multiple sections lacking <num>)",
+        "pattern": "multiple sections within a single pLaw where SectionNumber is null collapse to identical UniqueKey",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-27T19:02:21.000000",
+          "vol": 75
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "affected_examples": [
+          "PL 87-195 Foreign Assistance Act of 1961 (XML lines 24625-26315): <main> contains 4 top-level <part> elements (Part I..IV), no top-level <section>.",
+          "PL 87-328 Delaware River Basin Compact (XML lines 38889-40150): <main> contains 2 top-level <part> elements, no top-level <section>.",
+          "PL 87-397 IRC of 1954 identifying-numbers amendment (XML lines 47129-47270): <main> contains 4 top-level <subsection> elements (a, b, c, d), no top-level <section>."
+        ],
+        "description": "Teach the extractor's section walker to handle pLaws whose <main> has zero top-level <section> children. Two shapes seen so far: (1) multi-part Acts where <main> contains <part> elements directly (recurse into part/section and emit a row per section, carrying the part heading into the Division columns); (2) short single-section amending Acts where <main> contains <subsection> elements directly (synthesize a single section row per pLaw and walk into the subsections normally). Today these pLaws are silently dropped from the parsed output (0 rows emitted), which is why distinct LawIdentifier counts fall below the public-pLaw count in the XML."
+      },
+      "discovered_in_vol": 75,
+      "evidence": {
+        "rule_or_signal": "Validation report flagged 'Distinct LawIdentifier count 398 != public pLaw count in XML 401 (diff -3)' for vol 75. Diff of enriched_75.parquet against STATUTE-75.xml pinpoints the three missing pLaws; all three share the same root cause (zero <section> children directly under <main>).",
+        "xml_excerpt": "PL 87-195 <main>: <longTitle>, <enactingFormula>, <sidenote>, <part>, <part>, <part>, <part>, <action>.  PL 87-328 <main>: <longTitle>, <preamble>, <enactingFormula>, <part>, <part>, <action>.  PL 87-397 <main>: <longTitle>, <enactingFormula>, <sidenote>, <subsection>, <subsection>, <subsection>, <subsection>, <action>."
+      },
+      "id": 3,
+      "proposed_at": "2026-05-27T19:02:21.000000",
+      "review_note": "Surgical if-conditions added for PL 87-195, 87-328, 87-397",
+      "reviewed_at": "2026-05-27T19:28:09.756463",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "(any pLaw whose <main> has zero top-level <section> children)",
+        "pattern": "<main> contains <part> elements (multi-part Act) or bare <subsection> elements (short single-section amending Act) directly, with no top-level <section>; extractor's section walker emits 0 rows for the pLaw",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-27T19:56:23.144882",
+          "vol": 77
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "88-182"
+      },
+      "discovered_in_vol": 77,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate law id 88-181: a second pLaw at xml_index 181 carries the same citableAs as the preceding (Muscatine) pLaw, but it sits in the slot expected to be 88-182 (sequence 179,180,181,[?],183,184); approvedDate (Nov 20, 1963), Stat. page (77 Stat. 337, immediately after 88-181's 77 Stat. 336), and the official title (Navajo Tribe compromise agreement) all identify this as the missing PL 88-182.",
+        "xml_excerpt": "<pLaw>\n<meta>\n<dc:title>Public Law 88\u2013181: Approving a compromise and settlement agreement of the Navajo Tribe of Indians ...</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>181</docNumber>\n<citableAs>Public Law 88\u2013181</citableAs>\n<citableAs>77 Stat. 337</citableAs>\n<approvedDate>1963-11-20</approvedDate>\n..."
+      },
+      "id": 4,
+      "proposed_at": "2026-05-27T19:56:23.144882",
+      "review_note": "Auto-approved: conf=0.95 (vol 77, PL 88-181 \u2192 88-182 Navajo Tribe settlement)",
+      "reviewed_at": "2026-05-27T19:56:39.681049",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 88\u2013181",
+        "title_substring": "approving a compromise and settlement agreement of the navajo tribe of indians and authorizing the tribe to execute and the secretary of the interior to approve any oil and gas leases"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-27T20:01:55.727866",
+          "vol": 78
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "affected_examples": [
+          "PL 88-356 (lines 34433-34442): two <appropriations level=\"small\"><heading>construction</heading> blocks under <heading>National Park Service</heading>",
+          "PL 88-356 (lines 34467-34476): two <heading>administration of territories</heading> under <heading>Office of Territories</heading>",
+          "PL 88-390 (lines 37931, 37974): two <heading>Army Security Agency</heading> intermediates",
+          "PL 88-392 (lines 39109-39124): three <heading>salaries and expenses</heading> + two <heading>construction of mint facilities</heading> under <heading>Bureau of the Mint</heading>",
+          "PL 88-511 (lines 57921-57988): four <heading>operation and maintenance</heading> + two <heading>administrative provisions</heading> under TITLE II",
+          "PL 88-527 (lines 59590-59862): two <heading>research and development</heading> + two <heading>special international exhibitions</heading>"
+        ],
+        "description": "When walking <appropriations> children of a pLaw, disambiguate duplicate-heading siblings by appending a sequential intra-heading ordinal (1, 2, 3, ...) to the heading-derived position of the UniqueKey for the 2nd and subsequent occurrences under the same parent. The ordinal should follow document order (OriginalOrder). This preserves the Division heading text while ensuring uniqueness of UniqueKey across the regular + supplemental + transferred appropriation rows that share that heading."
+      },
+      "discovered_in_vol": 78,
+      "evidence": {
+        "rule_or_signal": "9 of the 10 unique_key_duplicates in vol 78 are Division-type rows whose ContentHash differs but whose Heading-derived UniqueKey positions collide. Inspection of STATUTE-78.xml shows the source legitimately contains multiple sibling <appropriations> elements with identical <heading> text (regular + 'additional amount' supplemental + transferred). The collapse is purely a deterministic limitation of the heading-only UniqueKey scheme.",
+        "xml_excerpt": "See affected_examples for line ranges."
+      },
+      "id": 5,
+      "proposed_at": "2026-05-27T20:01:55.727866",
+      "review_note": "Auto-approved: conf=0.9 (vol 78 appropriations Division-key sibling-heading collapse \u2014 verified across PL 88-356, 88-390, 88-392, 88-511, 88-527)",
+      "reviewed_at": "2026-05-27T20:02:04.259411",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "(any appropriations pLaw with sibling <appropriations> elements sharing identical <heading> text)",
+        "pattern": "Within a single pLaw, two or more sibling <appropriations> elements (typically a regular appropriation and an immediately following supplemental 'additional amount' appropriation) share identical <heading> text under the same parent <appropriations>. The extractor builds DivisionHeadingLevel1..3 (and the UniqueKey's heading-derived positions) from the heading text path alone, so the two rows collapse to the same UniqueKey even though their <content> bodies differ.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T00:02:37.744204",
+          "vol": 78
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "affected_examples": [
+          "PL 88-643 CIA Retirement Act (vol 78): <main> contains <longTitle>, <enactingFormula>, <sidenote>, 2 <title> elements (TITLE I, TITLE II), <action>. No top-level <section>. Approved 1964-10-13. officialTitle: 'To provide for the establishment and maintenance of a Central Intelligence Agency Retirement and Disability System for a limited number of employees, and for other purposes.'"
+        ],
+        "description": "Extend the extractor's section walker to recognize <title> as a valid top-level container under <main> when no top-level <section> children exist. For PL 88-643 in vol 78 (and any other pLaw whose <main> contains <title> elements directly), walk title/section and carry the title heading into DivisionHeadingLevel1. This is similar in spirit to active correction #3 but applies to <title> containers rather than <part> or bare <subsection>."
+      },
+      "discovered_in_vol": 78,
+      "evidence": {
+        "rule_or_signal": "Orchestrator verified via XML scan + parquet diff: vol 78 XML has 408 public pLaws, parquet has 407 distinct LawIdentifier. The single missing pLaw is PL 88-643. Its <main> structure ['longTitle','enactingFormula','sidenote','title','title','action'] has zero top-level <section> children, so the standard section walker emits 0 rows and the pLaw is dropped.",
+        "xml_excerpt": "<pLaw><main><longTitle>...</longTitle><enactingFormula>...</enactingFormula><sidenote>...</sidenote><title>...TITLE I \u2014 DEFINITIONS...</title><title>...TITLE II \u2014 ESTABLISHMENT OF SYSTEM...</title><action>...</action></main></pLaw>"
+      },
+      "id": 7,
+      "proposed_at": "2026-05-28T00:02:37.744212",
+      "review_note": "Auto-approved: conf=0.95 (orchestrator-filed correction for PL 88-643 CIA Retirement Act, <title>-organized <main>. Verified missing from enriched_78.parquet via XML diff.)",
+      "reviewed_at": "2026-05-27T20:02:45.248241",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 88\u2013643",
+        "pattern": "<main> contains <title> elements at the top level with no top-level <section>; extractor's section walker emits 0 rows for the pLaw. Distinct from active #3 (which covers <part> and bare <subsection>).",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    }
+  ],
+  "next_id": 10,
+  "rejected": [
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-26T15:27:16.794132",
+          "vol": 60
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "79-466"
+      },
+      "discovered_in_vol": 60,
+      "evidence": {
+        "rule_or_signal": "Out-of-place 79-496 between 79-465 and 79-467.",
+        "xml_excerpt": "<pLaw>...</pLaw>"
+      },
+      "id": 1,
+      "proposed_at": "2026-05-26T15:27:16.794132",
+      "review_note": "smoke test cleanup",
+      "reviewed_at": "2026-05-26T15:27:30.154894",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "rejected",
+      "trigger": {
+        "law_id_substring": "79-496",
+        "title_substring": "to amend the act approved july 3, 1943, entitled \u201can act"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-27T20:01:55.727866",
+          "vol": 78
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "description": "[ORCHESTRATOR NOTE: Subagent diagnosis is FACTUALLY INCORRECT. PL 88-283 is NOT missing; PL 88-643 is the actual missing pLaw, due to a different root cause (top-level <title> elements in <main>). Proposal should be rejected as redundant \u2014 existing fallback already handles bare <citableAs>."
+      },
+      "discovered_in_vol": 78,
+      "evidence": {
+        "rule_or_signal": "Subagent claimed missing-pLaw root cause but verification by the orchestrator (XML scan + parquet diff) shows PL 88-283 IS present and PL 88-643 is the actual missing law.",
+        "xml_excerpt": "PL 88-283 already in vol 78 parquet with LawIdentifier 'Public Law 88-283'."
+      },
+      "id": 6,
+      "proposed_at": "2026-05-27T20:01:55.727866",
+      "review_note": "Orchestrator-rejected: factually incorrect diagnosis. PL 88-283 is NOT missing from parquet \u2014 it is present with hyphen-form LawIdentifier (existing fallback in extract_public_law_from_uslm line ~169 handles bare citableAs). Actual missing pLaw is PL 88-643, root cause is <title>-organized <main> (NEW shape distinct from active #3). See new entry filed separately.",
+      "reviewed_at": "2026-05-27T20:02:10.138532",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "rejected",
+      "trigger": {
+        "law_id_substring": "(any pLaw whose first <citableAs> lacks the 'Public Law ' prefix)",
+        "pattern": "For vol > 63 (modern USLM branch), the extractor parses law id from <citableAs>. When the source XML emits <citableAs>88\u2013283</citableAs> without the 'Public Law ' prefix, the prefix-substring check fails. Subagent claimed the pLaw is silently dropped \u2014 VERIFY: actual orchestrator check shows the existing fallback logic in extract_public_law_from_uslm (line ~169) DOES catch this and constructs 'Public Law {congress}-{docNumber}' from siblings. PL 88-283 IS present in vol 78 enriched parquet (with hyphen-form id 'Public Law 88-283', not en-dash). The actual missing pLaw is PL 88-643, root cause unrelated to this proposal.",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    }
+  ],
+  "schema_version": 1
+}
