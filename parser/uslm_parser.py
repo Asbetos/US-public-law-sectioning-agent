@@ -201,7 +201,8 @@ def _disambiguate_sibling_levels(section_rows):
 
 def _disambiguate_sibling_appropriations(division_rows):
     """Post-process pass for the sibling-appropriations correction family
-    (entry #5, approved 2026-05-28 by asbetos).
+    (entry #5, approved 2026-05-28 by asbetos; extended by entry #24,
+    approved 2026-05-28 by asbetos).
 
     Within a single pLaw, the extractor's appropriations walker can emit two or
     more Division rows whose ``(DivisionHeadingLevel1, DivisionHeadingLevel2,
@@ -222,6 +223,15 @@ def _disambiguate_sibling_appropriations(division_rows):
     distinct ``DivisionHeadingLevel*`` IDs — and therefore distinct UniqueKeys —
     without any change to the key-generation pipeline itself.
 
+    Entry #24 extension — case-insensitive collision detection: the downstream
+    heading-to-ID mapper in ``generate_id_keys.py`` lower-cases heading text
+    before lookup, so two heading paths that differ only in letter case
+    ("Contingent Expenses of the Senate" vs "contingent expenses of the
+    senate", PL 92-18 vol 85 TITLE II) still collapse to the same UniqueKey.
+    The grouping key is therefore case-folded; the row's heading TEXT is
+    preserved as-is, only the ordinal is appended so display case is unchanged
+    on the first row and the second row keeps its original case + ordinal.
+
     Mutates ``division_rows`` in place.
     """
     if not division_rows:
@@ -235,17 +245,25 @@ def _disambiguate_sibling_appropriations(division_rows):
 
     for law_id, indices in by_law.items():
         # Within a single pLaw, group by full (L1, L2, L3) heading triple.
+        # The grouping key is case-folded so headings that differ only in
+        # letter case still collide (the downstream heading-to-ID mapper
+        # lower-cases before lookup; see generate_id_keys.handle_division_headings).
         path_groups = {}
+        path_order = []
         for i in indices:
             row = division_rows[i]
             path = (
-                (row.get("DivisionHeadingLevel1") or "").strip(),
-                (row.get("DivisionHeadingLevel2") or "").strip(),
-                (row.get("DivisionHeadingLevel3") or "").strip(),
+                (row.get("DivisionHeadingLevel1") or "").strip().casefold(),
+                (row.get("DivisionHeadingLevel2") or "").strip().casefold(),
+                (row.get("DivisionHeadingLevel3") or "").strip().casefold(),
             )
-            path_groups.setdefault(path, []).append(i)
+            if path not in path_groups:
+                path_groups[path] = []
+                path_order.append(path)
+            path_groups[path].append(i)
 
-        for path, group_indices in path_groups.items():
+        for path in path_order:
+            group_indices = path_groups[path]
             if len(group_indices) < 2:
                 continue  # No collision — nothing to disambiguate.
             # Append a sequential ordinal to the deepest non-null heading level
