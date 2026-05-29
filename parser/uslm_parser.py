@@ -373,6 +373,122 @@ def _walk_container_recursively(elem, ns, plaw_meta, labels, rows_out):
             _walk_container_recursively(child, ns, plaw_meta, new_labels[:3], rows_out)
 
 
+def _emit_appropriations_fallback_rows(container_elem, ns, plaw_meta, container_label, rows_out):
+    """Entry #25 shape (b) helper: when a top-level container (e.g. ``<chapter>``)
+    holds only ``<appropriations>`` and no ``<section>`` at any depth, synthesize
+    ONE section row per ``<appropriations>`` block so the dropped pLaw is
+    recovered.
+
+    Walks ``<appropriations>`` at any nesting depth under ``container_elem`` and
+    emits a row carrying:
+      * ``DivisionHeadingLevel1`` = ``container_label`` (the chapter / title /
+        part heading).
+      * ``DivisionHeadingLevel2`` = the outer ``<appropriations>``'s ``<heading>``
+        text (if any).
+      * ``DivisionHeadingLevel3`` = the inner ``<appropriations>``'s ``<heading>``
+        text (if any).
+      * ``Text`` = the concatenated ``<content>``/text of the deepest
+        ``<appropriations>``.
+
+    Returns the number of rows emitted.
+    """
+    law_id, approved_date, law_title, law_type = plaw_meta
+    emitted = 0
+
+    def _appr_heading_text(appr):
+        h = appr.find("uslm:heading", ns)
+        return get_clean_text(h).strip() if h is not None else ""
+
+    def _appr_body_text(appr):
+        # Prefer direct <content>; otherwise the appropriations subtree text
+        # minus headings (mirrors the upstream extractor's behavior).
+        content = appr.find("uslm:content", ns)
+        if content is not None:
+            text = get_clean_text(content)
+        else:
+            text = get_clean_text(appr, "appr")
+        return text.strip() if text else ""
+
+    outer_apprs = container_elem.findall("uslm:appropriations", ns)
+    for outer in outer_apprs:
+        outer_h = _appr_heading_text(outer)
+        inner_apprs = outer.findall("uslm:appropriations", ns)
+        if inner_apprs:
+            for inner in inner_apprs:
+                inner_h = _appr_heading_text(inner)
+                deepest = inner.findall("uslm:appropriations", ns)
+                if deepest:
+                    for d in deepest:
+                        rows_out.append(_make_section_row(
+                            law_identifiers=law_id,
+                            approved_date=approved_date,
+                            law_title=law_title,
+                            law_type=law_type,
+                            section_number=None,
+                            section_name=None,
+                            text=_appr_body_text(d) or None,
+                            div1=container_label or None,
+                            div2=outer_h or None,
+                            div3=inner_h or None,
+                        ))
+                        emitted += 1
+                else:
+                    rows_out.append(_make_section_row(
+                        law_identifiers=law_id,
+                        approved_date=approved_date,
+                        law_title=law_title,
+                        law_type=law_type,
+                        section_number=None,
+                        section_name=None,
+                        text=_appr_body_text(inner) or None,
+                        div1=container_label or None,
+                        div2=outer_h or None,
+                        div3=None,
+                    ))
+                    emitted += 1
+        else:
+            rows_out.append(_make_section_row(
+                law_identifiers=law_id,
+                approved_date=approved_date,
+                law_title=law_title,
+                law_type=law_type,
+                section_number=None,
+                section_name=None,
+                text=_appr_body_text(outer) or None,
+                div1=container_label or None,
+                div2=outer_h or None,
+                div3=None,
+            ))
+            emitted += 1
+
+    return emitted
+
+
+def _collect_bare_main_body_text(main, ns):
+    """Entry #25 shape (a) helper: collect text from bare ``<p>`` / ``<content>``
+    children of ``<main>`` that are NOT part of the metadata wrappers
+    (``<longTitle>``, ``<preamble>``, ``<resolvingClause>``, ``<enactingFormula>``,
+    ``<action>``, ``<sidenote>``).
+
+    Returns the concatenated text (joined with single spaces, stripped) or
+    an empty string if no operative body text is present.
+    """
+    SKIP_TAGS = {
+        "longTitle", "preamble", "resolvingClause", "enactingFormula",
+        "action", "sidenote", "page", "approvedDate", "footnote",
+    }
+    pieces = []
+    for child in list(main):
+        tag = child.tag.split("}")[-1]
+        if tag in SKIP_TAGS:
+            continue
+        if tag in ("p", "content"):
+            text = get_clean_text(child)
+            if text and text.strip():
+                pieces.append(text.strip())
+    return " ".join(pieces).strip()
+
+
 def _compute_law_identifier(plaw, ns, vol):
     """Mirror of the upstream extractor's law-id derivation, used by the
     recovery pass to identify which pLaws were silently dropped.
@@ -436,7 +552,8 @@ def _compute_law_identifier(plaw, ns, vol):
 
 def _recover_dropped_container_pLaws(file_path, vol, results):
     """Post-extraction recovery for the top-level-container correction family
-    (entries #3, #7, #11, #17, approved 2026-05-28 by asbetos).
+    (entries #3, #7, #11, #17, approved 2026-05-28 by asbetos; extended by
+    entry #25, approved 2026-05-28 by asbetos).
 
     A pLaw whose ``<main>`` has NO top-level ``<section>`` children — only
     container elements (``<part>``, ``<title>``, ``<chapter>``, bare
@@ -452,12 +569,25 @@ def _recover_dropped_container_pLaws(file_path, vol, results):
              title>part, etc.) → walk recursively and emit one row per
              ``<section>``, carrying container headings into Division
              columns 1-3.
+           * Entry #25 shape (b): a ``<part>``/``<title>``/``<chapter>``
+             container whose recursive walk yields ZERO rows but which holds
+             ``<appropriations>`` (PL 93-624 supplemental-appropriations
+             Joint Resolution shape: ``<chapter><appropriations>`` only, no
+             nested ``<section>``) → synthesize one row per ``<appropriations>``
+             block carrying the container heading on
+             ``DivisionHeadingLevel1`` and the appropriations headings on
+             ``DivisionHeadingLevel2/3``.
            * bare ``<subsection>`` children → synthesize ONE section row whose
              ``Text`` is the concatenated subsection text (short single-section
              amending-Act shape, e.g. PL 87-397).
            * ``<quotedContent>`` children → synthesize ONE section row whose
              ``Text`` is the quoted amendatory text (joint-resolution shape,
              e.g. PL 94-7).
+           * Entry #25 shape (a): bare ``<p>`` / ``<content>`` operative
+             paragraph(s) under ``<main>`` with no other recognized container
+             (PL 93-513 nuclear-warship Joint Resolution "policy" shape) →
+             synthesize ONE section row whose ``Text`` is the concatenated
+             text of those bare children.
 
     Mutates ``results['Sections']`` in place. Idempotent: pLaws already present
     in results are not re-walked.
@@ -505,14 +635,26 @@ def _recover_dropped_container_pLaws(file_path, vol, results):
 
         # Family member #3a / #7 / #11 (and any nested combinations):
         # walk part / title / chapter containers recursively for <section>.
+        # Entry #25 shape (b) extension: when a top-level container yields
+        # zero rows but holds <appropriations> (no nested <section> anywhere),
+        # synthesize one row per <appropriations> block instead of leaving the
+        # pLaw dropped (PL 93-624 shape: <chapter><appropriations> only).
         for tag in ("part", "title", "chapter"):
             for top_container in main.findall(f"uslm:{tag}", ns):
                 top_label = _container_label(top_container, ns)
+                before_container = len(sections_list)
                 _walk_container_recursively(
                     top_container, ns, plaw_meta,
                     [top_label] if top_label else [None],
                     sections_list,
                 )
+                if len(sections_list) == before_container:
+                    # Container produced no <section> rows. If it carries
+                    # <appropriations>, synthesize one row per block.
+                    if top_container.find("uslm:appropriations", ns) is not None:
+                        _emit_appropriations_fallback_rows(
+                            top_container, ns, plaw_meta, top_label, sections_list,
+                        )
 
         # If a container walk emitted rows, we're done for this pLaw — fall
         # through only when nothing was emitted (subsection-only / quotedContent
@@ -559,6 +701,25 @@ def _recover_dropped_container_pLaws(file_path, vol, results):
                 section_number="1",
                 section_name=None,
                 text="\n".join(t for t in quoted_texts if t) if quoted_texts else None,
+            ))
+            existing_law_ids.add(law_id)
+            continue
+
+        # Entry #25 shape (a): <main> contains bare <p> or <content> operative
+        # paragraph(s) (e.g. PL 93-513 nuclear-warship Joint Resolution) — no
+        # <section>, <part>, <title>, <chapter>, <subsection>, or
+        # <quotedContent>. Synthesize ONE section row carrying the concatenated
+        # operative text.
+        bare_body_text = _collect_bare_main_body_text(main, ns)
+        if bare_body_text:
+            sections_list.append(_make_section_row(
+                law_identifiers=law_id,
+                approved_date=approved_date,
+                law_title=law_title,
+                law_type=law_type,
+                section_number="1",
+                section_name=None,
+                text=bare_body_text,
             ))
             existing_law_ids.add(law_id)
             continue
