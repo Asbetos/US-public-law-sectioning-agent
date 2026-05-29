@@ -604,6 +604,153 @@
         "text_substring": "section 3 of the act of august 31, 1964 (78 stat. 749)"
       },
       "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:53.303445",
+          "vol": 74
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "86-463"
+      },
+      "discovered_in_vol": 74,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate law id 86-462: xml_index 78 carries PL 86-462 (Ohio River locks/dam, 74 Stat. 128, H.R. 10164) and xml_index 79 also carries PL 86-462 but for a completely different Act (Federal Deposit Insurance Act bank-merger amendment, 74 Stat. 129, S. 1062). Stat-page sequence 128 -> 129 -> 130 with subsequent PL 86-464 at xml_index 80 leaves a vacant slot for PL 86-463. PL 86-463 is the Bank Merger Act of 1960 (S. 1062, approved May 13, 1960) \u2014 the very bill the xml_index 79 pLaw enacts. The bill <ref> in the suspect's sidenote even points to /us/bill/86/s/1062 (Senate bill 1062) while the displayed text says 'H. R. 1062' \u2014 a further OCR signal that the docNumber and bill-number fields were mis-extracted on this pLaw.",
+        "xml_excerpt": "<dc:title>Public Law 86\u2013462: To amend the Federal Deposit Insurance Act to require Federal approval for mergers and consolidations of insured banks.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>462</docNumber>\n<citableAs>Public Law 86\u2013462</citableAs>\n<citableAs>74 Stat. 129</citableAs>\n<approvedDate>1960-05-13</approvedDate>\n...\n<sidenote><p class=\"centered fontsize8\">[<ref href=\"/us/bill/86/s/1062\">H. R. 1062</ref>]</p></sidenote>"
+      },
+      "id": 22,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-05-28T18:44:53.303445",
+      "review_note": "batch approve via Claude session",
+      "reviewed_at": "2026-05-28T20:36:57.165199",
+      "reviewer": "asbetos",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 86\u2013462",
+        "title_substring": "to amend the federal deposit insurance act to require federal approval for mergers and consolidations of insured banks"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:53.303445",
+          "vol": 74
+        }
+      ],
+      "confidence": 0.98,
+      "correction": {
+        "replace_with_law_id": "86-605"
+      },
+      "discovered_in_vol": 74,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: the suspect's docNumber says 360, but it sits between PL 86-604 (xml_index 220) and PL 86-606 (xml_index 222). Stat-page sequence 74 Stat. 359 -> 360 -> 361 leaves the 74 Stat. 360 slot for PL 86-605. Historically PL 86-605 (approved July 7, 1960) is the Act authorizing joint U.S.-Mexico construction of the Amistad Dam on the Rio Grande \u2014 a perfect match for the suspect's official title. The error is a systemic OCR misnumbering across every metadata field in this single pLaw (docNumber, both citableAs entries, dc:title, preface docNumber all read '360' instead of '605').",
+        "xml_excerpt": "<dc:title>Public Law 86\u2013360: To authorize the conclusion of an agreement for the Joint construction by the United States and Mexico of a major international storage dam on the Rio Grande in accordance with the provisions of the treaty of February 3, 1944, with Mexico, and for other purposes.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>360</docNumber>\n<citableAs>Public Law 86\u2013360</citableAs>\n<citableAs>74 Stat. 360</citableAs>\n<approvedDate>1960-07-07</approvedDate>\n...\n<preface>\n<page identifier=\"/us/stat/74/360\">74 <inline class=\"smallCaps\">Stat</inline>. 360</page>\n<dc:type>Public Law</dc:type> <docNumber>86\u2013360</docNumber>\n</preface>"
+      },
+      "id": 23,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-05-28T18:44:53.303445",
+      "review_note": "batch approve via Claude session",
+      "reviewed_at": "2026-05-28T20:36:57.167622",
+      "reviewer": "asbetos",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 86\u2013360",
+        "title_substring": "to authorize the conclusion of an agreement for the joint construction by the united states and mexico of a major international storage dam on the rio grande"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:54.230785",
+          "vol": 85
+        }
+      ],
+      "confidence": 0.8,
+      "correction": {
+        "description": "Generalize active correction #5's sibling-appropriations disambiguation so it catches UniqueKey collisions among <appropriations>-derived Division rows regardless of their structural sibling status or `level` attribute. Two viable approaches: (a) incorporate the <appropriations> `level` attribute (major / intermediate / small) into the heading-derived UniqueKey position so a small-level 'contingent expenses of the senate' never collides with an intermediate-level 'Contingent Expenses of the Senate' even after case-folding; or (b) extend the post-pass _disambiguate_sibling_appropriations so it triggers on ANY two Division rows within the same pLaw that end up sharing a UniqueKey (not only direct same-parent siblings), appending sequential ordinals in OriginalOrder to the deepest non-null DivisionHeadingLevel. For PL 92-18 in vol 85 the two affected rows are OriginalOrder 152 (intermediate-level 'Contingent Expenses of the Senate' under LEGISLATIVE BRANCH; Text=Senate policy committees / Automobiles / Inquiries / Folding documents / Miscellaneous items) and OriginalOrder 157 (small-level 'contingent expenses of the senate' appearing as a sibling of intermediate 'Joint Items' under LEGISLATIVE BRANCH; Text=Joint Economic Committee / Joint Committee on Atomic Energy / Joint Committee on Printing). Approach (a) is preferred because it preserves DivisionHeadingLevel2 unchanged and incorporates a real structural signal already present in the XML."
+      },
+      "discovered_in_vol": 85,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "PL 92-18 (vol 85) UniqueKey duplicate 092-018-000-002-000-000-000-D-01510-00247-00001: two Division rows under TITLE II / LEGISLATIVE BRANCH collide on the heading-derived UniqueKey position despite distinct Text and distinct case in DivisionHeadingLevel2 ('Contingent Expenses of the Senate' vs 'contingent expenses of the senate'). XML inspection at lines 5001 and 5065 shows the two are not direct structural siblings: they have different <appropriations> `level` attributes (intermediate vs small) and the small-level one appears one level shallower than expected. Active correction #5's same-parent sibling check does not fire on this cross-level shape.",
+        "xml_excerpt": "<title>\n<num value=\"II\">TITLE II</num>\n<heading class=\"centered\">INCREASED PAY COSTS</heading>\n<chapeau>For additional amounts for appropriations for the fiscal year 1971...</chapeau>\n<appropriations level=\"major\"><heading>LEGISLATIVE BRANCH</heading>\n  <appropriations level=\"intermediate\"><heading>Senate</heading>...</appropriations>\n  <appropriations level=\"intermediate\"><heading>Contingent Expenses of the Senate</heading>\n    <content class=\"firstIndent1 fontsize10\">\n      <list>\n        <listItem><listContent>\u201cSenate policy committees\u201d, $40,890;</listContent></listItem>\n        <listItem><listContent>\u201cAutomobiles and maintenance\u201d, $3,980;</listContent></listItem>\n        <listItem><listContent>\u201cInquiries and investigations\u201d, $664,955...</listContent></listItem>\n        <listItem><listContent>\u201cFolding documents\u201d, $4,415;</listContent></listItem>\n        <listItem><listContent>\u201cMiscellaneous items\u201d, $122,184...</listContent></listItem>\n      </list>\n    </content>\n  </appropriations>\n  <appropriations level=\"intermediate\"><heading>House of Representatives</heading>...</appropriations>\n  <appropriations level=\"intermediate\"><heading>Joint Items</heading>\n    <content class=\"firstIndent1 fontsize10\">\n      <list>\n        <listItem><listContent>\u201cJoint Committee on Reduction of Federal Expenditures\u201d, $5,440...</listContent></listItem>\n      </list>\n    </content>\n  </appropriations>\n  <appropriations level=\"small\"><heading>contingent expenses of the senate</heading>\n    <content class=\"firstIndent1 fontsize10\">\n      <list>\n        <listItem><listContent>\u201cJoint Economic Committee\u201d, $43,195;</listContent></listItem>\n        <listItem><listContent>\u201cJoint Committee on Atomic Energy\u201d, $27,285;</listContent></listItem>\n        <listItem><listContent>\u201cJoint Committee on Printing\u201d, $19,405;</listContent></listItem>\n      </list>\n    </content>\n  </appropriations>\n</appropriations>"
+      },
+      "id": 24,
+      "implementation_attempted_at": "2026-05-28T20:37:09.273839",
+      "implementation_commit_sha": "b593f3b6edbf82f081c5c111ac40025840022af0",
+      "implementation_notes": "Entry #24: _disambiguate_sibling_appropriations now case-folds heading paths when grouping, catching cross-level case-folded collisions (e.g. PL 92-18 'Contingent Expenses of the Senate' vs 'contingent expenses of the senate').",
+      "implementation_status": "implemented",
+      "proposed_at": "2026-05-28T18:44:54.230785",
+      "review_note": "batch approve via Claude session",
+      "reviewed_at": "2026-05-28T20:36:57.169893",
+      "reviewer": "asbetos",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "contingent expenses of the senate",
+        "law_id_substring": "Public Law 92\u201318",
+        "pattern": "Within a single appropriations pLaw (PL 92-18, vol 85, TITLE II 'INCREASED PAY COSTS'), two <appropriations> elements have heading text that case-folds to the same string ('Contingent Expenses of the Senate' at XML line 5001 vs 'contingent expenses of the senate' at XML line 5065) but differ in (a) the `level` attribute (intermediate vs small) and (b) their structural parent: the first is a direct child of <appropriations level=\"major\"><heading>LEGISLATIVE BRANCH</heading>, while the second is a `level=\"small\"` element that appears as a sibling of the intermediate <heading>Joint Items</heading> block, directly under the same LEGISLATIVE BRANCH major-level parent (no intervening intermediate-level wrapper). Active correction #5's _disambiguate_sibling_appropriations post-pass appends sequential ordinals to colliding <appropriations> siblings sharing identical <heading> text, but it does NOT trigger here because the case difference and the level mismatch break its matching criteria. Both rows collapse to UniqueKey 092-018-000-002-000-000-000-D-01510-00247-00001 even though their content differs sharply (the first row's Text covers 'Senate policy committees / Automobiles and maintenance / Inquiries and investigations / Folding documents / Miscellaneous items'; the second row's Text covers 'Joint Economic Committee / Joint Committee on Atomic Energy / Joint Committee on Printing').",
+        "scope": "extractor_code"
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-05-28T18:44:54.765557",
+          "vol": 88
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "affected_examples": [
+          "PL 93-513 Nuclear warship compensation Joint Resolution (vol 88, lines 87255-87298): <main> contains <longTitle>, <preamble>, <resolvingClause>, a bare <p class=\"inline\">That it is the policy of the United States that it will pay claims or judgments for bodily injury...</p>, and <action>. Zero containers of any recognized type. Approved 1974-12-06. 88 Stat. 1610.",
+          "PL 93-624 Urgent supplemental appropriations Joint Resolution (vol 88, lines 113301-113403): <main> contains <longTitle>, <resolvingClause>, <sidenote>, 5 <chapter> elements (CHAPTER I..V), and <action>. Each <chapter> holds only <appropriations level=\"intermediate\"> children (which themselves nest <appropriations level=\"small\">); zero <section> elements at any depth. Approved 1975-01-03. 88 Stat. 2106."
+        ],
+        "description": "Extend _recover_dropped_container_pLaws so it emits at least one synthesized row for every dropped public pLaw. Two new branches: (1) When <main> contains a bare <p> (or <content>) operative paragraph and no recognized container (the joint-resolution 'policy' shape, PL 93-513), synthesize ONE section row whose Text is the concatenated text of the <p>/<content> children of <main>. Treat <p>, <content>, and any direct text-bearing child of <main> outside <longTitle>/<preamble>/<resolvingClause>/<action> as the operative body. (2) When a <part>/<title>/<chapter> container contains only <appropriations> children (no <section>) and the upstream appropriations walker also did not emit Division rows under this pLaw (because the pLaw was dropped earlier in extraction), synthesize ONE Division row per <appropriations> block, carrying the chapter heading into DivisionHeadingLevel1 and the appropriations <heading> into DivisionHeadingLevel2/3 as appropriate. Alternatively, ensure that when the upstream extractor emits Division rows from <appropriations> blocks, it does so unconditionally \u2014 independent of whether <main> has any top-level <section>. Either fix recovers PL 93-624 (which has 11 appropriations blocks across 5 chapters)."
+      },
+      "discovered_in_vol": 88,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Orchestrator-style verification: vol 88 XML has 404 public pLaws; enriched_88.parquet has only 402 distinct LawIdentifier. XML-vs-parquet diff identifies PL 93-513 and PL 93-624 as the two missing pLaws. Inspection of each pLaw's <main> shows neither is covered by the existing recovery (active corrections #3/#7/#11/#17): PL 93-513 has no recognized container of any kind (bare <p> operative paragraph); PL 93-624 has <chapter> containers but they hold only <appropriations> (no <section>), so the recursive walker descends but emits 0 rows.",
+        "xml_excerpt": "PL 93-513 <main> excerpt (lines 87280-87295):\n<resolvingClause class=\"indent0 firstIndent1 fontsize10\"><i>Resolved by the Senate and House of Representatives of the United States of America in Congress assembled,</i></resolvingClause>\n<p class=\"inline\">That it is the policy of <sidenote>...</sidenote>the United States that it will pay claims or judgments for bodily injury, death, or damage to or loss of real or personal property proven to have resulted from a nuclear incident involving the nuclear reactor of a United States warship: <proviso><i>Provided,</i> That ...</proviso>.</p>\n<action><actionDescription>Approved December 6, 1974.</actionDescription></action>\n\nPL 93-624 <main> excerpt (lines 113317-113330):\n<chapter>\n<num value=\"I\">CHAPTER I</num>\n<heading class=\"centered\">DEPARTMENT OF LABOR</heading>\n<appropriations level=\"intermediate\">\n<heading>Manpower Administration</heading>\n<appropriations level=\"small\">\n<heading>program administration</heading>\n<content class=\"firstIndent1\">For an additional amount for \u201cProgram administration\u201d, $500,000, ...</content>\n</appropriations>\n...\n</appropriations>\n</chapter>"
+      },
+      "id": 25,
+      "implementation_attempted_at": "2026-05-28T20:37:09.277310",
+      "implementation_commit_sha": "3f5d14792bac8ba2c843b68bca5f4479cdbc030f",
+      "implementation_notes": "Entry #25: extended _recover_dropped_container_pLaws with shape (a) bare <p>/<content> operative paragraph (PL 93-513) and shape (b) <chapter>/<title>/<part> holding only <appropriations> (PL 93-624).",
+      "implementation_status": "implemented",
+      "proposed_at": "2026-05-28T18:44:54.765557",
+      "review_note": "batch approve via Claude session",
+      "reviewed_at": "2026-05-28T20:36:57.172221",
+      "reviewer": "asbetos",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "(any pLaw whose <main> has zero top-level <section>, <part>, <title>, <chapter>, <subsection>, or <quotedContent> children, OR whose <chapter>/<title>/<part> containers hold only <appropriations> children with no nested <section>)",
+        "pattern": "Extends the top-level-container recovery family (active corrections #3, #7, #11, #17) to two additional shapes seen in vol 88: (a) joint-resolution 'policy' shape where <main> contains only <longTitle>, <preamble>, <resolvingClause>, a bare <p class=\"inline\">That ...</p> operative paragraph, and <action> \u2014 no <section>, <part>, <title>, <chapter>, <subsection>, or <quotedContent> anywhere; (b) supplemental-appropriations joint-resolution shape where <main> contains <chapter> elements but each <chapter> holds only <appropriations> children (no nested <section>). In shape (b) the recovery walker already descends into <chapter> via _walk_container_recursively, but finds no <section> and no recognized nested container, so emits 0 rows. Both pLaws are silently dropped, producing the validation warning 'Distinct LawIdentifier count 402 != public pLaw count in XML 404 (diff -2)' for vol 88. Distinct from active #3 (covers <part> and bare <subsection>), #7 (<title>), #11 (<chapter> with nested <section>), and #17 (<quotedContent>).",
+        "scope": "extractor_code"
+      },
+      "type": "other"
     }
   ],
   "next_id": 1,
