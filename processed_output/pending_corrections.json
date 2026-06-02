@@ -751,9 +751,536 @@
         "scope": "extractor_code"
       },
       "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:48.656869",
+          "vol": 96
+        }
+      ],
+      "confidence": 0.96,
+      "correction": {
+        "replace_with_law_id": "97-253"
+      },
+      "discovered_in_vol": 96,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place / duplicate in XML order: this pLaw (96 Stat. 763, approved Sept. 8, 1982) sits between PL 97-252 (96 Stat. 718) and PL 97-254 (96 Stat. 808), where the slot expects 253. Its number 258 collides with the genuine PL 97-258 (Title 31 codification, 96 Stat. 877). docNumber 253 is entirely absent from the volume.",
+        "xml_excerpt": "<dc:title>Public Law 97\u2013258: To provide for reconciliation pursuant to the first concurrent resolution on the budget for fiscal year 1983 (S. Con. Res. 92, Ninety-seventh Congress).</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>258</docNumber>\n<citableAs>Public Law 97\u2013258</citableAs>\n<citableAs>96 Stat. 763</citableAs>\n<approvedDate>1982-09-08</approvedDate>"
+      },
+      "id": 26,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:48.656869",
+      "review_note": "auto-approved: confidence 0.96 > 0.8; vol 96; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.429301",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 97\u2013258",
+        "title_substring": "to provide for reconciliation pursuant to the first concurrent resolution on the budget for fiscal year 1983 (s. con. res. 92, ninety-seventh congress)"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:48.656869",
+          "vol": 96
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "97-424"
+      },
+      "discovered_in_vol": 96,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate law id 97-414: the citableAs reads 97-414 (colliding with the genuine PL 97-414 Orphan Drug Act, 96 Stat. 2049) while every other field in the same pLaw (dc:title, docNumber, preface docNumber) reads 424. At 96 Stat. 2097 it sits between PL 97-423 (96 Stat. 2096) and PL 97-425 (96 Stat. 2201) \u2014 the 424 slot.",
+        "xml_excerpt": "<dc:title>Public Law 97\u2013424: To authorize appropriations for construction of certain highways in accordance with title 23, United States Code, for highway safety, for mass transportation in urban and rural areas, and for other purposes.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>424</docNumber>\n<citableAs>Public Law 97\u2013414</citableAs>\n<citableAs>96 Stat. 2097</citableAs>\n<approvedDate>1983-01-06</approvedDate>\n...\n<preface>\n<page identifier=\"/us/stat/96/2097\">96 STAT. 2097</page>\n<dc:type>Public Law</dc:type> <docNumber>97\u2013424</docNumber>\n</preface>"
+      },
+      "id": 27,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:48.656869",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 96; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.432417",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 97\u2013414",
+        "title_substring": "to authorize appropriations for construction of certain highways in accordance with title 23, united states code, for highway safety, for mass transportation in urban and rural areas, and for other purposes"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:49.135927",
+          "vol": 100
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "99-366"
+      },
+      "discovered_in_vol": 100,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: 99-866 sits between 99-365 (100 Stat. 772) and 99-367 (100 Stat. 774); the slot expected 99-366, which is otherwise missing from the volume.",
+        "xml_excerpt": "<docNumber>866</docNumber>\n<citableAs>Public Law 99\u2013866</citableAs>\n<citableAs>100 Stat. 773</citableAs>\n<approvedDate>1986-07-31</approvedDate>"
+      },
+      "id": 28,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:49.135927",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 100; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.435335",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 99\u2013866",
+        "title_substring": "to ratify the february 1, 1986, sequestration order of the president for fiscal year 1986 issued under section 252 of the balanced budget and emergency deficit control act of 1985"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:49.375058",
+          "vol": 101
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "100-61"
+      },
+      "discovered_in_vol": 101,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate law number 51 reappears at 101 Stat. 377 sandwiched between Public Law 100-60 (101 Stat. 376) and Public Law 100-62 (101 Stat. 378); the slot at page 377 requires Public Law 100-61.",
+        "xml_excerpt": "<dc:type>Public Law</dc:type><docNumber>51</docNumber>\n<citableAs>Public Law 100\u201351</citableAs>\n<citableAs>101 Stat. 377</citableAs>"
+      },
+      "id": 29,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:49.375058",
+      "review_note": "auto-approved: confidence 0.95 > 0.8; vol 101; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.438264",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 100\u201351",
+        "title_substring": "designating the week beginning june 21, 1987. as \u201cnational outward bound week\u201d"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:49.616544",
+          "vol": 102
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "100-644"
+      },
+      "discovered_in_vol": 102,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate law number 629: this pLaw (102 Stat. 3339, H.J. Res. 604) reuses 629 already held by the U.S.-Soviet fishery agreement at 102 Stat. 3286; it sits in XML order between 100-643 and 100-645 where 644 is expected.",
+        "xml_excerpt": "<docNumber>629</docNumber>\n<citableAs>Public Law 100\u2013629</citableAs>\n<citableAs>102 Stat. 3339</citableAs>\n<officialTitle>Designating February 5 through 11, 1989, as \u201cNational Bum Awareness Week\u201d.</officialTitle>\n<sidenote>...[<ref href=\"/us/bill/100/hjres/604\">H.J. Res. 604</ref>]</sidenote>"
+      },
+      "id": 30,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:49.616544",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 102; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.441211",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 100\u2013629",
+        "title_substring": "designating february 5 through 11, 1989, as \u201cnational bum awareness week\u201d"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:49.616544",
+          "vol": 102
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 716."
+      },
+      "discovered_in_vol": 102,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Two sections in PL 100-607 Subtitle B carry the same number SEC. 711, collapsing to one UniqueKey; the second (Establishment of Demonstration Program) follows SEC. 715 and precedes Subtitle C / SEC. 721, so its true number is 716.",
+        "xml_excerpt": "<num value=\"715\">SEC. 715. </num><heading>NURSING SCHOLARSHIPS.</heading>\n...\n<section>\n<num value=\"711\">SEC. 711 </num><heading>ESTABLISHMENT OF DEMONSTRATION PROGRAM FOR STUDENT LOANS WITH RESPECT TO SERVICE IN CERTAIN HEALTH CARE FACILITIES IN UNDERSERVED AREAS.</heading>"
+      },
+      "id": 31,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:49.616544",
+      "review_note": "auto-approved: confidence 0.92 > 0.8; vol 102; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.444206",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "establishment of demonstration program for student loans with respect to service in certain health care facilities in underserved areas",
+        "law_id_substring": "Public Law 100\u2013607",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:49.861144",
+          "vol": 104
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "101-395"
+      },
+      "discovered_in_vol": 104,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate in XML order: citableAs Public Law 101\u2013394 appears at xml_index 153 (Religious Freedom Week, 104 Stat. 845) and again at xml_index 154; the slot for 154 expects 395.",
+        "xml_excerpt": "<dc:title>Public Law 101\u2013395: To designate the week of September 30, 1990, through October 6, 1990, as \u201cNational Job Skills Week\u201d.</dc:title>\n<docNumber>395</docNumber>\n<citableAs>Public Law 101\u2013394</citableAs>\n<citableAs>104 Stat. 847</citableAs>\n<docNumber>101\u2013395</docNumber>"
+      },
+      "id": 32,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:49.861144",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 104; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.447232",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 101\u2013394",
+        "title_substring": "to designate the week of september 30, 1990, through october 6, 1990, as \u201cnational job skills week\u201d"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:49.861144",
+          "vol": 104
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "101-452"
+      },
+      "discovered_in_vol": 104,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate in XML order: citableAs Public Law 101\u2013451 appears at xml_index 210 (National Radon Action Week, 104 Stat. 1053) and again at xml_index 211; next law jumps to 453, leaving 452 unused.",
+        "xml_excerpt": "<dc:title>Public Law 101\u2013451: To authorize a joint Federal, State, and Tribal study for the restoration of the fishery resources of the Chehalis River Basin, Washington, and for other purposes.</dc:title>\n<docNumber>451</docNumber>\n<citableAs>Public Law 101\u2013451</citableAs>\n<citableAs>104 Stat. 1054</citableAs>"
+      },
+      "id": 33,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:49.861144",
+      "review_note": "auto-approved: confidence 0.9 > 0.8; vol 104; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.450263",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 101\u2013451",
+        "title_substring": "to authorize a joint federal, state, and tribal study for the restoration of the fishery resources of the chehalis river basin, washington"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.101325",
+          "vol": 106
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "102-251"
+      },
+      "discovered_in_vol": 106,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate in XML order: a second 102-249 appears at xml_index 7, but docNumber, dc:title and the preface docNumber all say 251; the citableAs is OCR-corrupted.",
+        "xml_excerpt": "<dc:title>Public Law 102\u2013251: To provide for the designation of the Flower Garden Banks National Marine Sanctuary.</dc:title>\n<docNumber>251</docNumber>\n<citableAs>Public Law 102\u2013249</citableAs>\n<citableAs>106 Stat. 60</citableAs>\n<dc:type>Public Law</dc:type> <docNumber>102\u2013251</docNumber>"
+      },
+      "id": 34,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.101325",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 106; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.453433",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 102\u2013249",
+        "title_substring": "to provide for the designation of the flower garden banks national marine sanctuary"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.101325",
+          "vol": 106
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "102-254"
+      },
+      "discovered_in_vol": 106,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate in XML order: a second 102-253 appears at xml_index 10, but docNumber, dc:title and the preface docNumber all say 254; the citableAs is OCR-corrupted.",
+        "xml_excerpt": "<dc:title>Public Law 102\u2013254: To designate March 12, 1992, as \u201cGirl Scouts of the United States of America 80th Anniversary Day\u201d.</dc:title>\n<docNumber>254</docNumber>\n<citableAs>Public Law 102\u2013253</citableAs>\n<citableAs>106 Stat. 71</citableAs>\n<dc:type>Public Law</dc:type> <docNumber>102\u2013254</docNumber>"
+      },
+      "id": 35,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.101325",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 106; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.456568",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 102\u2013253",
+        "title_substring": "to designate march 12, 1992, as \u201cgirl scouts of the united states of america 80th anniversary day\u201d"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.101325",
+          "vol": 106
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "102-451"
+      },
+      "discovered_in_vol": 106,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate in XML order: a second complete 102-450 record appears at xml_index 207, occupying the slot between 102-450 and 102-452 where 451 is expected. No 102-451 record exists in the volume.",
+        "xml_excerpt": "<dc:title>Public Law 102\u2013450: To authorize certain additional uses of the Library of Congress Special Facilities Center, and for other purposes.</dc:title>\n<docNumber>450</docNumber>\n<citableAs>Public Law 102\u2013450</citableAs>\n<citableAs>106 Stat. 2253</citableAs>\n<dc:type>Public Law</dc:type> <docNumber>102\u2013450</docNumber>"
+      },
+      "id": 36,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.101325",
+      "review_note": "auto-approved: confidence 0.9 > 0.8; vol 106; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.459672",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 102\u2013450",
+        "title_substring": "to authorize certain additional uses of the library of congress special facilities center"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.101325",
+          "vol": 106
+        }
+      ],
+      "confidence": 0.98,
+      "correction": {
+        "replace_with_law_id": "102-485"
+      },
+      "discovered_in_vol": 106,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place: extracted law id 102-48 sits between 102-484 and 102-486 where 485 is expected; docNumber, dc:title and preface docNumber all say 485.",
+        "xml_excerpt": "<dc:title>Public Law 102\u2013485: To facilitate recovery from recent disasters by providing greater flexibility for depository institutions and their regulators, and for other purposes.</dc:title>\n<docNumber>485</docNumber>\n<citableAs>Public Law 102\u201348</citableAs>\n<citableAs>106 Stat. 2771</citableAs>\n<dc:type>Public Law</dc:type> <docNumber>102\u2013485</docNumber>"
+      },
+      "id": 37,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.101325",
+      "review_note": "auto-approved: confidence 0.98 > 0.8; vol 106; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.462783",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 102\u201348",
+        "title_substring": "to facilitate recovery from recent disasters by providing greater flexibility for depository institutions and their regulators"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.590637",
+          "vol": 111
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_section_number": "SEC. 1251."
+      },
+      "discovered_in_vol": 111,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate UniqueKey ...S-000000000001261: two distinct sections in PL 105-34 Subtitle D both carry SEC. 1261. The first (CLARIFICATION OF LIMITATION ON MAXIMUM NUMBER OF SHAREHOLDERS, line 33897) sits between SEC. 1246 and SEC. 1252; the volume's own table of contents lists it as Sec. 1251.",
+        "xml_excerpt": "<subtitle>\n<num value=\"D\">Subtitle D\u2014</num><heading>Provisions Relating to Real Estate Investment Trusts</heading>\n<section>\n<num value=\"1261\">SEC. 1261.</num> <heading>CLARIFICATION OF LIMITATION ON MAXIMUM NUMBER OF SHAREHOLDERS.</heading>"
+      },
+      "id": 38,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.590637",
+      "review_note": "auto-approved: confidence 0.95 > 0.8; vol 111; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.465917",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "clarification of limitation on maximum number of shareholders",
+        "law_id_substring": "Public Law 105\u201334",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.841082",
+          "vol": 112
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "105-208"
+      },
+      "discovered_in_vol": 112,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate of 105-205 (which genuinely appears at xml_index 51); the first citableAs reads 205 but docNumber, dc:title, preface docNumber and page all read 208, and the XML slot sits between 207 and 209.",
+        "xml_excerpt": "<docNumber>208</docNumber>\n<citableAs>Public Law 105\u2013205</citableAs>\n<citableAs>112 Stat. 879 </citableAs>\n...\n<docNumber>105\u2013208</docNumber>"
+      },
+      "id": 39,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.841082",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 112; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.469081",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 105\u2013205",
+        "title_substring": "to facilitate the sale of certain land in tahoe national forest in the state of california to placer county, california"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T12:40:50.841082",
+          "vol": 112
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "105-219"
+      },
+      "discovered_in_vol": 112,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate of 105-201 (which genuinely appears at xml_index 47); the first citableAs reads 201 but docNumber, dc:title, preface docNumber and page all read 219, and the XML slot sits between 218 and 220.",
+        "xml_excerpt": "<docNumber>219</docNumber>\n<citableAs>Public Law 105\u2013201</citableAs>\n<citableAs>112 Stat. 913</citableAs>\n...\n<docNumber>105\u2013219</docNumber>"
+      },
+      "id": 40,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T12:40:50.841082",
+      "review_note": "auto-approved: confidence 0.97 > 0.8; vol 112; cv-correct batch 2026-06-02",
+      "reviewed_at": "2026-06-02T12:42:23.472314",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 105\u2013201",
+        "title_substring": "to amend the federal credit union act to clarify existing law with regard to the field of membership of federal credit unions"
+      },
+      "type": "law_id"
     }
   ],
-  "next_id": 26,
+  "next_id": 41,
   "rejected": [
     {
       "agent_version": "cv-correct@0.1.0",
