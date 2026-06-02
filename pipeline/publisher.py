@@ -1,4 +1,4 @@
-"""Publication stage: write the 26-column Excel + SME view; update manifest.
+"""Publication stage: write the 26-column Excel; update manifest.
 
 A safety guard refuses any output path under ``/groups/brooksgrp/``. Production
 directories there are read-only to this pipeline.
@@ -152,7 +152,7 @@ def publish(
     corrections_applied: dict | None = None,
     corrections_registry_hash: str | None = None,
 ) -> dict:
-    """Write the volume Excel + SME view; update manifest if a path is given.
+    """Write the volume Excel; update manifest if a path is given.
 
     Refuses to write if a main Excel for this volume already exists
     (``hard freeze`` per PLAN §15.7), unless ``force_republish=True``. To
@@ -163,7 +163,9 @@ def publish(
     into the manifest entry when present (manifest provenance per PLAN
     §Data Contracts).
 
-    Returns ``{'output_path', 'sme_path', 'output_sha256'}``.
+    Returns ``{'output_path', 'output_sha256'}``. The legacy SME view
+    (Selection==1 rows only) is no longer generated — operator preference,
+    one canonical Excel per publish.
     """
     output_dir = Path(output_dir)
     _check_safe_output(output_dir)
@@ -179,12 +181,10 @@ def publish(
         )
 
     out_path = write_volume_excel(df, output_dir, vol, formatted_time)
-    sme_path = write_sme_view(df, output_dir, vol, formatted_time)
     out_sha = _sha256_file(out_path)
 
     result = {
         "output_path": str(out_path),
-        "sme_path": str(sme_path),
         "output_sha256": out_sha,
     }
 
@@ -192,7 +192,6 @@ def publish(
         from pipeline.ingest import update_volume_status
         extras: dict = {
             "output_path": str(out_path),
-            "sme_path": str(sme_path),
             "output_sha256": out_sha,
             "status": "success",
         }
