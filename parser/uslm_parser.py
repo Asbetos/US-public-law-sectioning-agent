@@ -28,6 +28,12 @@ from law_id_corrections import (  # noqa: E402
     apply_section_number_correction,
 )
 
+# Canonical public-law identifier shape: "Public Law <congress>-<docNumber>"
+# where the separator is an ASCII hyphen, en-dash, or em-dash. Used by the
+# malformed-law-id repair pass (entry #41) to detect LawIdentifier values that
+# arose from corrupt source <citableAs> text.
+_CANONICAL_PUBLIC_LAW_ID = re.compile(r"Public Law \d+[-–—]\d+")
+
 
 def _section_number_maps_to_null_fallback(text):
     """Mirror of ``clean_and_format_section_fixed`` (generate_id_keys.py):
@@ -725,6 +731,76 @@ def _recover_dropped_container_pLaws(file_path, vol, results):
             continue
 
 
+def _repair_malformed_law_identifiers(file_path, vol, results):
+    """Post-extraction repair for the malformed-law-id correction family
+    (entry #41, approved 2026-06-02 by "asbetos auto-approve batch2").
+
+    Corrupt source ``<citableAs>`` text yields ``LawIdentifier`` values that do
+    not match the canonical ``Public Law <congress>-<docNumber>`` shape:
+
+      * vol 105 — ``<citableAs>`` is ``"Public Law 102–v"`` (the public-law
+        NUMBER is the literal token ``v``). The upstream "v"-branch rebuilds
+        from ``<docNumber>`` alone, dropping ``<congress>``, so the row carries
+        a bare ``"Public Law 23"`` … ``"Public Law 49"`` (18 pLaws).
+      * vol 108 — ``<citableAs>`` is ``"Public Law 103ߝ399"`` where the
+        congress/number separator is the corrupt non-dash character U+07DD;
+        the extractor passes it through verbatim as ``"Public Law 103ߝ399"``.
+
+    This pass re-parses the XML and, for every PUBLIC pLaw whose extractor-
+    computed ``LawIdentifier`` (mirrored via :func:`_compute_law_identifier`)
+    does NOT match :data:`_CANONICAL_PUBLIC_LAW_ID`, re-derives the id from the
+    authoritative ``<docNumber>`` and ``<congress>`` as
+    ``"Public Law {congress}-{docNumber}"``. The authoritative metadata is
+    preferred over attempting to repair the corrupt ``citableAs`` string.
+
+    It builds a ``{malformed_id: corrected_id}`` map (only for pLaws whose
+    rebuilt id is itself canonical) and rewrites every ``Sections`` /
+    ``Divisions`` row whose ``LawIdentifier`` matches a malformed key. Rows that
+    already carry a canonical id are left untouched. Mutates ``results`` in
+    place; idempotent.
+    """
+    try:
+        tree = ET.parse(file_path)
+    except (ET.ParseError, FileNotFoundError, OSError):
+        return
+    root = tree.getroot()
+    ns = {"uslm": root.tag.split("}")[0].strip("{")}
+
+    repair_map = {}
+    for plaw in root.findall(".//uslm:pLaw", ns):
+        malformed_id = _compute_law_identifier(plaw, ns, vol)
+        if not malformed_id:
+            continue
+        if _CANONICAL_PUBLIC_LAW_ID.search(malformed_id):
+            continue  # already canonical — nothing to repair
+
+        doc_elem = plaw.find(".//uslm:docNumber", ns)
+        doc_number = (
+            "".join(doc_elem.itertext()).strip() if doc_elem is not None else ""
+        )
+        congress_elem = plaw.find(".//uslm:congress", ns)
+        congress = (
+            "".join(congress_elem.itertext()).strip()
+            if congress_elem is not None else ""
+        )
+        if not doc_number or not congress:
+            continue  # no authoritative metadata to rebuild from
+
+        corrected_id = f"Public Law {congress}-{doc_number}"
+        if not _CANONICAL_PUBLIC_LAW_ID.search(corrected_id):
+            continue  # rebuilt id still not canonical — leave row as-is
+        repair_map[malformed_id] = corrected_id
+
+    if not repair_map:
+        return
+
+    for key in ("Sections", "Divisions"):
+        for row in results.get(key, []):
+            current = row.get("LawIdentifier")
+            if current in repair_map:
+                row["LawIdentifier"] = repair_map[current]
+
+
 def extract_public_law_from_uslm(file_path, vol):
     """Wrap the raw extractor and apply post-extraction corrections.
 
@@ -766,10 +842,23 @@ def extract_public_law_from_uslm(file_path, vol):
         ``SubTitle``/``Chapter``/``SubChapter`` so the 2nd and subsequent
         block's rows produce distinct ``UniqueKey``\\ s. The first block is
         left untouched.
+
+      * **malformed-law-id** (entry #41): when corrupt source ``<citableAs>``
+        text yields a ``LawIdentifier`` that does not match the canonical
+        ``Public Law <congress>-<docNumber>`` shape — vol 105's bare
+        ``"Public Law 23"`` (the "v"-token shape) and vol 108's
+        ``"Public Law 103ߝ399"`` (corrupt U+07DD separator) — the repair pass
+        re-derives the id from the authoritative ``<docNumber>`` and
+        ``<congress>`` and rewrites the affected ``Sections`` / ``Divisions``
+        rows. It runs AFTER the container-recovery pass (whose ``LawIdentifier``
+        bookkeeping mirrors the raw extractor's malformed ids) but BEFORE the
+        row-level grouping passes, so they group on the corrected (canonical)
+        ``LawIdentifier``.
     """
     results = _extract_public_law_from_uslm_raw(file_path, vol)
     if isinstance(results, dict) and "Sections" in results:
         _recover_dropped_container_pLaws(file_path, vol, results)
+        _repair_malformed_law_identifiers(file_path, vol, results)
         _assign_unnumbered_section_ordinals(results["Sections"])
         _disambiguate_sibling_levels(results["Sections"])
     if isinstance(results, dict) and "Divisions" in results:
