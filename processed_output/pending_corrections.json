@@ -1278,9 +1278,783 @@
         "title_substring": "to amend the federal credit union act to clarify existing law with regard to the field of membership of federal credit unions"
       },
       "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@batch2-investigation",
+      "applied_in_runs": [],
+      "confidence": 0.97,
+      "correction": {
+        "description": "Add a post-extraction correction pass in parser/uslm_parser.py (layered inside extract_public_law_from_uslm alongside the existing null-num / top-level-container passes) that repairs malformed LawIdentifier values arising from corrupt source <citableAs> text. After raw extraction, for every PUBLIC-law row whose LawIdentifier does NOT match the canonical regex r'Public Law \\d+[-\\u2013\\u2014]\\d+', re-derive it from the authoritative <docNumber> and <congress> of that pLaw as 'Public Law {congress}-{docNumber}'. Re-parse the source XML to build the docNumber+congress map (the same technique _recover_dropped_container_pLaws already uses). Two corruption shapes must be handled: (1) vol 105 has 18 public pLaws whose <citableAs> is 'Public Law 102\\u2013v' (the public-law NUMBER is the literal token 'v'); the current v-branch rebuilds from docNumber but omits the congress, yielding a bare 'Public Law 23'. (2) vol 108 has a pLaw whose <citableAs> is 'Public Law 103\\u07dd399' where the congress/number separator is a corrupt non-dash character U+07DD, yielding 'Public Law 103\\u07dd399'. After the fix, vol 105 ids become 'Public Law 102-23'..'Public Law 102-49' and vol 108 becomes 'Public Law 103-399'. Prefer docNumber+congress (authoritative) over trying to repair citableAs text. This unblocks validator rule 'LawIdentifier values without recognizable pattern'."
+      },
+      "discovered_in_vol": 105,
+      "evidence": {
+        "affected_counts": {
+          "105": "18 pLaws",
+          "108": "1 pLaw / 9 rows"
+        },
+        "affected_examples": [
+          {
+            "citableAs": "Public Law 102\u2013v",
+            "congress": "102",
+            "docNumber": "23",
+            "expected": "Public Law 102-23",
+            "vol": 105
+          },
+          {
+            "citableAs": "Public Law 102\u2013v",
+            "congress": "102",
+            "docNumber": "49",
+            "expected": "Public Law 102-49",
+            "vol": 105
+          },
+          {
+            "citableAs": "Public Law 103\u07dd399",
+            "congress": "103",
+            "docNumber": "399",
+            "expected": "Public Law 103-399",
+            "vol": 108
+          }
+        ],
+        "rule_or_signal": "validator: 'LawIdentifier values without recognizable pattern'"
+      },
+      "id": 41,
+      "implementation_attempted_at": "2026-06-02T15:35:38.121729",
+      "implementation_commit_sha": "92a57a9b61d628ab3758db4edc2f08d5259972b2",
+      "implementation_notes": "Added module-level constant _CANONICAL_PUBLIC_LAW_ID = re.compile(r'Public Law \\d+[-\\u2013\\u2014]\\d+') and a new post-extraction pass _repair_malformed_law_identifiers(file_path, vol, results) in parser/uslm_parser.py, layered inside extract_public_law_from_uslm. The pass re-parses the source XML (same ET.parse + _compute_law_identifier technique as _recover_dropped_container_pLaws). For every PUBLIC pLaw whose extractor-computed LawIdentifier does NOT match the canonical regex, it re-derives the id from the authoritative <docNumber> and <congress> as 'Public Law {congress}-{docNumber}', builds a {malformed_id: corrected_id} map (only for entries whose rebuilt id is itself canonical and whose docNumber+congress are both present), and rewrites the LawIdentifier on every matching Sections and Divisions row. Wired the pass into the orchestrator AFTER _recover_dropped_container_pLaws (so recovery's malformed-id bookkeeping is unaffected) and BEFORE the row-level grouping passes (_assign_unnumbered_section_ordinals / _disambiguate_sibling_levels) so they group on the corrected canonical id. New test file tests/unit/test_malformed_law_id.py with literal in-test USLM fixtures for both corruption shapes: (a) vol 105 <citableAs>Public Law 102\u2013v</citableAs> + <docNumber>23</docNumber>/<congress>102</congress> -> 'Public Law 102-23' (plus high-end docNumber 49 and a 3-pLaw distinctness test), and (b) vol 108 <citableAs>Public Law 103\u07dd399</citableAs> + <docNumber>399</docNumber>/<congress>103</congress> -> 'Public Law 103-399', plus a guard that a well-formed 'Public Law 105-100' is left untouched.",
+      "implementation_status": "implemented",
+      "proposed_at": "2026-06-02T15:35:38.115153",
+      "review_note": "extractor fix for malformed law-ids (vols 105,108); confidence 0.97",
+      "reviewed_at": "2026-06-02T15:35:38.117689",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "anomaly": "malformed_law_identifier",
+        "law_id_substring": "Public Law",
+        "vols": [
+          105,
+          108
+        ]
+      },
+      "type": "other"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.658769",
+          "vol": 105
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "102-233"
+      },
+      "discovered_in_vol": 105,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: the Resolution Trust Corporation Act (105 Stat. 1761, [H.R. 3435]) is labeled 102\u2013238 but sits between 102\u2013232 and 102\u2013234 where the slot expects 102\u2013233; a second genuine 102\u2013238 (Indian laws, 105 Stat. 1908, [S. 1193]) appears later at xml_index 237.",
+        "xml_excerpt": "<dc:title>Public Law 102\u2013238: To provide funding for the resolution of failed savings associations and working capital for the Resolution Trust Corporation, to restructure the Oversight Board and the Resolution Trust Corporation, and for other purposes.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>238</docNumber>\n<citableAs>Public Law 102\u2013238</citableAs>\n<citableAs>105 Stat. 1761</citableAs>\n<approvedDate>1991-12-12</approvedDate>\n...\n<page identifier=\"/us/stat/105/1761\">105 STAT. 1761</page>\n<dc:type>Public Law</dc:type> <docNumber>102\u2013238</docNumber>"
+      },
+      "id": 42,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.658769",
+      "review_note": "auto-approved conf 0.97>0.8; vol 105; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.701947",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 102\u2013238",
+        "title_substring": "to provide funding for the resolution of failed savings associations and working capital for the resolution trust corporation, to restructure the oversight board and the resolution trust corporation"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "103-53"
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: a pLaw numbered 103\u201358 sits at 107 Stat. 273 between PL 103\u201352 (107 Stat. 271) and PL 103\u201354 (107 Stat. 274); the slot expected 103\u201353, and a separate, genuine PL 103\u201358 (107 Stat. 280, Hot Springs National Park) already exists later in the volume.",
+        "xml_excerpt": "<dc:title>Public Law 103\u201358: Designating July 17 through July 23, 1993, as \u201cNational Veterans Golden Age Games Week\u201d.</dc:title>\n<dc:type>Public Law</dc:type>\n<docNumber>58</docNumber>\n<citableAs>Public Law 103\u201358</citableAs>\n<citableAs>107 Stat. 273</citableAs>\n<approvedDate>1993-07-22</approvedDate>"
+      },
+      "id": 43,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.97>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.706392",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 103\u201358",
+        "title_substring": "designating july 17 through july 23, 1993, as \u201cnational veterans golden age games week\u201d"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_section_number": "SEC. 105."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "In document order this section appears as SEC. 104, SEC. 108 (Defense Inspector General), SEC. 106, SEC. 107, SEC. 108 (National Shipbuilding Initiative), SEC. 109; the first 'SEC. 108.' fills the 105 slot and collides with the genuine SEC. 108.",
+        "xml_excerpt": "<section>\n<num value=\"108\">SEC. 108. </num>\n<heading>DEFENSE INSPECTOR GENERAL.</heading>\n<content>Funds are hereby authorized to be appropriated for fiscal year 1994 for procurement for the Inspector General of the Department of Defense in the amount of $800,000.</content>\n</section>"
+      },
+      "id": 44,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.95>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.710596",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "defense inspector general",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 126."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 125, SEC. 128 (double-hull tankers), SEC. 127, SEC. 128 (F-14); the first 'SEC. 128.' fills the 126 slot and collides with the genuine SEC. 128.",
+        "xml_excerpt": "<section>\n<num value=\"128\">SEC. 128. </num>\n<heading>LONG-TERM LEASE OR CHARTER AUTHORITY FOR CERTAIN DOUBLE-HULL TANKERS AND OCEANOGRAPHIC VESSELS.</heading>"
+      },
+      "id": 45,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.714950",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "long-term lease or charter authority for certain double-hull tankers",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 136."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 135, SEC. 138 (intertheater airlift), SEC. 137, SEC. 138 (tactical signals intelligence), SEC. 139; the first 'SEC. 138.' fills the 136 slot.",
+        "xml_excerpt": "<section>\n<num value=\"138\">SEC. 138. </num>\n<heading>INTERTHEATER AIRLIFT PROGRAM.</heading>"
+      },
+      "id": 46,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.719356",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "intertheater airlift program",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 155."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 154, SEC. 158 (chemical demilitarization), SEC. 156, SEC. 157, SEC. 158 (sales authority), SEC. 159; the first 'SEC. 158.' fills the 155 slot.",
+        "xml_excerpt": "<section>\n<num value=\"158\">SEC. 158. </num>\n<heading>ADMINISTRATION OF CHEMICAL DEMILITARIZATION PROGRAM.</heading>"
+      },
+      "id": 47,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.723677",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "administration of chemical demilitarization program",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 235."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 234, SEC. 236 (theater missile defense), SEC. 236 (limited defense system), SEC. 237; the first 'SEC. 236.' fills the 235 slot.",
+        "xml_excerpt": "<section>\n<num value=\"236\">SEC. 236. </num>\n<heading>THEATER MISSILE DEFENSE MASTER PLAN.</heading>"
+      },
+      "id": 48,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.728166",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "theater missile defense master plan",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 345."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 343, SEC. 344, SEC. 346 (sense of congress depot-level), SEC. 346 (contracts to perform workloads), SEC. 347; the first 'SEC. 346.' fills the 345 slot.",
+        "xml_excerpt": "<section>\n<num value=\"346\">SEC. 346. </num>\n<heading>SENSE OF CONGRESS ON THE ROLE OF DEPOT-LEVEL ACTIVITIES OF THE DEPARTMENT OF DEFENSE.</heading>"
+      },
+      "id": 49,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.732701",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "sense of congress on the role of depot-level activities",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 365."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 363, SEC. 364, SEC. 366 (pilot program national guard), SEC. 366 (armed forces retirement home act), SEC. 367; the first 'SEC. 366.' fills the 365 slot.",
+        "xml_excerpt": "<section>\n<num value=\"366\">SEC. 366. </num>\n<heading>EXTENSION AND MODIFICATION OF PILOT PROGRAM TO USE NATIONAL GUARD PERSONNEL IN MEDICALLY UNDERSERVED COMMUNITIES.</heading>"
+      },
+      "id": 50,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.737296",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "extension and modification of pilot program to use national guard personnel",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 716."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 715, SEC. 718 (specialized treatment facility), SEC. 717, SEC. 718 (managed-care delivery), SEC. 719; the first 'SEC. 718.' fills the 716 slot.",
+        "xml_excerpt": "<section>\n<num value=\"718\">SEC. 718. </num>\n<heading>SPECIALIZED TREATMENT FACILITY PROGRAM AUTHORITY AND ISSUANCE OF NONAVAILABILITY OF HEALTH CARE STATEMENTS.</heading>"
+      },
+      "id": 51,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.741860",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "specialized treatment facility program authority",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 836."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 835, SEC. 838 (program work force policies), SEC. 837, SEC. 838 (contract administration), SEC. 839; the first 'SEC. 838.' fills the 836 slot.",
+        "xml_excerpt": "<section>\n<num value=\"838\">SEC. 838. </num>\n<heading>PROGRAM WORK FORCE POLICIES.</heading>"
+      },
+      "id": 52,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.746388",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "program work force policies",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_section_number": "SEC. 1112."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 1111, SEC. 1113 (obligation of certain appropriations), SEC. 1113 (supplemental authorization); the first 'SEC. 1113.' fills the 1112 slot.",
+        "xml_excerpt": "<section>\n<num value=\"1113\">SEC. 1113. </num>\n<heading>OBLIGATION OF CERTAIN APPROPRIATIONS.</heading>"
+      },
+      "id": 53,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.9>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.751003",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "obligation of certain appropriations",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 1175."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 1174, SEC. 1176 (effective date SGLI), SEC. 1176 (eligibility of former POWs), SEC. 1177; the first 'SEC. 1176.' fills the 1175 slot.",
+        "xml_excerpt": "<section>\n<num value=\"1176\">SEC. 1176. </num>\n<heading>EFFECTIVE DATE FOR CHANGES IN SERVICEMEN\u2019S GROUP LIFE INSURANCE PROGRAM.</heading>"
+      },
+      "id": 54,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.755573",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "effective date for changes in servicemen\u2019s group life insurance",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_section_number": "SEC. 1312."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 1311, SEC. 1313 (defense technology...planning), SEC. 1313 (congressional defense policy), SEC. 1314, SEC. 1315; the first 'SEC. 1313.' fills the 1312 slot.",
+        "xml_excerpt": "<section>\n<num value=\"1313\">SEC. 1313. </num>\n<heading>DEFENSE TECHNOLOGY AND INDUSTRIAL BASE, REINVESTMENT, AND CONVERSION PLANNING.</heading>"
+      },
+      "id": 55,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.9>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.760246",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "defense technology and industrial base, reinvestment, and conversion planning",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 1605."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 1604, SEC. 1606 (joint committee), SEC. 1606 (report on nonproliferation), SEC. 1607; the first 'SEC. 1606.' fills the 1605 slot.",
+        "xml_excerpt": "<section>\n<num value=\"1606\">SEC. 1606. </num>\n<heading>JOINT COMMITTEE FOR REVIEW OF PROLIFERATION PROGRAMS OF THE UNITED STATES.</heading>"
+      },
+      "id": 56,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.765000",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "joint committee for review of proliferation programs",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_section_number": "SEC. 2916."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 2915, SEC. 2918 (sense of congress seminars), SEC. 2917, SEC. 2918 (definitions); the first 'SEC. 2918.' fills the 2916 slot.",
+        "xml_excerpt": "<section>\n<num value=\"2918\">SEC. 2918. </num>\n<heading>SENSE OF CONGRESS ON SEMINARS ON REUSE OR REDEVELOPMENT OF PROPERTY AT INSTALLATIONS TO BE CLOSED.</heading>"
+      },
+      "id": 57,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.9>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.769708",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "sense of congress on seminars on reuse or redevelopment of property",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:30.920654",
+          "vol": 107
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_section_number": "SEC. 3125."
+      },
+      "discovered_in_vol": 107,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Document order is SEC. 3122, SEC. 3123 (limits on construction projects), SEC. 3124, SEC. 3123 (authority for construction design), SEC. 3126; the second 'SEC. 3123.' fills the 3125 slot.",
+        "xml_excerpt": "<section>\n<num value=\"3123\">SEC. 3123. </num>\n<heading>AUTHORITY FOR CONSTRUCTION DESIGN.</heading>"
+      },
+      "id": 58,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:30.920654",
+      "review_note": "auto-approved conf 0.92>0.8; vol 107; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.774376",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "heading_substring": "authority for construction design",
+        "law_id_substring": "Public Law 103\u2013160",
+        "text_substring": null
+      },
+      "type": "section_number"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:31.182178",
+          "vol": 108
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "103-300"
+      },
+      "discovered_in_vol": 108,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: PL 103-800 sits between PL 103-299 and PL 103-301; the slot expects PL 103-300, and the following law (108 Stat. 1558) is PL 103-301.",
+        "xml_excerpt": "<dc:title>Public Law 103\u2013800: To designate the United States courthouse under construction in St. Louis, Missouri, as the \u201cThomas F. Eagleton United States Courthouse\u201d.</dc:title>\n<docNumber>800</docNumber>\n<citableAs>Public Law 103\u2013800</citableAs>\n<citableAs>108 Stat. 1557</citableAs>\n<preface>\n<page identifier=\"/us/stat/108/1557\">108 STAT. 1557</page>\n<dc:type>Public Law</dc:type> <docNumber>103\u2013800</docNumber>"
+      },
+      "id": 59,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:31.182178",
+      "review_note": "auto-approved conf 0.95>0.8; vol 108; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.779144",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 103\u2013800",
+        "title_substring": "to designate the united states courthouse under construction in st. louis, missouri, as the \u201cthomas f. eagleton united states courthouse\u201d"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:31.182178",
+          "vol": 108
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "103-327"
+      },
+      "discovered_in_vol": 108,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: this pLaw sits between PL 103-326 and PL 103-328 at 108 Stat. 2298; the slot expects 327, and the authoritative docNumber (327) and preface docNumber (103\u2013327) both disagree with the citableAs (103\u2013333).",
+        "xml_excerpt": "<dc:title>Public Law 103\u2013327: Making appropriations for the Departments of Veterans Affairs and Housing and Urban Development, ...</dc:title>\n<docNumber>327</docNumber>\n<citableAs>Public Law 103\u2013333</citableAs>\n<citableAs>108 Stat. 2298</citableAs>\n<preface>\n<page identifier=\"/us/stat/108/2298\">108 STAT. 2298</page>\n<dc:type>Public Law</dc:type> <docNumber>103\u2013327</docNumber>"
+      },
+      "id": 60,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:31.182178",
+      "review_note": "auto-approved conf 0.97>0.8; vol 108; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.783910",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 103\u2013333",
+        "title_substring": "making appropriations for the departments of veterans affairs and housing and urban development, and for sundry independent agencies, boards, commissions, corporations, and offices"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-06-02T15:51:31.182178",
+          "vol": 108
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "103-334"
+      },
+      "discovered_in_vol": 108,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: this pLaw sits between PL 103-333 and PL 103-335 at 108 Stat. 2576; the slot expects 334, and the authoritative docNumber (334) and preface docNumber (103\u2013334) both disagree with the citableAs (103\u2013331).",
+        "xml_excerpt": "<dc:title>Public Law 103\u2013334: Making appropriations for the government of the District of Columbia ...</dc:title>\n<docNumber>334</docNumber>\n<citableAs>Public Law 103\u2013331</citableAs>\n<citableAs>108 Stat. 2576</citableAs>\n<preface>\n<page identifier=\"/us/stat/108/2576\">108 Stat. 2576</page>\n<dc:type>Public Law</dc:type> <docNumber>103\u2013334</docNumber>"
+      },
+      "id": 61,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-06-02T15:51:31.182178",
+      "review_note": "auto-approved conf 0.97>0.8; vol 108; batch2 redo 2026-06-02",
+      "reviewed_at": "2026-06-02T15:51:31.788840",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Law 103\u2013331",
+        "title_substring": "making appropriations for the government of the district of columbia and other activities chargeable in whole or in part against the revenues of said district"
+      },
+      "type": "law_id"
     }
   ],
-  "next_id": 41,
+  "next_id": 62,
   "rejected": [
     {
       "agent_version": "cv-correct@0.1.0",
