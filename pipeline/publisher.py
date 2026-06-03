@@ -6,12 +6,22 @@ directories there are read-only to this pipeline.
 from __future__ import annotations
 
 import hashlib
+import re
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
 
 _FORBIDDEN_PREFIX = "/groups/brooksgrp/"
+
+# Canonical published LawIdentifier separator: EN-DASH (U+2013).
+_LAW_ID_EN_DASH = "–"
+# Match an optional "Public Law " prefix, a congress number, any of
+# hyphen/en-dash/em-dash, and a law number. Anything that does not match is
+# left unchanged (defensive).
+_PUBLISHED_LAW_ID_RE = re.compile(
+    r"^(?:Public Law\s+)?(\d+)\s*[-–—]\s*(\d+)$"
+)
 
 FINAL_COLUMN_ORDER = [
     "UniqueKey",
@@ -81,6 +91,40 @@ def _ensure_column_order(df: pd.DataFrame) -> pd.DataFrame:
     return df.reindex(columns=FINAL_COLUMN_ORDER)
 
 
+def _normalize_one_law_id(value):
+    """Rewrite a single LawIdentifier to ``Public Law {congress}–{number}``.
+
+    Parses congress + number from any of these shapes and re-emits the
+    canonical EN-DASH form:
+        'Public Law 103–160' (en-dash) -> unchanged
+        'Public Law 84-486'  (hyphen)  -> 'Public Law 84–486'
+        'Public Law 103—286' (em-dash) -> 'Public Law 103–286'
+        '103-53' / '79-600'  (bare)    -> 'Public Law 103–53' / 'Public Law 79–600'
+
+    Any value that does not match the public-law shape is returned unchanged
+    (defensive: never crash, never blank a value).
+    """
+    if not isinstance(value, str):
+        return value
+    m = _PUBLISHED_LAW_ID_RE.match(value)
+    if not m:
+        return value
+    return f"Public Law {m.group(1)}{_LAW_ID_EN_DASH}{m.group(2)}"
+
+
+def _normalize_law_identifier_column(df: pd.DataFrame) -> pd.DataFrame:
+    """Make the ``LawIdentifier`` column uniform (canonical published form).
+
+    Touches ONLY the ``LawIdentifier`` column; every other column (including
+    ``UniqueKey``) is left untouched. No-op if the column is absent.
+    """
+    if "LawIdentifier" not in df.columns:
+        return df
+    df = df.copy()
+    df["LawIdentifier"] = df["LawIdentifier"].map(_normalize_one_law_id)
+    return df
+
+
 def _sha256_file(path) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
@@ -106,6 +150,8 @@ def write_volume_excel(
 
     df = _ensure_review_status(df)
     df = _ensure_column_order(df)
+    # Last transform before the rows are written: make LawIdentifier uniform.
+    df = _normalize_law_identifier_column(df)
 
     out_dir = output_dir / f"Volume-{vol}"
     out_dir.mkdir(parents=True, exist_ok=True)
