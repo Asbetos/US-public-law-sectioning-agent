@@ -2052,9 +2052,59 @@
         "title_substring": "making appropriations for the government of the district of columbia and other activities chargeable in whole or in part against the revenues of said district"
       },
       "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@batch2-format-uniformity",
+      "applied_in_runs": [],
+      "confidence": 0.97,
+      "correction": {
+        "description": "Add a LawIdentifier format-normalization step to pipeline/publisher.py so the published LawIdentifier column is UNIFORM. Canonical format: 'Public Law {congress}\u2013{number}' with an EN-DASH (U+2013) separator. As the LAST transform before the DataFrame is written to the Excel (after any dynamic corrections have already been applied upstream by apply_corrections_and_publish), rewrite every LawIdentifier value: parse congress+number from ANY existing shape -- 'Public Law 103\u2013160' (en-dash), 'Public Law 84-486' (hyphen), 'Public Law 103\u2014286' (em-dash), or bare '103-53'/'79-600' (no prefix) -- and re-emit as 'Public Law {congress}\u2013{number}'. Use a regex like ^(?:Public Law\\s+)?(\\d+)\\s*[-\\u2013\\u2014]\\s*(\\d+)$ ; capture congress and number. Any value that does NOT match this public-law shape must be left UNCHANGED (defensive). ONLY the LawIdentifier column may change -- never UniqueKey or any other column. Must run at publish time so it applies uniformly to corrected, legacy, and modern rows alike. Must NOT alter correction trigger-matching (corrections run before publish, so they see the original format)."
+      },
+      "discovered_in_vol": null,
+      "evidence": {
+        "affected_examples": [
+          {
+            "after": "Public Law 103\u20131",
+            "before": "Public Law 103\u20131"
+          },
+          {
+            "after": "Public Law 103\u2013110",
+            "before": "Public Law 103-110"
+          },
+          {
+            "after": "Public Law 103\u2013286",
+            "before": "Public Law 103\u2014286"
+          },
+          {
+            "after": "Public Law 103\u201353",
+            "before": "103-53"
+          },
+          {
+            "after": "Public Law 79\u2013600",
+            "before": "79-600"
+          }
+        ],
+        "rule_or_signal": "operator request: uniform LawIdentifier column"
+      },
+      "id": 62,
+      "implementation_attempted_at": "2026-06-02T22:40:49.454552",
+      "implementation_commit_sha": "164ccf10bddc9884a55bde31324a8940a9bd9042",
+      "implementation_notes": "Added _normalize_one_law_id(value) and _normalize_law_identifier_column(df) to pipeline/publisher.py, plus module-level _LAW_ID_EN_DASH and _PUBLISHED_LAW_ID_RE = ^(?:Public Law\\s+)?(\\d+)\\s*[-\\u2013\\u2014]\\s*(\\d+)$ and an `import re`. Wired _normalize_law_identifier_column as the LAST DataFrame transform in write_volume_excel (which publish() calls), immediately after _ensure_review_status/_ensure_column_order and right before df.to_excel. Parses congress+number from en-dash/hyphen/em-dash/bare shapes and re-emits 'Public Law {congress}\\u2013{number}' (en-dash). Non-string and non-matching values pass through unchanged; column is a no-op when absent; only the LawIdentifier column is mapped (df.copy() then column reassign), UniqueKey and all other columns untouched. New test file tests/unit/test_publisher_law_id_format.py covers every shape plus idempotency, non-matching passthrough, column-isolation, missing-column no-op, and an end-to-end Excel write+read-back assertion.",
+      "implementation_status": "implemented",
+      "proposed_at": "2026-06-02T22:40:49.445430",
+      "review_note": "publisher law-id format normalization (Public Law {c}-en-dash{n}); operator-approved",
+      "reviewed_at": "2026-06-02T22:40:49.449013",
+      "reviewer": "asbetos auto-approve batch2",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "anomaly": "nonuniform_law_identifier_format",
+        "scope": "publisher"
+      },
+      "type": "other"
     }
   ],
-  "next_id": 62,
+  "next_id": 63,
   "rejected": [
     {
       "agent_version": "cv-correct@0.1.0",
