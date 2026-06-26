@@ -47,14 +47,34 @@ subagent → record → publish.
 | `skills/cv-correct/prefilter.py` | Rule-based pre-filter: walks `<pLaw>` in XML order, surfaces law-number anomalies + UniqueKey duplicates |
 | `skills/cv-correct/record_proposals.py` | Parses the subagent's JSON response; appends proposals to `pending_corrections.json` and rows to `gpo_issue_log.xlsx` (with dedup) |
 | `pipeline/`, `parser/`, `validation/` | Internal modules — segmenter, enricher, publisher, validator, registry |
+| `legacy/` | Original extractor modules (still imported by the pipeline) + standalone GPO scrapers — see [Legacy modules](#legacy-modules) |
+
+## Legacy modules
+
+The original, pre-refactor extractor scripts live in [`legacy/`](legacy/) and
+are **vendored into this repo** so it is self-contained (no dependency on the
+parent directory):
+
+| File | Status | Role |
+|---|---|---|
+| `Extract_Sections_Divisions_From_XML.py` | **live dependency** | Raw USLM section/division extractor; wrapped by `parser/uslm_parser.py` |
+| `post_process.py` | **live dependency** | Agency substring-tagging; wrapped by `pipeline/enricher.py` |
+| `generate_id_keys.py` | **live dependency** | `UniqueKey` + section-number formatting; used by enricher + parser |
+| `scrape_gpo.py`, `scrape_and_download_gpo.py` | standalone | Fetch the GPO bulk-data modification timeline + download `STATUTE-N.xml` |
+| `tag_appropriations.py` | standalone | Config-driven appropriations tagging (superseded by the pipeline) |
+| `config.conf`, `data/*.xlsx` | reference | Old config + scraped GPO timeline spreadsheets |
+
+The three **live-dependency** modules are still imported by the active
+pipeline. `run_pipeline.py`, `tests/conftest.py`, `pipeline/enricher.py`, and
+`parser/uslm_parser.py` add `legacy/` to `sys.path` (via a path relative to
+the repo) so imports resolve regardless of where the repo is checked out.
 
 ## Quick start
 
 ```bash
-# 1. Create a virtualenv with Python 3.11
-python3 -m venv venv
-source venv/bin/activate
-pip install pandas lxml openpyxl pyarrow numpy pytest
+# 1. Use the shared project venv (uv-managed CPython 3.11), or create one:
+python3.11 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
 
 # 2. Seed local lookup files (one-time)
 python seed_lookup_files.py
@@ -209,8 +229,8 @@ marked `failed` with notes recording the specific blocker.
 python -m pytest tests/ -x
 ```
 
-103 unit tests cover the registry, prefilter, approval CLI, publisher
-freeze, ingest, manifest, and dedup logic.
+208 unit tests cover the parser/segmenter, registry, prefilter, approval
+CLI, publisher freeze, ingest, manifest, and dedup logic.
 
 ## Authorship
 

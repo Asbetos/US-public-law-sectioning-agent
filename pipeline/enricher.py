@@ -15,9 +15,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-_CODE_DIR = str(Path("/home/G39248410/citizen_voice/Code").resolve())
-if _CODE_DIR not in sys.path:
-    sys.path.insert(0, _CODE_DIR)
+# The original extractor modules now live in this repo under legacy/.
+_LEGACY_DIR = str(Path(__file__).resolve().parents[1] / "legacy")
+if _LEGACY_DIR not in sys.path:
+    sys.path.insert(0, _LEGACY_DIR)
 
 # Reuse battle-tested logic from the legacy modules.
 from post_process import add_grouped_agencies  # noqa: E402

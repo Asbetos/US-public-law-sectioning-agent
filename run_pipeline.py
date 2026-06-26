@@ -18,10 +18,10 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-# Make sibling packages importable regardless of CWD.
+# Make sibling packages + the in-repo legacy/ extractor modules importable regardless of CWD.
 _HERE = Path(__file__).resolve().parent
-_CODE_DIR = _HERE.parent  # /home/G39248410/citizen_voice/Code/
-for p in (str(_HERE), str(_CODE_DIR)):
+_LEGACY_DIR = _HERE / "legacy"  # original extractor modules, now vendored in this repo
+for p in (str(_HERE), str(_LEGACY_DIR)):
     if p not in sys.path:
         sys.path.insert(0, p)
 

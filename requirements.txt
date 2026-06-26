@@ -1,0 +1,15 @@
+# data-preprocessing-pipeline dependencies
+# Pinned to the shared project venv (uv-managed CPython 3.11.6).
+# Install:  pip install -r requirements.txt
+
+# --- Core pipeline ---
+lxml==6.1.1         # USLM XML parsing
+pandas==3.0.3       # tabular section data
+numpy==2.4.4        # numeric helpers
+openpyxl==3.1.5     # read/write the per-volume Excel + lookup workbooks
+
+# --- legacy/ GPO scrapers (scrape_gpo.py, scrape_and_download_gpo.py) ---
+requests==2.34.0
+
+# --- Tests ---
+pytest==9.0.3

@@ -13,9 +13,10 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-_CODE_DIR = str(Path("/home/G39248410/citizen_voice/Code").resolve())
-if _CODE_DIR not in sys.path:
-    sys.path.insert(0, _CODE_DIR)
+# The original extractor modules now live in this repo under legacy/.
+_LEGACY_DIR = str(Path(__file__).resolve().parents[1] / "legacy")
+if _LEGACY_DIR not in sys.path:
+    sys.path.insert(0, _LEGACY_DIR)
 
 from Extract_Sections_Divisions_From_XML import (  # noqa: E402
     extract_public_law_from_uslm as _extract_public_law_from_uslm_raw,
