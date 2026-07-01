@@ -15,6 +15,7 @@ np.random.seed(42)
 from post_process import fetch_agency_list,add_grouped_agencies
 from generate_id_keys import generate_and_process_id, update_all_directories
 from law_id_corrections import apply_law_id_corrections, apply_section_number_correction
+from legacy_law_identity import resolve_legacy_law_identities
 
 logger = logging.getLogger(__name__)
 
@@ -144,12 +145,18 @@ def extract_public_law_from_uslm(file_path,vol):
     ns = {'uslm': root.tag.split('}')[0].strip('{')}
     results = {"Sections": [], "Divisions": []}
 
-    for plaw in root.findall(".//uslm:pLaw", ns):
-        lawtype = plaw.find(".//uslm:publicPrivate", ns)
-        lawtype = lawtype.text
-        # print(lawtype)
-        if lawtype.lower() != "public":
-            continue
+    plaws = root.findall(".//uslm:pLaw", ns)
+    legacy_ids = resolve_legacy_law_identities(plaws, vol, ns) if int(vol) <= 63 else {}
+
+    for plaw_idx, plaw in enumerate(plaws):
+        if int(vol) <= 63:
+            ident = legacy_ids.get(plaw_idx)
+            if ident is None or not ident["is_public"]:
+                continue
+        else:
+            lawtype_el = plaw.find(".//uslm:publicPrivate", ns)
+            if lawtype_el is None or not lawtype_el.text or lawtype_el.text.strip().lower() != "public":
+                continue
         # Volumes >63 use modern USLM with <citableAs>; earlier volumes encode the
         # public-law number inside <sidenote> text and need regex extraction.
         if int(vol)>63:
@@ -174,46 +181,20 @@ def extract_public_law_from_uslm(file_path,vol):
                 law_identifiers = 'Public Law ' + congress_text + '-' + law_identifiers
 
         else:
-            c = plaw.find(".//uslm:sidenote", ns)
-            law_identifiers_text = ''.join(c.itertext()).strip() if c is not None else ""
-
-            pattern1 = r"\bPublic Law\s+\d+(?:-\d+)?\b"
-            match1 = re.search(pattern1, law_identifiers_text)
-
-            pattern2 = r"[Pp]ub[l]?i[c]?[e]?\s*,?\.?\s*No\.?\s*\d+.+"
-            match2 = re.search(pattern2, law_identifiers_text)
-            # law_identifiers = match.group(0)
-
-            congress = plaw.find(".//uslm:congress", ns)
-            congress_text = ''.join(congress.itertext()).strip() if congress is not None else ""
-            law_identifiers = ''
-
-            if match1:
-                match = match1
-            else:
-                match = match2
-
-            if match:
-                law_identifiers = match.group(0)  # first match as string
-                # print(law_identifiers)
-                pattern_number = r"\d+"
-                law_num = re.search(pattern_number, law_identifiers)
-                # print(f"{congress_text} : {law_num.group(0)}")
-                law_identifiers = congress_text + "-" + str(law_num.group(0))
-                # print(law_identifiers)
-            else:
-                privateLaw_pattern = r"\bPrivate Law\s+\d+(?:-\d+)?\b"
-                match2 = re.search(privateLaw_pattern, law_identifiers_text)
-                if match2:
-                    break
+            # Legacy (vol <=63) public-law-number id comes from the
+            # legacy-law-identity resolver (computed once above). This replaces the
+            # old inline <sidenote> regex (which emitted bare/empty ids and whose
+            # private-law branch `break`-ed out of the whole volume walk).
+            law_identifiers = legacy_ids[plaw_idx]["law_identifier"]
 
         # if law_identifiers!= '81-118':
         #     continue
-        approved_date = ''.join(plaw.find(".//uslm:approvedDate", ns).itertext()).strip()
+        approved_date_elem = plaw.find(".//uslm:approvedDate", ns)
+        approved_date = ''.join(approved_date_elem.itertext()).strip() if approved_date_elem is not None else ''
         law_title_elem = plaw.find(".//uslm:officialTitle", ns)
-        law_title = get_clean_text(law_title_elem)
+        law_title = get_clean_text(law_title_elem) if law_title_elem is not None else ''
         law_type_elem = plaw.find(".//uslm:docTitle", ns)
-        law_type = get_clean_text(law_type_elem)
+        law_type = get_clean_text(law_type_elem) if law_type_elem is not None else ''
         counter = 0
         print("LAW IDENTIFIERS : ", law_identifiers)
 
@@ -1045,7 +1026,7 @@ def extract_public_law_from_uslm(file_path,vol):
 
             for subtitle in title.findall("uslm:subtitle", ns):
                 num_subtitle = subtitle.find("uslm:num", ns)
-                subtitle_text = num_subtitle.text if num_title is not None else None
+                subtitle_text = num_subtitle.text if num_subtitle is not None else None
 
                 for level in subtitle.findall("uslm:level", ns):
                     for section in level.findall("uslm:section", ns):

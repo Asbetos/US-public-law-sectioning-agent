@@ -859,7 +859,12 @@ def extract_public_law_from_uslm(file_path, vol):
     results = _extract_public_law_from_uslm_raw(file_path, vol)
     if isinstance(results, dict) and "Sections" in results:
         _recover_dropped_container_pLaws(file_path, vol, results)
-        _repair_malformed_law_identifiers(file_path, vol, results)
+        # The malformed-id repair pass rebuilds ids from <docNumber>, which is the
+        # PUBLIC-LAW number for modern volumes (>63) but the CHAPTER number for legacy
+        # volumes (<=63). Legacy ids now come correctly from the legacy-law-identity
+        # resolver, so the repair pass must only run for modern volumes.
+        if int(vol) > 63:
+            _repair_malformed_law_identifiers(file_path, vol, results)
         _assign_unnumbered_section_ordinals(results["Sections"])
         _disambiguate_sibling_levels(results["Sections"])
     if isinstance(results, dict) and "Divisions" in results:
