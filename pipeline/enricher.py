@@ -177,6 +177,8 @@ def _save_division_mapping_atomic(mapping: dict, path: Path) -> None:
 def add_unique_keys(
     df: pd.DataFrame,
     division_mapping_path,
+    vol=None,
+    source_xml_dir=None,
     version: str = "BaseRun",
     write_mapping: bool = True,
 ) -> pd.DataFrame:
@@ -209,7 +211,32 @@ def add_unique_keys(
     generate_id_keys.division_mapper_json = mapping  # consumed by generate_unique_key
 
     df = df.copy()
-    df["UniqueKey"] = df.apply(generate_unique_key, axis=1)
+    if vol is not None and int(vol) <= 63:
+        # Legacy volumes: updated 11-segment key with per-row Congress/Session
+        # (derived from approvedDate) so laws sharing a number across sessions
+        # in a single volume stay distinct. Adds VolumeNumber/Congress/Session.
+        df["VolumeNumber"] = int(vol)
+        if "Congress" not in df.columns or "Session" not in df.columns:
+            cs_path = Path(source_xml_dir) / "Congress_Session_Dates.csv"
+            congress_df = pd.read_csv(cs_path)
+            cs = generate_id_keys.map_approved_date_to_congress(df["approvedDate"], congress_df)
+
+            def _clean_session(x):
+                if pd.isna(x):
+                    return pd.NA
+                s = str(x).strip()
+                try:
+                    return str(int(float(s)))       # 1.0 / "2" -> "1" / "2"
+                except (ValueError, TypeError):
+                    return s                          # special session label: S1, S2
+
+            df["Congress"] = pd.array(
+                [int(c) if pd.notna(c) else pd.NA for c in cs["Congress"]], dtype="Int64"
+            )
+            df["Session"] = [_clean_session(x) for x in cs["Session"]]
+        df["UniqueKey"] = df.apply(generate_id_keys.generate_unique_key_legacy, axis=1)
+    else:
+        df["UniqueKey"] = df.apply(generate_unique_key, axis=1)
     df["KeyVersion"] = version
     return df
 
@@ -217,10 +244,16 @@ def add_unique_keys(
 def enrich(
     df: pd.DataFrame,
     processed_output_dir,
+    vol=None,
+    source_xml_dir=None,
     version: str = "BaseRun",
     write_mapping: bool = True,
 ) -> pd.DataFrame:
-    """Run the full enrichment chain: agency tags → appr flag → content hash → unique keys."""
+    """Run the full enrichment chain: agency tags → appr flag → content hash → unique keys.
+
+    ``vol`` + ``source_xml_dir`` enable the legacy (<=63) updated 11-segment key
+    with per-row Congress/Session derived from ``Congress_Session_Dates.csv``.
+    """
     out_dir = Path(processed_output_dir)
     agency_list = fetch_agency_list(out_dir)
     df = add_agency_tags(df, agency_list)
@@ -229,6 +262,8 @@ def enrich(
     df = add_unique_keys(
         df,
         division_mapping_path=out_dir / "DivisionMapping.xlsx",
+        vol=vol,
+        source_xml_dir=source_xml_dir,
         version=version,
         write_mapping=write_mapping,
     )

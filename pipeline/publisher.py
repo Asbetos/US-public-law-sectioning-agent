@@ -86,9 +86,25 @@ def _ensure_review_status(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+_LEGACY_EXTRA_COLS = ("VolumeNumber", "Congress", "Session")
+
+
 def _ensure_column_order(df: pd.DataFrame) -> pd.DataFrame:
-    """Reindex to the canonical 26-column order; missing columns become NaN."""
-    return df.reindex(columns=FINAL_COLUMN_ORDER)
+    """Reindex to the canonical 26-column order; missing columns become NaN.
+
+    Legacy volumes (<=63) carry 3 extra columns (VolumeNumber/Congress/Session,
+    from the updated 11-segment UniqueKey). When present they are inserted before
+    LawIdentifier and preserved; modern volumes keep the exact 26-column order.
+    """
+    extra = [c for c in _LEGACY_EXTRA_COLS if c in df.columns]
+    if not extra:
+        return df.reindex(columns=FINAL_COLUMN_ORDER)
+    order = []
+    for c in FINAL_COLUMN_ORDER:
+        if c == "LawIdentifier":
+            order.extend(extra)
+        order.append(c)
+    return df.reindex(columns=order)
 
 
 def _normalize_one_law_id(value):

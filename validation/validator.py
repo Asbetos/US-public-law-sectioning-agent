@@ -56,8 +56,11 @@ SECTION_NUMBER_REGRESSION_RULES = [
 
 def validate_schema(df: pd.DataFrame) -> tuple[list, list]:
     failures, warnings = [], []
+    # Legacy volumes (<=63) carry 3 extra columns from the updated 11-segment
+    # UniqueKey; these are expected, not anomalous.
+    _legacy_extra = {"VolumeNumber", "Congress", "Session"}
     missing = [c for c in EXPECTED_COLUMNS_26 if c not in df.columns]
-    extra = [c for c in df.columns if c not in EXPECTED_COLUMNS_26]
+    extra = [c for c in df.columns if c not in EXPECTED_COLUMNS_26 and c not in _legacy_extra]
     if missing:
         failures.append(f"Missing columns: {missing}")
     if extra:

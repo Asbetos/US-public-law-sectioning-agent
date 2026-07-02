@@ -100,7 +100,7 @@ def process_volume(
                  len(raw_records.get("Sections", [])), len(raw_records.get("Divisions", [])))
         df = segment(raw_records)
         log.info("Enriching (%d rows)", len(df))
-        df = enrich(df, output_dir, version=formatted_time)
+        df = enrich(df, output_dir, vol=vol, source_xml_dir=source_xml_dir, version=formatted_time)
     except Exception:
         log.exception("Segmentation/enrichment failed")
         update_volume_status(manifest_path, vol, status="enrich_failed")

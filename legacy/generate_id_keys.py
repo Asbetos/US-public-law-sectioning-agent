@@ -125,6 +125,100 @@ def handle_division_headings(text):
 
     return str(division_mapper_json.get(text.lower())).zfill(5)
 
+
+# --- Congress/Session derivation (legacy vols <=63; matches
+#     cleaned_unique_key_processing.py so a single volume may span sessions) ---
+
+def clean_date_col(s):
+    """Parse a Series of approved-date strings to Timestamps (tolerant)."""
+    def parse_one_date(x):
+        if pd.isna(x):
+            return pd.NaT
+        x = str(x).replace("\xa0", " ").strip()
+        x = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", x, flags=re.IGNORECASE)
+        match = re.search(r"([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})", x)
+        if match:
+            month, day, year = match.groups()
+            return pd.to_datetime(f"{month} {day} {year}", errors="coerce")
+        return pd.to_datetime(x, errors="coerce")
+
+    return s.apply(parse_one_date)
+
+
+def map_approved_date_to_congress(approved_dates, congress_df):
+    """Map each approved date to (Congress, Session) via the date-range table.
+
+    ``congress_df`` columns: Congress, Session, BeginDate, AdjournDate|EndDate.
+    On a boundary date, the session with the latest BeginDate wins.
+    """
+    congress_lookup = congress_df.copy()
+    end_col = "AdjournDate" if "AdjournDate" in congress_lookup.columns else "EndDate"
+    congress_lookup["BeginDate"] = clean_date_col(congress_lookup["BeginDate"])
+    congress_lookup[end_col] = clean_date_col(congress_lookup[end_col]).fillna(pd.Timestamp.max)
+
+    approved_dates = clean_date_col(approved_dates)
+    results = []
+    for date in approved_dates:
+        if pd.isna(date):
+            results.append({"Congress": None, "Session": None})
+            continue
+        match = congress_lookup[
+            (congress_lookup["BeginDate"] <= date) & (congress_lookup[end_col] >= date)
+        ]
+        if match.empty:
+            results.append({"Congress": None, "Session": None})
+        else:
+            match = match.sort_values("BeginDate", ascending=False)
+            results.append({
+                "Congress": match.iloc[0]["Congress"],
+                "Session": match.iloc[0]["Session"],
+            })
+    return pd.DataFrame(results, index=approved_dates.index)
+
+
+def generate_unique_key_legacy(row):
+    """Updated 11-segment key for legacy volumes (<=63):
+    VOL-CONGRESS-SESSION-LAW-DIV-TITLE-SUBTITLE-CHAP-SUBCHAP-{S|D}-{sec/div}.
+    Congress+Session disambiguate laws that share a number across sessions.
+    """
+    volume = f"{int(row['VolumeNumber']):03d}"
+    match = re.search(r'(\d+)[–-](\d+)', str(row['LawIdentifier']))
+    law = int(match.group(2)) if match else 0
+
+    congress = row.get('Congress')
+    session = row.get('Session')
+    Congress = f"{int(congress):03d}" if pd.notna(congress) else "000"
+    if pd.isna(session):
+        Session = "0"
+    else:
+        try:
+            Session = str(int(session))          # regular session: 1,2,3,4
+        except (ValueError, TypeError):
+            Session = str(session).strip()        # special session label: S1, S2
+    Law = f"{law:03d}"
+
+    DDD = alpha_code(row.get('Division'), prefix="DIVISION")
+    TTT = roman_or_numeric_code(row.get('Title'), prefix="TITLE")
+    SSS = alpha_code(row.get('SubTitle'), prefix="SUBTITLE")
+    CCC = roman_or_numeric_code(row.get('Chapter'), prefix="CHAPTER")
+    UUU = alpha_code(row.get('SubChapter'), prefix="Subchapter")
+
+    I = 'S' if str(row['EntryType']).strip().lower() == 'section' else 'D'
+    if I == 'S':
+        sec_div_id = clean_and_format_section_fixed(row.get('SectionNumber'))
+    else:
+        sec_div_id = (
+            handle_division_headings(row.get('DivisionHeadingLevel1')) + '-'
+            + handle_division_headings(row.get('DivisionHeadingLevel2')) + '-'
+            + handle_division_headings(row.get('DivisionHeadingLevel3'))
+        )
+
+    return (
+        f"{volume}-{Congress}-{Session}-{Law}-{DDD}-{TTT}-{SSS}-"
+        f"{CCC}-{UUU}-{I}-{sec_div_id}"
+    )
+
+
 # --- Key Generation Function ---
 
 def generate_unique_key(row):
