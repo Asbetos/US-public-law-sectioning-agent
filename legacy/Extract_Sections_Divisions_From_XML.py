@@ -196,7 +196,6 @@ def extract_public_law_from_uslm(file_path,vol):
         law_type_elem = plaw.find(".//uslm:docTitle", ns)
         law_type = get_clean_text(law_type_elem) if law_type_elem is not None else ''
         counter = 0
-        print("LAW IDENTIFIERS : ", law_identifiers)
 
         law_identifiers = apply_law_id_corrections(law_identifiers, law_title)
 

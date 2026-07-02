@@ -34,16 +34,32 @@ from pipeline.publisher import publish  # noqa: E402
 DEFAULT_OUTPUT_DIR = _HERE / "processed_output"
 
 
+_LAW_ID_DASHES = str.maketrans("–—", "--")  # en-dash, em-dash -> hyphen
+
+
+def _canon_law_id(value) -> str:
+    """Canonicalize a law id for dash/prefix-insensitive substring matching:
+    drop the 'Public Law ' prefix, fold en/em dashes to hyphen, lowercase, strip.
+    So 'Public Law 77–5', '77-5' and '77–5' all compare equal.
+    """
+    return str(value).translate(_LAW_ID_DASHES).lower().replace("public law", "").strip()
+
+
 def _apply_law_id_rules(df: pd.DataFrame, rules: list[tuple[str, str, str]]) -> int:
-    """Apply law-id corrections in place. Returns the number of row mutations."""
+    """Apply law-id corrections in place. Returns the number of row mutations.
+
+    Matching is dash/prefix-insensitive (see :func:`_canon_law_id`): a proposal
+    trigger '77-5' matches the published 'Public Law 77–5'.
+    """
     if not rules or df.empty or "LawIdentifier" not in df.columns:
         return 0
     mutations = 0
     title_lower = df["LawTitle"].fillna("").astype(str).str.lower()
+    law_id_canon = df["LawIdentifier"].map(_canon_law_id)
     for match_id, match_title, replacement in rules:
         match_title_lower = match_title.lower()
         mask = (
-            df["LawIdentifier"].astype(str).str.contains(match_id, regex=False, na=False)
+            law_id_canon.str.contains(_canon_law_id(match_id), regex=False, na=False)
             & title_lower.str.contains(match_title_lower.replace("(", r"\(").replace(")", r"\)"), regex=True, na=False)
         )
         n = int(mask.sum())
@@ -83,10 +99,10 @@ def _apply_section_number_rules(
     mutations = 0
     heading_lower = df["SectionName"].fillna("").astype(str).str.lower()
     text_lower = df["Text"].fillna("").astype(str).str.lower()
-    law_id = df["LawIdentifier"].astype(str)
+    law_id = df["LawIdentifier"].map(_canon_law_id)
     for match_id, match_heading, match_text, replacement in rules:
         mask = (
-            law_id.str.contains(match_id, regex=False, na=False)
+            law_id.str.contains(_canon_law_id(match_id), regex=False, na=False)
             & heading_lower.str.contains(match_heading.lower(), regex=False, na=False)
         )
         if match_text is not None:
