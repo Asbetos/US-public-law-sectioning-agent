@@ -151,6 +151,25 @@ def cmd_show(args, reg: CorrectionsRegistry) -> int:
     return 0
 
 
+def _target_repo_for(family: str, registry_entries: list[dict]) -> str:
+    """Which repo a coder task edits: the standalone legacy-law-identity package
+    (legacy law-identity corrections — e.g. sidenote-regex changes in the
+    resolver) or the pipeline (everything else, default). Heuristic over the
+    family name and each correction's description/trigger text.
+    """
+    hay = (family or "").lower()
+    for e in registry_entries:
+        corr = e.get("correction") or {}
+        hay += " " + str(corr.get("description", "")).lower()
+        trig = e.get("trigger") or {}
+        hay += " " + " ".join(str(v).lower() for v in trig.values())
+    markers = (
+        "legacy_law_identity", "legacy-law-identity", "resolve_legacy_law_identities",
+        "sidenote regex", "sidenote-regex", "legacy law-identity", "legacy law identity",
+    )
+    return "legacy-law-identity" if any(m in hay for m in markers) else "pipeline"
+
+
 def _queue_coder_task(
     output_dir: Path,
     entry_ids: list[int],
@@ -178,25 +197,42 @@ def _queue_coder_task(
 
     scratch = output_dir / "scratch"
     scratch.mkdir(parents=True, exist_ok=True)
-    task = {
-        "task_id": primary_id,
-        "entry_ids": entry_ids,
-        "family": family,
-        "queued_at": datetime.now().isoformat(),
-        "approver": reviewer,
-        "registry_entries": registry_entries,
-        "context_files": [
+    target_repo = _target_repo_for(family, registry_entries)
+    if target_repo == "legacy-law-identity":
+        context_files = [
+            "../legacy-law-identity/src/legacy_law_identity/resolver.py",
+            "../legacy-law-identity/tests/test_resolver.py",
+        ]
+        constraints = [
+            "Add at least one regression test per family member that fails on the OLD code and passes on the NEW code.",
+            "Edit ONLY the legacy-law-identity package: src/legacy_law_identity/ and its tests/ (paths relative to that repo). Report files_modified relative to the package root.",
+            "Do not delete or rename existing tests.",
+            "Do NOT git commit — the finalize helper commits in the correct repo.",
+            "Run `python -m pytest tests/` inside the legacy-law-identity package before reporting success.",
+        ]
+    else:
+        context_files = [
             "parser/uslm_parser.py",
             "tests/unit/test_uslm_parser.py",
-        ],
-        "constraints": [
+        ]
+        constraints = [
             "Add at least one regression test per family member that fails on the OLD code and passes on the NEW code.",
             "Do not modify pipeline/corrections_registry.py, run_pipeline.py, processed_output/*, settings.json, .gitignore, or CI files.",
             "Do not delete or rename existing tests.",
             "All edits must be confined to parser/, pipeline/, and tests/.",
             "Do NOT git commit — leave changes staged or unstaged. The finalize helper will commit.",
             "Run `pytest tests/ -x` before reporting success.",
-        ],
+        ]
+    task = {
+        "task_id": primary_id,
+        "entry_ids": entry_ids,
+        "family": family,
+        "target_repo": target_repo,
+        "queued_at": datetime.now().isoformat(),
+        "approver": reviewer,
+        "registry_entries": registry_entries,
+        "context_files": context_files,
+        "constraints": constraints,
     }
     task_path = scratch / f"coder_task_{primary_id}.json"
     task_path.write_text(json.dumps(task, indent=2))

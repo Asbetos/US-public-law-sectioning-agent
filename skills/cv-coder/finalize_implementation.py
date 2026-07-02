@@ -25,6 +25,17 @@ _FORBIDDEN_FILES = (
     "approve_corrections.py",
 )
 
+# Branch-aware targets. A coder task may target the pipeline repo (default —
+# structural corrections that edit parser/uslm_parser.py, shared by legacy and
+# modern volumes) or the standalone legacy-law-identity package (legacy
+# law-identity corrections, e.g. sidenote-regex changes in the resolver). The
+# task's "target_repo" field selects; absent/unknown -> pipeline (back-compat).
+_LEGACY_PKG_ROOT = _REPO_ROOT.parent / "legacy-law-identity"
+_REPO_TARGETS = {
+    "pipeline": (_REPO_ROOT, _ALLOWED_PREFIXES),
+    "legacy-law-identity": (_LEGACY_PKG_ROOT, ("src/legacy_law_identity/", "tests/")),
+}
+
 logger = logging.getLogger("cv-coder.finalize")
 
 
@@ -65,11 +76,11 @@ def _load_response(path: Path) -> dict | None:
     return None
 
 
-def _assert_scope_clean(files_modified):
+def _assert_scope_clean(files_modified, allowed_prefixes=_ALLOWED_PREFIXES):
     for f in files_modified:
         if f in _FORBIDDEN_FILES:
             return False, f"forbidden file modified: {f}"
-        if not any(f.startswith(p) for p in _ALLOWED_PREFIXES):
+        if not any(f.startswith(p) for p in allowed_prefixes):
             return False, f"out-of-scope file: {f}"
     return True, None
 
@@ -220,6 +231,9 @@ def main(argv=None):
     # Load task JSON to get entry_ids list
     task = _read_task_json(args.output_dir, args.task_id)
     entry_ids = task.get("entry_ids", [args.task_id]) if task else [args.task_id]
+    target_repo = (task or {}).get("target_repo", "pipeline")
+    repo_root, allowed_prefixes = _REPO_TARGETS.get(target_repo, (_REPO_ROOT, _ALLOWED_PREFIXES))
+    logger.info("cv-coder finalize target repo: %s (%s)", target_repo, repo_root)
 
     # Load coder response
     resp = _load_response(args.response)
@@ -237,17 +251,17 @@ def main(argv=None):
     if resp.get("status") != "success":
         notes = f"coder returned status={resp.get('status')!r}; notes: {resp.get('notes', '')}"
         _update_entries_status(args.output_dir, entry_ids, "failed", notes=notes)
-        _git_revert_files(resp.get("files_modified", []))
+        _git_revert_files(resp.get("files_modified", []), repo_root)
         logger.error("Coder did not succeed: %s", notes)
         return 1
 
     files_modified = resp.get("files_modified", []) or []
 
     # Gate 2: scope
-    scope_ok, scope_err = _assert_scope_clean(files_modified)
+    scope_ok, scope_err = _assert_scope_clean(files_modified, allowed_prefixes)
     if not scope_ok:
         _update_entries_status(args.output_dir, entry_ids, "failed", notes=f"scope: {scope_err}")
-        _git_revert_files(files_modified)
+        _git_revert_files(files_modified, repo_root)
         logger.error("Scope violation: %s", scope_err)
         return 1
 
@@ -259,12 +273,12 @@ def main(argv=None):
             "failed",
             notes="no new tests reported (TDD gate)",
         )
-        _git_revert_files(files_modified)
+        _git_revert_files(files_modified, repo_root)
         logger.error("No new tests")
         return 1
 
     # Gate 4: pytest on working tree
-    pytest_ok, pytest_summary = _run_pytest_gate(_REPO_ROOT)
+    pytest_ok, pytest_summary = _run_pytest_gate(repo_root)
     if not pytest_ok:
         _update_entries_status(
             args.output_dir,
@@ -272,7 +286,7 @@ def main(argv=None):
             "failed",
             notes=f"pytest red: {pytest_summary}",
         )
-        _git_revert_files(files_modified)
+        _git_revert_files(files_modified, repo_root)
         logger.error("Pytest gate failed")
         return 1
 
@@ -281,10 +295,10 @@ def main(argv=None):
         f"cv-coder: implement correction(s) #{','.join(str(i) for i in entry_ids)}\n\n"
         f"{resp.get('diff_summary', '')}"
     )
-    sha = _git_commit_and_capture_sha(files_modified, commit_msg, _REPO_ROOT)
+    sha = _git_commit_and_capture_sha(files_modified, commit_msg, repo_root)
     if sha is None:
         _update_entries_status(args.output_dir, entry_ids, "failed", notes="git commit failed")
-        _git_revert_files(files_modified)
+        _git_revert_files(files_modified, repo_root)
         logger.error("Commit failed")
         return 1
 
@@ -294,7 +308,7 @@ def main(argv=None):
         entry_ids,
         "implemented",
         commit_sha=sha,
-        notes=resp.get("diff_summary", ""),
+        notes=f"[repo={target_repo}] " + resp.get("diff_summary", ""),
     )
 
     # Auto-chain re-publish (failure here is a warning, not a hard failure)

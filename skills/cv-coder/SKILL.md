@@ -87,6 +87,15 @@ The helper:
 - On any gate failure: revert the working tree (`git checkout -- <modified files>`)
   and mark all entry_ids implementation_status="failed" with notes
 
+**Branch-aware (old + new volumes):** the task's `target_repo` field selects
+where edits land — `pipeline` (default; structural corrections in
+`parser/uslm_parser.py`, shared by legacy ≤63 and modern >63 volumes) or
+`legacy-law-identity` (legacy law-identity corrections in the resolver package,
+e.g. sidenote-regex changes). The finalize helper runs *that repo's* pytest,
+enforces scope against *that repo's* allowed prefixes, commits in *that repo*,
+and records the SHA. `approve_corrections.py` sets `target_repo` when it queues
+the task (see `_target_repo_for`).
+
 ### Step 6 — Auto-chain re-publish
 
 If finalize exited 0 (success), it ALREADY invoked re_publish_after_fix.py

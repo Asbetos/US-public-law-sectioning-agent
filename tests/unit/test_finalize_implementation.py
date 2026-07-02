@@ -96,7 +96,7 @@ def test_coder_status_failed_marks_failed_and_reverts(tmp_path):
                                       "notes": "couldn't get the test red"})
     _seed_registry(tmp_path, entry_ids=(50,))
     revert_called = []
-    with patch.object(fi, "_git_revert_files", side_effect=lambda f: revert_called.extend(f)):
+    with patch.object(fi, "_git_revert_files", side_effect=lambda f, repo_root=None: revert_called.extend(f)):
         rc = fi.main(["--task-id", "50", "--response", str(resp), "--output-dir", str(tmp_path)])
     assert rc == 1
     assert "parser/uslm_parser.py" in revert_called
