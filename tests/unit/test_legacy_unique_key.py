@@ -45,3 +45,11 @@ def test_map_approved_date_to_congress_boundary_and_session():
     )
     assert int(res.iloc[0]["Congress"]) == 77 and int(res.iloc[0]["Session"]) == 1
     assert int(res.iloc[1]["Session"]) == 2
+
+
+def test_legacy_approved_date_parses_to_yyyy_mm_dd():
+    # Legacy XML stores "Month DD, YYYY"; output must be yyyy-mm-dd to match the
+    # modern/original pipeline.
+    s = pd.Series(["January 29, 1941", "July 24, 1941", "December 16, 1925"])
+    parsed = gik.clean_date_col(s)
+    assert [p.strftime("%Y-%m-%d") for p in parsed] == ["1941-01-29", "1941-07-24", "1925-12-16"]

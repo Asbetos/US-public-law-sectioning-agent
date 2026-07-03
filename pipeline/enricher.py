@@ -234,6 +234,14 @@ def add_unique_keys(
                 [int(c) if pd.notna(c) else pd.NA for c in cs["Congress"]], dtype="Int64"
             )
             df["Session"] = [_clean_session(x) for x in cs["Session"]]
+        # Normalize approvedDate to yyyy-mm-dd to match the modern/original
+        # pipeline output (legacy XML stores it as "Month DD, YYYY" text).
+        # Unparseable values are left as-is rather than dropped.
+        _parsed_dates = generate_id_keys.clean_date_col(df["approvedDate"])
+        df["approvedDate"] = [
+            p.strftime("%Y-%m-%d") if pd.notna(p) else o
+            for p, o in zip(_parsed_dates, df["approvedDate"])
+        ]
         df["UniqueKey"] = df.apply(generate_id_keys.generate_unique_key_legacy, axis=1)
     else:
         df["UniqueKey"] = df.apply(generate_unique_key, axis=1)
