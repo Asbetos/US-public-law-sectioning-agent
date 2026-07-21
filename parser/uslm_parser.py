@@ -790,16 +790,23 @@ def _repair_malformed_law_identifiers(file_path, vol, results):
         corrected_id = f"Public Law {congress}-{doc_number}"
         if not _CANONICAL_PUBLIC_LAW_ID.search(corrected_id):
             continue  # rebuilt id still not canonical — leave row as-is
-        repair_map[malformed_id] = corrected_id
+        # Key by (malformed_id, official title). Multiple pLaws can share the
+        # SAME malformed id — most commonly an empty "<citableAs>Public Law</citableAs>"
+        # (no number) — and keying by the id alone collapses them all onto a
+        # single (last-wins) docNumber. The official title is unique per pLaw, so
+        # (id, title) repairs each law to its own docNumber.
+        ot = plaw.find(".//uslm:officialTitle", ns)
+        title = get_clean_text(ot) if ot is not None else ""
+        repair_map[(malformed_id, title)] = corrected_id
 
     if not repair_map:
         return
 
     for key in ("Sections", "Divisions"):
         for row in results.get(key, []):
-            current = row.get("LawIdentifier")
-            if current in repair_map:
-                row["LawIdentifier"] = repair_map[current]
+            k = (row.get("LawIdentifier"), row.get("LawTitle"))
+            if k in repair_map:
+                row["LawIdentifier"] = repair_map[k]
 
 
 def extract_public_law_from_uslm(file_path, vol):

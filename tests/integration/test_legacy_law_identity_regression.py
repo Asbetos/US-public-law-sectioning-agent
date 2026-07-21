@@ -67,3 +67,14 @@ def test_vol70_saint_mary_seed_correction_survives_repair():
     assert sm, "saint-mary law not found in vol 70"
     ids = {r.get("LawIdentifier") for r in sm}
     assert ids == {"84-663"}, f"expected 84-663, got {ids}"
+
+
+def test_vol68_empty_citableas_ids_not_collapsed():
+    # Regression: several vol 68 pLaws carry an empty "<citableAs>Public Law</citableAs>"
+    # (no number). The malformed-id repair map previously keyed by that shared id,
+    # so all of them collapsed onto one docNumber (last-wins -> 83-757). Keying by
+    # (id, title) must repair each to its own docNumber.
+    res = extract_public_law_from_uslm(f"{XML_DIR}/STATUTE-68.xml", "68")
+    ids = {r.get("LawIdentifier") for r in res["Sections"]}
+    for dn in ("315", "332", "333", "339", "351", "714", "737", "757"):
+        assert f"Public Law 83-{dn}" in ids, f"vol 68 missing Public Law 83-{dn} (collapsed?)"
