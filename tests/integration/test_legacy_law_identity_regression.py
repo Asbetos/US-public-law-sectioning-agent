@@ -37,18 +37,33 @@ def test_no_blank_law_identifiers(vol):
     assert blanks == [], f"vol {vol} has {len(blanks)} unrecognizable LawIdentifiers"
 
 
-@pytest.mark.parametrize("vol", [55, 57, 59, 61, 62, 63])
+@pytest.mark.parametrize("vol", [55, 57, 59, 61, 62, 63, 64])
 def test_ready_volumes_ids_are_pl_number_namespace(vol):
     # Legacy ids must no longer be blank/chapter-only: every id should be a
     # recognizable {congress}-{N} value reflecting the sidenote public-law number.
+    # Vol 64 is legacy-structured too (public-law number in the sidenote, chapter
+    # in docNumber, no "Public Law N" citableAs), so the legacy boundary is <=64.
     ids = [x for x in _law_ids(vol) if x]
     assert ids and all(PATTERN.search(str(x)) for x in ids)
 
 
-@pytest.mark.parametrize("vol", [64, 105, 108])
+@pytest.mark.parametrize("vol", [105, 108])
 def test_modern_volumes_unaffected(vol):
-    # Module is gated to <=63; modern volumes must still parse and keep the
-    # canonical "Public Law N-M" citable form (repair pass still runs for >63).
+    # Module is gated to <=64; modern volumes (>64) must still parse and keep the
+    # canonical "Public Law N-M" citable form (repair pass still runs for >64).
     ids = [x for x in _law_ids(vol) if x]
     assert ids
     assert any("Public Law" in str(x) for x in ids)
+
+
+def test_vol70_saint_mary_seed_correction_survives_repair():
+    # Regression: the 84-274 -> 84-663 seed correction (Saint Mary River) must
+    # survive the malformed-id repair pass. The repair previously treated the
+    # bare corrected id "84-663" (no "Public Law" prefix) as malformed and
+    # rebuilt "Public Law 84-274" from <docNumber>, undoing the correction.
+    res = extract_public_law_from_uslm(f"{XML_DIR}/STATUTE-70.xml", "70")
+    sm = [r for r in res["Sections"]
+          if "saint mary river" in str(r.get("LawTitle", "")).lower()]
+    assert sm, "saint-mary law not found in vol 70"
+    ids = {r.get("LawIdentifier") for r in sm}
+    assert ids == {"84-663"}, f"expected 84-663, got {ids}"

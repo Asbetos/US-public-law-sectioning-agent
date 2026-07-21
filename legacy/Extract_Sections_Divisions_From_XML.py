@@ -146,10 +146,10 @@ def extract_public_law_from_uslm(file_path,vol):
     results = {"Sections": [], "Divisions": []}
 
     plaws = root.findall(".//uslm:pLaw", ns)
-    legacy_ids = resolve_legacy_law_identities(plaws, vol, ns) if int(vol) <= 63 else {}
+    legacy_ids = resolve_legacy_law_identities(plaws, vol, ns) if int(vol) <= 64 else {}
 
     for plaw_idx, plaw in enumerate(plaws):
-        if int(vol) <= 63:
+        if int(vol) <= 64:
             ident = legacy_ids.get(plaw_idx)
             if ident is None or not ident["is_public"]:
                 continue
@@ -157,9 +157,9 @@ def extract_public_law_from_uslm(file_path,vol):
             lawtype_el = plaw.find(".//uslm:publicPrivate", ns)
             if lawtype_el is None or not lawtype_el.text or lawtype_el.text.strip().lower() != "public":
                 continue
-        # Volumes >63 use modern USLM with <citableAs>; earlier volumes encode the
+        # Volumes >64 use modern USLM with <citableAs>; vol 64 and earlier encode the
         # public-law number inside <sidenote> text and need regex extraction.
-        if int(vol)>63:
+        if int(vol)>64:
             c = plaw.find(".//uslm:citableAs", ns)
             law_identifiers = ''.join(c.itertext()).strip() if c is not None else ""
             if int(vol) == 70:

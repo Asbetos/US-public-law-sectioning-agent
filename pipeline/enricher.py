@@ -211,8 +211,10 @@ def add_unique_keys(
     generate_id_keys.division_mapper_json = mapping  # consumed by generate_unique_key
 
     df = df.copy()
-    if vol is not None and int(vol) <= 63:
-        # Legacy volumes: updated 11-segment key with per-row Congress/Session
+    if vol is not None and int(vol) <= 64:
+        # Legacy volumes (<=64, incl. vol 64 whose public-law number lives in the
+        # sidenote and whose docNumber is the chapter): updated 11-segment key with
+        # per-row Congress/Session
         # (derived from approvedDate) so laws sharing a number across sessions
         # in a single volume stay distinct. Adds VolumeNumber/Congress/Session.
         df["VolumeNumber"] = int(vol)

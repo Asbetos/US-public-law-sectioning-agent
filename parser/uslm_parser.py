@@ -514,7 +514,7 @@ def _compute_law_identifier(plaw, ns, vol):
     except (TypeError, ValueError):
         vol_int = 0
 
-    if vol_int > 63:
+    if vol_int > 64:
         c = plaw.find(".//uslm:citableAs", ns)
         law_identifiers = "".join(c.itertext()).strip() if c is not None else ""
         if vol_int == 70:
@@ -860,11 +860,24 @@ def extract_public_law_from_uslm(file_path, vol):
     if isinstance(results, dict) and "Sections" in results:
         _recover_dropped_container_pLaws(file_path, vol, results)
         # The malformed-id repair pass rebuilds ids from <docNumber>, which is the
-        # PUBLIC-LAW number for modern volumes (>63) but the CHAPTER number for legacy
-        # volumes (<=63). Legacy ids now come correctly from the legacy-law-identity
-        # resolver, so the repair pass must only run for modern volumes.
-        if int(vol) > 63:
+        # PUBLIC-LAW number for modern volumes (>64) but the CHAPTER number for legacy
+        # volumes (<=64, including vol 64 whose public-law number lives in <sidenote>).
+        # Legacy ids now come correctly from the legacy-law-identity resolver, so the
+        # repair pass must only run for modern volumes.
+        if int(vol) > 64:
             _repair_malformed_law_identifiers(file_path, vol, results)
+            # The repair pass rebuilds ids from <docNumber> and treats a
+            # seed-corrected BARE id (e.g. "84-663", which has no "Public Law"
+            # prefix) as malformed, clobbering it back to the uncorrected
+            # "Public Law 84-274". Re-apply the static-seed law-id corrections as
+            # the LAST step so a correction is never undone by the repair.
+            for _bucket in ("Sections", "Divisions"):
+                for _row in results.get(_bucket, []):
+                    _lid = _row.get("LawIdentifier")
+                    if _lid:
+                        _row["LawIdentifier"] = apply_law_id_corrections(
+                            _lid, _row.get("LawTitle") or ""
+                        )
         _assign_unnumbered_section_ordinals(results["Sections"])
         _disambiguate_sibling_levels(results["Sections"])
     if isinstance(results, dict) and "Divisions" in results:
