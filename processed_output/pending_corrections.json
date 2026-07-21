@@ -6866,9 +6866,79 @@
         "title_substring": "to amend the act incorporating the american legion so as to redefine eligibility for membership"
       },
       "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-21T12:02:36.751259",
+          "vol": 66
+        }
+      ],
+      "confidence": 0.99,
+      "correction": {
+        "replace_with_law_id": "82-324"
+      },
+      "discovered_in_vol": 66,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Empty <citableAs>Public Law</citableAs>; docNumber=324 and 66 Stat. 64 are authoritative. Repair-pass map collapsed 3 empty-citableAs pLaws (324,330,332) to 332 (last-wins).",
+        "xml_excerpt": "<docNumber>324</docNumber> <citableAs>Public Law</citableAs> <citableAs>66 Stat. 64</citableAs>"
+      },
+      "id": 196,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-21T12:02:36.751259",
+      "review_note": "vol66 empty-citableAs collapse; docNumber-authoritative, conf 0.99",
+      "reviewed_at": "2026-07-21T12:02:37.315201",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "82-332",
+        "title_substring": "to provide for setting aside an appropriate day as a national day of prayer"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-21T12:02:36.751259",
+          "vol": 66
+        }
+      ],
+      "confidence": 0.99,
+      "correction": {
+        "replace_with_law_id": "82-330"
+      },
+      "discovered_in_vol": 66,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Empty <citableAs>Public Law</citableAs>; docNumber=330 and 66 Stat. 66 are authoritative. Repair-pass map collapsed 3 empty-citableAs pLaws (324,330,332) to 332 (last-wins).",
+        "xml_excerpt": "<docNumber>330</docNumber> <citableAs>Public Law</citableAs> <citableAs>66 Stat. 66</citableAs>"
+      },
+      "id": 197,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-21T12:02:36.751259",
+      "review_note": "vol66 empty-citableAs collapse; docNumber-authoritative, conf 0.99",
+      "reviewed_at": "2026-07-21T12:02:37.386678",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "82-332",
+        "title_substring": "to amend section 1716 of title 18, united states code"
+      },
+      "type": "law_id"
     }
   ],
-  "next_id": 196,
+  "next_id": 198,
   "rejected": [
     {
       "agent_version": "cv-correct@0.1.0",
