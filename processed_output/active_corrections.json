@@ -6295,6 +6295,1196 @@
         "title_substring": "to amend section 1716 of title 18, united states code"
       },
       "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "69-9"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 14 prints Public, No. 8 (duplicating chapter 13), but sits between 69-8 and 69-10 where the sequence requires 9.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-02-08\">February 8, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/1811\">S. 1811</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/8\">Public, No. 8</ref>.]</p></sidenote>"
+      },
+      "id": 198,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:24.955949",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-8",
+        "title_substring": "fox river, in the county of kendall"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "69-20"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Revenue Act of 1926 prints Public, No. 2O with a letter O instead of a zero; the reference link is /us/pl/69/20 and the slot between 69-19 and 69-21 requires 20.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-02-26\">February 26, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/1\">H. R. 1</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/20\">Public, No. 2O</ref>.]</p></sidenote>"
+      },
+      "id": 199,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.027713",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-2",
+        "title_substring": "to reduce and equalize taxation"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_law_id": "69-36"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 44 prints Public, No. 26 (duplicating an earlier chapter) but sits between 69-35 and 69-37, where the sequence requires 36.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-03-03\">March 3, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/8722\">H. R. 8722</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/26\">Public, No. 26</ref>.]</p></sidenote>"
+      },
+      "id": 200,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.099765",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-26",
+        "title_substring": "urgent deficiencies in certain appropriations"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-205"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The DC appropriation act prints Public, No. 203 (duplicating chapter 273) but sits between 69-204 and 69-206, where the sequence requires 205.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-10\">May 10, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/2296\">S. 2296</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/203\">Public, No. 203</ref>.]</p></sidenote>"
+      },
+      "id": 201,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.171535",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-203",
+        "title_substring": "government of the district of columbia and other activities chargeable"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-225"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Little Falls bridge act prints Public, No. 224 (duplicating chapter 296) but sits between 69-224 and 69-226, where the sequence requires 225.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-13\">May 13, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/10470\">H. R. 10470</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/224\">Public, No. 224</ref>.]</p></sidenote>"
+      },
+      "id": 202,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.242475",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-224",
+        "title_substring": "city of little falls, minnesota"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-233"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapters 305 and 306 both print Public, No. 234; chapter 305 sits between 69-232 and 69-234 where the sequence requires 233.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-17\">May 17, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/935\">H. R. 935</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/234\">Public, No. 234</ref>.]</p></sidenote>"
+      },
+      "id": 203,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.314051",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-234",
+        "title_substring": "colville indian reservation"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-259"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 350 prints Public, No. 269 (duplicating chapter 364) but sits between 69-258 and 69-260, where the sequence requires 259.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-21\">May 21, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/3550\">S. 3550</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/269\">Public, No. 269</ref>.]</p></sidenote>"
+      },
+      "id": 204,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.385901",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-269",
+        "title_substring": "kennesaw mountain"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_law_id": "69-298"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Prince William County act prints Public, No. 293 (duplicating chapter 397) but sits between 69-297 and 69-299, where the sequence requires 298.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-26\">May 26, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/7286\">H. R. 7286</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/293\">Public, No. 293</ref>.]</p></sidenote>"
+      },
+      "id": 205,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.457346",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-293",
+        "title_substring": "prince william county, virginia"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-325"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "This World War Veterans Act amendment prints a garbled Public, No. 54 but sits between 69-324 and 69-326, where the sequence requires 325.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-06-02\">June 2, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/3997\">S. 3997</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/65/54\">Public, No. 54</ref>.]</p></sidenote>"
+      },
+      "id": 206,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.528685",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-54",
+        "title_substring": "world war veterans"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "69-349"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The sidenote text prints Public, No. 54 while its own reference link is /us/pl/69/349; the slot between 69-348 and 69-350 requires 349.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-06-08\">June 8, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/9869\">H. R. 9869</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/349\">Public, No. 54</ref>.]</p></sidenote>"
+      },
+      "id": 207,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.600489",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-54",
+        "title_substring": "corrective deed to certain real estate in the city of new york"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.94,
+      "correction": {
+        "replace_with_law_id": "69-257"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 347 (the Railway Labor Act) prints Public, No. 357 (duplicating chapter 501) but sits between 69-256 and 69-258, where the sequence requires 257.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-20\">May 20, 1926</approvedDate>.</p><p class=\"firstIndent1 fontsize8\">[<ref href=\"/us/bill/69/hr/9463\">H. R. 9463</ref>.]</p><p class=\"firstIndent1 fontsize8\">[<ref href=\"/us/pl/69/357\">Public, No. 357</ref>.].</p></sidenote>"
+      },
+      "id": 208,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.671713",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-357",
+        "title_substring": "prompt disposition of disputes between carriers"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.94,
+      "correction": {
+        "replace_with_law_id": "69-354"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 498 prints Public, No. 364 (duplicating chapter 516) but sits between 69-353 and 69-355, where the sequence requires 354.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-06-08\">June 8, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/674\">S. 674</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/364\">Public, No. 364</ref>.]</p></sidenote>"
+      },
+      "id": 209,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.743251",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-364",
+        "title_substring": "kaysville, utah"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.85,
+      "correction": {
+        "replace_with_law_id": "69-441"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 713's entire sidenote (bill S. 3012, Public No. 439\u00bd, and marginal notes) is copied from chapter 707; the Code-publication act sits between 69-440 and 69-442, requiring 441.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-06-30\">June 30, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/3012\">S. 3012</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/69/pl/439\u00bd\">Public, No. 439\u00bd</ref>.]</p></sidenote>"
+      },
+      "id": 210,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.814625",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-439",
+        "title_substring": "publication of the act to consolidate"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_law_id": "69-457"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Greenwich Parkway act prints Public, No. 437 (duplicating chapter 701) but sits between 69-456 and 69-458, where the sequence requires 457.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-07-03\">July 3, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/9637\">H. R. 9637</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/437\">Public. No. 437</ref>.]</p></sidenote>"
+      },
+      "id": 211,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.886171",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-437",
+        "title_substring": "greenwich parkway"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-526"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 4 prints Public, No. 528 (duplicating chapter 6) and appears out of order before chapter 5's 69-527, where the sequence requires 526.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-12-11\">December 11, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/10547\">H. R. 10547</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/528\">Public, No. 528</ref>.]</p></sidenote>"
+      },
+      "id": 212,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:25.957613",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-528",
+        "title_substring": "filing of an affidavit by certain officers"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_law_id": "69-545"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Minneapolis silver-service act prints Public, No. 515 (duplicating first-session chapter 794) but sits between 69-544 and 69-546, where the sequence requires 545.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-01-14\">January 14, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/11515\">H. R. 11515</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/515\">Public, No. 515</ref>.]</p></sidenote>"
+      },
+      "id": 213,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.029714",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-515",
+        "title_substring": "silver service set in use on the cruiser minneapolis"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-553"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Rock Creek church-land act prints Public, No. 533 (duplicating chapter 18) but sits between 69-552 and 69-554, where the sequence requires 553.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-01-20\">January 20, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/5231\">S. 5231</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/533\">Public, No. 533</ref>.]</p></sidenote>"
+      },
+      "id": 214,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.101146",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-533",
+        "title_substring": "rock creek and potomac parkway for construction of a church"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_law_id": "69-666"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "The Oregon land-selection act prints Public, No. 665 (duplicating chapter 245) but sits between 69-665 and 69-667, where the sequence requires 666.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-03-02\">March 2, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/722\">S. 722</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/665\">Public, No. 665</ref>.]</p></sidenote>"
+      },
+      "id": 215,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.172641",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-665",
+        "title_substring": "publicly owned lands by the state of oregon"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.93,
+      "correction": {
+        "replace_with_law_id": "69-578"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Chapter 65 (session 2) prints Public, No. 678 (duplicating chapter 261) but sits between 69-577 and 69-579, where the sequence requires 578.",
+        "xml_excerpt": "<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-02-05\">February 5, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/10082\">H. R. 10082</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/678\">Public, No. 678</ref>.]</p></sidenote>"
+      },
+      "id": 216,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.243801",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-678",
+        "title_substring": "pipe lines for petroleum"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-605"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate PL 695: this chapter (44 Stat. 1089) sits between PL 604 (Stat 1087) and PL 606 (Stat 1090); the real PL 695 is the Starr County Bridge act at Stat 1341.",
+        "xml_excerpt": "<docNumber>112</docNumber>\n<citableAs>44 Stat. 1089</citableAs>\n<officialTitle>To authorize an appropriation for the purchase of certain privately owned land within the Jicarilla Indian Reservation, New Mexico.</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-02-12\">February 12, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/4942\">S. 4942</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/695\">Public, No. 695</ref>.]</p></sidenote>"
+      },
+      "id": 217,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.316035",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-695",
+        "title_substring": "to authorize an appropriation for the purchase of certain privately owned land within the jicarilla indian reservation"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-703"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate PL 708: this chapter (44 Stat. 1348) sits between PL 702 (Stat 1347) and PL 704 (Stat 1349); the real PL 708 is the Michigan Avenue grade-crossing act at Stat 1351.",
+        "xml_excerpt": "<docNumber>300</docNumber>\n<citableAs>44 Stat. 1348</citableAs>\n<officialTitle>To provide for the appointment of an additional district judge for the district of Connecticut.</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-03-03\">March 3, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/227\">S. 227</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/708\">Public, No. 708</ref>.]</p></sidenote>"
+      },
+      "id": 218,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.388087",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-708",
+        "title_substring": "to provide for the appointment of an additional district judge for the district of connecticut"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.85,
+      "correction": {
+        "replace_with_law_id": "69-726"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-order PL 728: chapter 323 falls between chapter 322 (PL 725) and chapter 324 (PL 727), so it must be 726.",
+        "xml_excerpt": "<docNumber>323</docNumber>\n<citableAs>44 Stat. 1364</citableAs>\n<officialTitle>To amend section 10 of the Act entitled \u201cAn Act extending the homestead laws and providing for right of way for railroads in the District of Alaska, and for other purposes,\u201d approved May 14, 1898 (Thirtieth Statutes at Large, page 409).</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-03-03\">March 3, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/15620\">H. R. 15620</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/728\">Public, No. 728</ref>.]</p></sidenote>"
+      },
+      "id": 219,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.460482",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-728",
+        "title_substring": "homestead laws and providing for right of way for railroads in the district of alaska"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-728"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate PL 727: chapter 325 immediately follows chapter 324 (Golden, Colorado = PL 727), so it must be 728.",
+        "xml_excerpt": "<docNumber>325</docNumber>\n<citableAs>44 Stat. 1365</citableAs>\n<officialTitle>To amend section 1 of the Act approved May 26, 1926, entitled \u201cAn Act to amend sections 1, 5, 6, 8, and 18 of an Act approved June 4, 1920, entitled \u2018An Act to provide for the allotment of lands of the Crow Tribe, for the distribution of tribal funds, and for other purposes.\u2019 \u201d</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-03-03\">March 3, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/16017\">H. R. 16017</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/727\">Public, No. 727</ref>.]</p></sidenote>"
+      },
+      "id": 220,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.532925",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-727",
+        "title_substring": "to amend section 1 of the act approved may 26, 1926"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.92,
+      "correction": {
+        "replace_with_law_id": "69-744"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate/short PL 74: this chapter (44 Stat. 1378) sits between PL 743 (Stat 1374) and PL 745 (Stat 1379); sidenote 'Public. No. 74' has a dropped digit.",
+        "xml_excerpt": "<docNumber>341</docNumber>\n<citableAs>44 Stat. 1378</citableAs>\n<officialTitle>Transferring a portion of the lands of the military reservation of the Presidio of San Francisco to the Department of the Treasury.</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-03-03\">March 3, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/4964\">S. 4964</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69//74\">Public. No. 74</ref>.]</p></sidenote>"
+      },
+      "id": 221,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.605197",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-74",
+        "title_substring": "transferring a portion of the lands of the military reservation of the presidio of san francisco"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-784"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Duplicate PL 734: this chapter (44 Stat. 1410) sits between PL 783 (Stat 1406) and PL 785 (Stat 1411); the real PL 734 is at Stat 1369.",
+        "xml_excerpt": "<docNumber>490</docNumber>\n<citableAs>44 Stat. 1410</citableAs>\n<officialTitle>To provide for continued hospitalization at Saranac Lake, New York, of certain beneficiaries of the Veterans\u2019 Bureau.</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-03-04\">March 4, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/5625\">S. 5625</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/734\">Public, No. 734</ref>.]</p></sidenote>"
+      },
+      "id": 222,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.677062",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-734",
+        "title_substring": "to provide for continued hospitalization at saranac lake"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.97,
+      "correction": {
+        "replace_with_law_id": "69-257"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place PL 357 between PL 256 and PL 258; this is the Railway Labor Act, historically Public Law 69-257 (44 Stat. 577).",
+        "xml_excerpt": "<docNumber>347</docNumber>\n<citableAs>44 Stat. 577</citableAs>\n<officialTitle>To provide for the prompt disposition of disputes between carriers and their employees, and for other purposes.</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-20\">May 20, 1926</approvedDate>.</p><p class=\"firstIndent1 fontsize8\">[<ref href=\"/us/bill/69/hr/9463\">H. R. 9463</ref>.]</p><p class=\"firstIndent1 fontsize8\">[<ref href=\"/us/pl/69/357\">Public, No. 357</ref>.].</p></sidenote>"
+      },
+      "id": 223,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.748800",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-357",
+        "title_substring": "to provide for the prompt disposition of disputes between carriers and their employees"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-259"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place PL 269 between PL 258 and PL 260; the real PL 269 is at 44 Stat. 617.",
+        "xml_excerpt": "<docNumber>350</docNumber>\n<citableAs>44 Stat. 588</citableAs>\n<officialTitle>Providing for an inspection of the Kennesaw Mountain and Lost Mountain and other battle fields in the State of Georgia.</officialTitle><sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-05-21\">May 21, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/3550\">S. 3550</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/269\">Public, No. 269</ref>.]</p></sidenote>"
+      },
+      "id": 224,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.821149",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-269",
+        "title_substring": "providing for an inspection of the kennesaw mountain and lost mountain"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-354"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: parsed 69-364 sits between 69-353 and 69-355; chapter 498 falls between chapter 497 (law 353) and chapter 499 (law 355), so the slot requires 354.",
+        "xml_excerpt": "<docNumber>498</docNumber>\n<citableAs>44 Stat. 707</citableAs>\n<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1926-06-08\">June 8, 1926</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/s/674\">S. 674</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/364\">Public, No. 364</ref>.]</p></sidenote>"
+      },
+      "id": 225,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.894225",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-364",
+        "title_substring": "granting certain lands to the city of kaysville, utah, to protect the watershed of the water-supply system of said city"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "69-578"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: parsed 69-678 sits between 69-577 and 69-579; this is second-session Chap. 65, and Chap. 64 = law 577, Chap. 66 = law 579, so the slot requires 578.",
+        "xml_excerpt": "<docNumber>65</docNumber>\n<citableAs>44 Stat. 1056</citableAs>\n<sidenote><p class=\"centered fontsize8\"><approvedDate date=\"1927-02-05\">February 5, 1927</approvedDate>.</p><p class=\"centered fontsize8\">[<ref href=\"/us/bill/69/hr/10082\">H. R. 10082</ref>.]</p><p class=\"centered fontsize8\">[<ref href=\"/us/pl/69/678\">Public, No. 678</ref>.]</p></sidenote>"
+      },
+      "id": 226,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:26.966633",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-678",
+        "title_substring": "use of certain pipe lines for petroleum and its products"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "69-618"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: 69-818 sits between 69-617 and 69-619; the slot expected 69-618.",
+        "xml_excerpt": "<docNumber>136</docNumber><citableAs>44 Stat. 1097</citableAs>...<sidenote>...[<ref href=\"/us/pl/69/818\">Public, No. 818</ref>.]</sidenote>"
+      },
+      "id": 227,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:27.039641",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-818",
+        "title_substring": "approving the transaction of the adjutant general of the state of oregon in issuing property to sufferers from a fire in astoria, oregon"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-726"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: 69-728 sits between 69-725 and 69-727; the slot expected 69-726.",
+        "xml_excerpt": "<docNumber>323</docNumber><citableAs>44 Stat. 1364</citableAs>...<sidenote>...[<ref href=\"/us/pl/69/728\">Public, No. 728</ref>.]</sidenote>"
+      },
+      "id": 228,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:27.111782",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-728",
+        "title_substring": "extending the homestead laws and providing for right of way for railroads in the district of alaska"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.9,
+      "correction": {
+        "replace_with_law_id": "69-776"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Out-of-place in XML order: 69-726 sits between 69-775 and 69-777; the slot expected 69-776.",
+        "xml_excerpt": "<docNumber>373</docNumber><citableAs>44 Stat. 1399</citableAs>...<sidenote>...[<ref href=\"/us/pl/69/726\">Public, No. 726.</ref>.]</sidenote>"
+      },
+      "id": 229,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:27.183619",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-726",
+        "title_substring": "authorizing negotiations for the acquisition of a site for the farmers"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "69-482"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Public act misnumbered 483 (chapter before 762=483, 763=484); should be 482",
+        "xml_excerpt": "<sidenote>July 3, 1926.[S. 1344.][Public, No, 483.]</sidenote>"
+      },
+      "id": 230,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:27.255671",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "69-483",
+        "title_substring": "to amend paragraph (11), section 20, of the interstate commerce"
+      },
+      "type": "law_id"
+    },
+    {
+      "agent_version": "cv-correct@0.1.0",
+      "applied_in_runs": [
+        {
+          "run_ts": "2026-07-22T11:32:24.357700",
+          "vol": 44
+        }
+      ],
+      "confidence": 0.95,
+      "correction": {
+        "replace_with_law_id": "Public Resolution 69-26"
+      },
+      "discovered_in_vol": 44,
+      "evidence": {
+        "comparable_rows": [],
+        "rule_or_signal": "Public resolution misprinted No. 20 (May 10, after PR 21/25); PR 26 is the sequence gap",
+        "xml_excerpt": "<sidenote>May 10, 1926.[S. J. Res. 60.][Pub. Res., No. 20.]</sidenote>"
+      },
+      "id": 231,
+      "implementation_attempted_at": null,
+      "implementation_commit_sha": null,
+      "implementation_notes": null,
+      "implementation_status": "not_required",
+      "proposed_at": "2026-07-22T11:32:24.357700",
+      "review_note": "vol44 legacy OCR misnumbering; opus-reviewed, validated distinct->879/collisions->0",
+      "reviewed_at": "2026-07-22T11:32:27.329802",
+      "reviewer": "G39248410",
+      "seen_again_count": 0,
+      "status": "approved",
+      "trigger": {
+        "law_id_substring": "Public Resolution 69-20",
+        "title_substring": "authorizing expenditures from the fort peck"
+      },
+      "type": "law_id"
     }
   ],
   "next_id": 1,
