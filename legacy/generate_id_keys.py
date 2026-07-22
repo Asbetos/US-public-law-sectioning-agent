@@ -145,26 +145,56 @@ def clean_date_col(s):
     return s.apply(parse_one_date)
 
 
-def map_approved_date_to_congress(approved_dates, congress_df):
+def map_approved_date_to_congress(approved_dates, congress_df, congress_hints=None):
     """Map each approved date to (Congress, Session) via the date-range table.
 
     ``congress_df`` columns: Congress, Session, BeginDate, AdjournDate|EndDate.
-    On a boundary date, the session with the latest BeginDate wins.
+
+    Consecutive sessions in the table share their boundary date (adjourn of one
+    == begin of the next), so a date on a boundary matches two sessions. When a
+    boundary also crosses a congress (pre-1935 congresses ended March 4, the day
+    the next congress's term nominally began), a date-only match can land a law
+    in the WRONG congress -- e.g. a 72nd-Congress act signed 1933-03-04 falling
+    into the phantom 73rd-Congress special session (Mar 4-9 1933, before it
+    convened).
+
+    ``congress_hints`` (optional, per-row) supplies the law's authoritative
+    congress -- e.g. parsed from its LawIdentifier/sidenote. When given, the
+    candidate sessions are restricted to that congress BEFORE matching, so the
+    congress can never be wrong; the session is then picked within it. Within a
+    single congress, a boundary tie is still broken by latest BeginDate.
     """
     congress_lookup = congress_df.copy()
     end_col = "AdjournDate" if "AdjournDate" in congress_lookup.columns else "EndDate"
     congress_lookup["BeginDate"] = clean_date_col(congress_lookup["BeginDate"])
     congress_lookup[end_col] = clean_date_col(congress_lookup[end_col]).fillna(pd.Timestamp.max)
+    congress_str = congress_lookup["Congress"].apply(lambda c: str(c).strip())
 
     approved_dates = clean_date_col(approved_dates)
+    hints = list(congress_hints) if congress_hints is not None else [None] * len(approved_dates)
     results = []
-    for date in approved_dates:
+    for pos, date in enumerate(approved_dates):
         if pd.isna(date):
             results.append({"Congress": None, "Session": None})
             continue
-        match = congress_lookup[
-            (congress_lookup["BeginDate"] <= date) & (congress_lookup[end_col] >= date)
-        ]
+        cand = congress_lookup
+        hinted = False
+        hint = hints[pos] if pos < len(hints) else None
+        if hint is not None and pd.notna(hint):
+            sub = cand[congress_str == str(hint).strip()]
+            if not sub.empty:
+                cand = sub
+                hinted = True
+        match = cand[(cand["BeginDate"] <= date) & (cand[end_col] >= date)]
+        if match.empty and hinted:
+            # The date is outside every session of the law's OWN congress — most
+            # often a bill passed before adjournment but signed a few days after
+            # the congress ended (e.g. an 81st-Congress act signed Jan 1951, past
+            # the Jan 3 1951 adjournment). Anchor it to the nearest session of
+            # that congress rather than dropping the congress to null.
+            below = (cand["BeginDate"] - date).clip(lower=pd.Timedelta(0))
+            above = (date - cand[end_col]).clip(lower=pd.Timedelta(0))
+            match = cand.loc[[(below + above).idxmin()]]
         if match.empty:
             results.append({"Congress": None, "Session": None})
         else:

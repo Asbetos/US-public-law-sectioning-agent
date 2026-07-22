@@ -221,7 +221,14 @@ def add_unique_keys(
         if "Congress" not in df.columns or "Session" not in df.columns:
             cs_path = Path(source_xml_dir) / "Congress_Session_Dates.csv"
             congress_df = pd.read_csv(cs_path)
-            cs = generate_id_keys.map_approved_date_to_congress(df["approvedDate"], congress_df)
+            # The law's own congress (before the dash in "Public Law 72–430" /
+            # "Public Resolution 72-72") is authoritative — use it to anchor the
+            # congress so an overlapping session boundary (e.g. 1933-03-04) can't
+            # push the law into a neighbouring congress's session.
+            law_congress = df["LawIdentifier"].astype(str).str.extract(r"(\d+)\s*[–—-]\s*\d+")[0]
+            cs = generate_id_keys.map_approved_date_to_congress(
+                df["approvedDate"], congress_df, congress_hints=law_congress
+            )
 
             def _clean_session(x):
                 if pd.isna(x):
