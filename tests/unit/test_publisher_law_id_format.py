@@ -28,6 +28,9 @@ EM = "—"  # em-dash
         ("103-53", f"Public Law 103{EN}53"),                 # bare (no prefix) -> prefixed
         ("79-600", f"Public Law 79{EN}600"),                 # legacy bare -> prefixed
         (f"Public Law 103{EN}160", f"Public Law 103{EN}160"),  # already canonical (idempotent)
+        ("69-439½", f"Public Law 69{EN}439½"),               # legacy fractional half-number
+        ("79-160A", f"Public Law 79{EN}160A"),               # legacy alpha suffix
+        (f"Public Law 69{EN}439½", f"Public Law 69{EN}439½"),  # fractional already canonical
     ],
 )
 def test_normalize_rewrites_every_shape(raw, expected):

@@ -17,10 +17,12 @@ _FORBIDDEN_PREFIX = "/groups/brooksgrp/"
 # Canonical published LawIdentifier separator: EN-DASH (U+2013).
 _LAW_ID_EN_DASH = "–"
 # Match an optional "Public Law " prefix, a congress number, any of
-# hyphen/en-dash/em-dash, and a law number. Anything that does not match is
-# left unchanged (defensive).
+# hyphen/en-dash/em-dash, and a law number. The law number may carry a single
+# non-integer suffix that legacy volumes use to keep distinct laws apart: a
+# vulgar fraction (e.g. "439½") or one trailing capital letter (e.g. "160A").
+# Anything that does not match is left unchanged (defensive).
 _PUBLISHED_LAW_ID_RE = re.compile(
-    r"^(?:Public Law\s+)?(\d+)\s*[-–—]\s*(\d+)$"
+    r"^(?:Public Law\s+)?(\d+)\s*[-–—]\s*(\d+(?:[½¼¾⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞]|[A-Z])?)$"
 )
 
 FINAL_COLUMN_ORDER = [
@@ -116,6 +118,7 @@ def _normalize_one_law_id(value):
         'Public Law 84-486'  (hyphen)  -> 'Public Law 84–486'
         'Public Law 103—286' (em-dash) -> 'Public Law 103–286'
         '103-53' / '79-600'  (bare)    -> 'Public Law 103–53' / 'Public Law 79–600'
+        '69-439½' / '79-160A' (suffix) -> 'Public Law 69–439½' / 'Public Law 79–160A'
 
     Any value that does not match the public-law shape is returned unchanged
     (defensive: never crash, never blank a value).
