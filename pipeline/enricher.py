@@ -243,6 +243,21 @@ def add_unique_keys(
                 [int(c) if pd.notna(c) else pd.NA for c in cs["Congress"]], dtype="Int64"
             )
             df["Session"] = [_clean_session(x) for x in cs["Session"]]
+        # Vol 44 carries the 1926 U.S. Code codification as a single undated
+        # <pLaw> (~12k sections, no congress/session/date in the source), which
+        # the resolver labeled "69-1" — colliding with the genuine first act of
+        # the 69th Congress. Give the codification its own identity and the
+        # authorizing-Act metadata (Act of June 30 1926, 44 Stat. 777) so its
+        # Congress/Session/approvedDate are populated and the real Public Law
+        # 69-1 stays distinct. The codification is exactly the undated rows.
+        if int(vol) == 44:
+            _code = df["approvedDate"].isna() | df["approvedDate"].astype(str).str.strip().isin(
+                ["", "nan", "NaT", "None"]
+            )
+            df.loc[_code, "LawIdentifier"] = "US Code 1926"
+            df.loc[_code, "Congress"] = 69
+            df.loc[_code, "Session"] = "1"
+            df.loc[_code, "approvedDate"] = "June 30, 1926"
         # Normalize approvedDate to yyyy-mm-dd to match the modern/original
         # pipeline output (legacy XML stores it as "Month DD, YYYY" text).
         # Unparseable values are left as-is rather than dropped.

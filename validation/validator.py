@@ -90,7 +90,13 @@ def validate_law_id_format(df: pd.DataFrame) -> list:
     if "LawIdentifier" not in df.columns:
         return ["LawIdentifier column missing"]
     pat = re.compile(r"\d+[-–—]\d+")
-    bad = df[~df["LawIdentifier"].fillna("").astype(str).apply(lambda s: bool(pat.search(s)))]
+    # The U.S. Code codification (vol 44) is a legitimate non-numbered object; it
+    # carries the special identifier "US Code <year>" rather than a public-law
+    # number, so accept that form too.
+    uscode = re.compile(r"^US Code \d{4}$")
+    bad = df[~df["LawIdentifier"].fillna("").astype(str).apply(
+        lambda s: bool(pat.search(s)) or bool(uscode.match(s))
+    )]
     if not bad.empty:
         sample = bad["LawIdentifier"].iloc[0]
         return [f"LawIdentifier values without recognizable pattern: {len(bad)} (sample: {sample!r})"]
