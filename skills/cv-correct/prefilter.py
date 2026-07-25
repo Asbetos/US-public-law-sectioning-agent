@@ -91,7 +91,7 @@ def _extract_canonical(plaw_elem, ns: dict, vol: int) -> tuple[str, int | None]:
             return ""
         return "".join(el.itertext()).strip()
 
-    if vol > 63:
+    if vol > 64:
         citable = _text(".//uslm:citableAs")
         m = _MODERN_CITABLE_AS_RE.search(citable)
         if m:

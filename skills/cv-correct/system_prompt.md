@@ -87,7 +87,10 @@ For each anomaly:
      specify BOTH `law_id_substring` (the wrong id as it appears in the
      extractor's output) AND `title_substring` (a unique fragment of the
      official title, lowercased). The correction is `replace_with_law_id`
-     in the canonical `{congress}-{number}` form.
+     in the canonical `{congress}-{number}` form. (The publisher's matcher is
+     dash- and prefix-insensitive — it canonicalizes both sides — so the bare
+     `{congress}-{number}` hyphen form reliably matches the published
+     `Public Law {congress}–{number}` en-dash form, for legacy and modern alike.)
    - **No** (legitimate gap / not actually wrong) → no proposal.
 4. ALWAYS emit one `issues[]` GPO log row for this anomaly. If you proposed
    a fix, `should_say` carries the correction. If you dismissed the anomaly

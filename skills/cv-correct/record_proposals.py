@@ -147,23 +147,18 @@ def _proposals_to_entries(proposals: list[dict], vol: int, agent_version: str) -
         if ptype not in ("law_id", "section_number", "other"):
             logger.warning("Skipping proposal with unknown type=%r", ptype)
             continue
-        entry = CorrectionEntry.from_dict({
-            "id": 0,
-            "type": ptype,
-            "trigger": p.get("trigger", {}) or {},
-            "correction": p.get("correction", {}) or {},
-            "evidence": p.get("evidence", {}) or {},
-            "proposed_at": now,
-            "discovered_in_vol": vol,
-            "agent_version": agent_version,
-            "confidence": p.get("confidence"),
-            "applied_in_runs": [{"vol": vol, "run_ts": now}],
-            "seen_again_count": 0,
-            "status": "pending",
-            "reviewer": None,
-            "review_note": None,
-            "reviewed_at": None,
-        })
+        entry = CorrectionEntry(
+            id=0,
+            type=ptype,
+            trigger=p.get("trigger", {}) or {},
+            correction=p.get("correction", {}) or {},
+            evidence=p.get("evidence", {}) or {},
+            proposed_at=now,
+            discovered_in_vol=vol,
+            agent_version=agent_version,
+            confidence=p.get("confidence"),
+            applied_in_runs=[{"vol": vol, "run_ts": now}],
+        )
         out.append(entry)
     return out
 

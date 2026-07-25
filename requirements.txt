@@ -13,3 +13,9 @@ requests==2.34.0
 
 # --- Tests ---
 pytest==9.0.3
+
+# --- Sibling package (NOT on PyPI) ---
+# The legacy pLaw identity resolver lives in the sibling repo `legacy-law-identity`
+# (checked out next to this one) and is installed editable — it is NOT pulled by
+# `pip install -r requirements.txt`. Install it separately (see SETUP.md):
+#     python -m pip install -e ../legacy-law-identity
