@@ -23,3 +23,13 @@ processed_output/scratch/
 
 # Logs
 *.log
+
+# --- Published deliverables (large binaries) ---
+# Track only the FINAL Excel per volume (force-added); ignore everything else
+# under Volume-*/ (superseded timestamps, _SME views), plus download bundles,
+# per-session split sheets, and stale-removal backups.
+processed_output/Volume-*/
+processed_output/*.zip
+processed_output/session_coding_sheets*/
+processed_output/session_split*/
+processed_output/_removed_stale*/
