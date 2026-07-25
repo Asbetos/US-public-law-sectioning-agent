@@ -31,10 +31,23 @@ identity resolver), which is a **separate repo** kept as a sibling directory:
 ```
 
 ```bash
-git clone <this-repo-url> data-preprocessing-pipeline
-git clone <legacy-law-identity-repo-url> legacy-law-identity
+git clone git@github.com:Asbetos/US-public-law-sectioning-agent.git data-preprocessing-pipeline
+git clone <legacy-law-identity-repo-url> legacy-law-identity   # see note below
 cd data-preprocessing-pipeline
 ```
+
+> **⚠️ `legacy-law-identity` has no git remote yet.** On the original server it
+> is a local-only repo, so it cannot be cloned on a new machine. Before this repo
+> can be reproduced elsewhere you must do ONE of:
+> 1. **Push `legacy-law-identity` to its own remote** (e.g. a sibling GitHub repo)
+>    and use that URL above — keeps it a standalone package; **or**
+> 2. **Copy the `legacy-law-identity/` directory** to the new server next to this
+>    repo (tar/scp) — no remote needed; **or**
+> 3. **Vendor it into this repo** (move the package in) so a single clone is
+>    fully self-contained.
+>
+> The pipeline **cannot import** without it (`from legacy_law_identity import
+> resolve_legacy_law_identities`), so this is a hard prerequisite.
 
 ## 2. venv + dependencies
 
